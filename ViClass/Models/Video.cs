@@ -7,5 +7,7 @@
         public string Path { get; set; }
         public uint VolumeInMg { get; set; }
         public string LengthFormatted { get; set; }
+        public int ClassId { get; set; }
+        public Class Class { get; set; }
     }
 }

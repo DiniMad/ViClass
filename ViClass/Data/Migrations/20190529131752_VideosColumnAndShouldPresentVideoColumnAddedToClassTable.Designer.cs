@@ -9,8 +9,8 @@ using ViClass.Data;
 namespace ViClass.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190529120819_VideosColumntAndShouldPresentVideoColumnAddedToClassTable")]
-    partial class VideosColumntAndShouldPresentVideoColumnAddedToClassTable
+    [Migration("20190529131752_VideosColumnAndShouldPresentVideoColumnAddedToClassTable")]
+    partial class VideosColumnAndShouldPresentVideoColumnAddedToClassTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -296,7 +296,7 @@ namespace ViClass.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ClassId");
+                    b.Property<int>("ClassId");
 
                     b.Property<string>("Description");
 
@@ -388,9 +388,11 @@ namespace ViClass.Data.Migrations
 
             modelBuilder.Entity("ViClass.Models.Video", b =>
                 {
-                    b.HasOne("ViClass.Models.Class", null)
+                    b.HasOne("ViClass.Models.Class", "Class")
                         .WithMany("Videos")
-                        .HasForeignKey("ClassId");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

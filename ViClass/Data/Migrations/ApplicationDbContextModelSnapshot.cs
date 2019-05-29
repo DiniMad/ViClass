@@ -294,7 +294,7 @@ namespace ViClass.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ClassId");
+                    b.Property<int>("ClassId");
 
                     b.Property<string>("Description");
 
@@ -386,9 +386,11 @@ namespace ViClass.Data.Migrations
 
             modelBuilder.Entity("ViClass.Models.Video", b =>
                 {
-                    b.HasOne("ViClass.Models.Class", null)
+                    b.HasOne("ViClass.Models.Class", "Class")
                         .WithMany("Videos")
-                        .HasForeignKey("ClassId");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

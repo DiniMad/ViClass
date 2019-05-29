@@ -26,7 +26,7 @@ namespace ViClass.Data
                    .HasForeignKey<Class>(c => c.InstructorId);
 
             builder.Entity<ClassStudent>()
-                   .HasKey(cs => new {cs.ClassId, cs.StudentId});
+                   .HasKey(cs => new { cs.ClassId, cs.StudentId });
 
             builder.Entity<ClassStudent>()
                    .HasOne(cs => cs.Class)
@@ -38,6 +38,10 @@ namespace ViClass.Data
                    .WithMany(au => au.ClassAsStudent)
                    .HasForeignKey(cs => cs.StudentId);
 
+            builder.Entity<Class>()
+                   .HasMany(c => c.Videos)
+                   .WithOne(v => v.Class)
+                   .HasForeignKey(v => v.ClassId);
 
             base.OnModelCreating(builder);
         }
