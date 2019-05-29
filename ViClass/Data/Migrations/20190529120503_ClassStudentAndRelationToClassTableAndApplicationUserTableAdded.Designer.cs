@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ViClass.Data;
 
 namespace ViClass.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190529120503_ClassStudentAndRelationToClassTableAndApplicationUserTableAdded")]
+    partial class ClassStudentAndRelationToClassTableAndApplicationUserTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,8 +264,6 @@ namespace ViClass.Data.Migrations
 
                     b.Property<ushort>("PriceInToman");
 
-                    b.Property<bool>("ShouldPresentVideo");
-
                     b.Property<string>("StartDateFormatted");
 
                     b.Property<string>("Title");
@@ -287,28 +287,6 @@ namespace ViClass.Data.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("ClassStudent");
-                });
-
-            modelBuilder.Entity("ViClass.Models.Video", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ClassId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("LengthFormatted");
-
-                    b.Property<string>("Path");
-
-                    b.Property<uint>("VolumeInMg");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("Video");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -382,13 +360,6 @@ namespace ViClass.Data.Migrations
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ViClass.Models.Video", b =>
-                {
-                    b.HasOne("ViClass.Models.Class", null)
-                        .WithMany("Videos")
-                        .HasForeignKey("ClassId");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,5 +17,29 @@ namespace ViClass.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Class>()
+                   .HasOne(c => c.Instructor)
+                   .WithOne(au => au.ClassAsInstructor)
+                   .HasForeignKey<Class>(c => c.InstructorId);
+
+            builder.Entity<ClassStudent>()
+                   .HasKey(cs => new {cs.ClassId, cs.StudentId});
+
+            builder.Entity<ClassStudent>()
+                   .HasOne(cs => cs.Class)
+                   .WithMany(c => c.Students)
+                   .HasForeignKey(cs => cs.ClassId);
+
+            builder.Entity<ClassStudent>()
+                   .HasOne(cs => cs.Student)
+                   .WithMany(au => au.ClassAsStudent)
+                   .HasForeignKey(cs => cs.StudentId);
+
+
+            base.OnModelCreating(builder);
+        }
     }
 }
