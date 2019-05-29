@@ -24,6 +24,8 @@ namespace ViClass.Models
         }
         public ICollection<Video> Videos { get; set; }
         public ICollection<SharedFile> SharedFiles { get; set; }
+        public int WeekTimeScheduleId { get; set; }
+        public WeekTimeSchedule WeekTimeSchedule { get; set; }
         public string StartDateFormatted { get; set; }
         public string EndDateFormatted { get; set; }
         public byte PeriodInEveryXWeeks { get; set; }

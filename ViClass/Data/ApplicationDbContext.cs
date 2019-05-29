@@ -48,6 +48,11 @@ namespace ViClass.Data
                    .WithOne(sf => sf.Class)
                    .HasForeignKey(sf => sf.ClassId);
 
+            builder.Entity<Class>()
+                   .HasOne(c => c.WeekTimeSchedule)
+                   .WithOne(w => w.Class)
+                   .HasForeignKey<Class>(c => c.WeekTimeScheduleId);
+
             base.OnModelCreating(builder);
         }
     }
