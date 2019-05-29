@@ -9,6 +9,7 @@ namespace ViClass.Models
         public Class()
         {
             Students=new Collection<ClassStudent>();
+            SharedFiles=new Collection<SharedFile>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -22,6 +23,7 @@ namespace ViClass.Models
             set => Videos = value ? new Collection<Video>() : null;
         }
         public ICollection<Video> Videos { get; set; }
+        public ICollection<SharedFile> SharedFiles { get; set; }
         public string StartDateFormatted { get; set; }
         public string EndDateFormatted { get; set; }
         public byte PeriodInEveryXWeeks { get; set; }

@@ -43,6 +43,11 @@ namespace ViClass.Data
                    .WithOne(v => v.Class)
                    .HasForeignKey(v => v.ClassId);
 
+            builder.Entity<Class>()
+                   .HasMany(c => c.SharedFiles)
+                   .WithOne(sf => sf.Class)
+                   .HasForeignKey(sf => sf.ClassId);
+
             base.OnModelCreating(builder);
         }
     }
