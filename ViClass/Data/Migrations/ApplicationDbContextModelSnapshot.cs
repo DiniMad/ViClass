@@ -289,26 +289,6 @@ namespace ViClass.Data.Migrations
                     b.ToTable("ClassStudent");
                 });
 
-            modelBuilder.Entity("ViClass.Models.SharedFile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ClassId");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("Path");
-
-                    b.Property<ushort>("VolumeInMg");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("SharedFile");
-                });
-
             modelBuilder.Entity("ViClass.Models.Video", b =>
                 {
                     b.Property<int>("Id")
@@ -400,15 +380,6 @@ namespace ViClass.Data.Migrations
                     b.HasOne("ViClass.Models.ApplicationUser", "Student")
                         .WithMany("ClassAsStudent")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ViClass.Models.SharedFile", b =>
-                {
-                    b.HasOne("ViClass.Models.Class", "Class")
-                        .WithMany("SharedFiles")
-                        .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
