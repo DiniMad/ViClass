@@ -2,7 +2,7 @@
 
 namespace ViClass.Data.Migrations
 {
-    public partial class VideosColumnAndShouldPresentVideoColumnAddedToClassTable : Migration
+    public partial class VideosColumntAndShouldPresentVideoColumnAddedToClassTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,7 +22,7 @@ namespace ViClass.Data.Migrations
                     Path = table.Column<string>(nullable: true),
                     VolumeInMg = table.Column<uint>(nullable: false),
                     LengthFormatted = table.Column<string>(nullable: true),
-                    ClassId = table.Column<int>(nullable: false)
+                    ClassId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,7 +32,7 @@ namespace ViClass.Data.Migrations
                         column: x => x.ClassId,
                         principalTable: "Class",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
