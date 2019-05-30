@@ -3,10 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ViClass.Data;
 
 namespace ViClass.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public ICollection<Class> ClassesAsInstructor { get; set; }
+        public ICollection<ClassStudent> ClassesAsStudent { get; set; }
+        public ICollection<Survey> SurveysCreated { get; set; }
     }
 }

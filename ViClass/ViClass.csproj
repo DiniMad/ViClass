@@ -30,6 +30,23 @@
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530051539_ClassTableAdded.cs" />
+    <Compile Remove="Data\Migrations\20190530051539_ClassTableAdded.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530051919_ClassTableAdded.cs" />
+    <Compile Remove="Data\Migrations\20190530051919_ClassTableAdded.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530052115_ClassTableAdded.cs" />
+    <Compile Remove="Data\Migrations\20190530052115_ClassTableAdded.Designer.cs" />
+    <Compile Remove="Migrations\20190530054915_InitialModel.cs" />
+    <Compile Remove="Migrations\20190530054915_InitialModel.Designer.cs" />
+    <Compile Remove="Migrations\20190530055528_foo.cs" />
+    <Compile Remove="Migrations\20190530055528_foo.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->

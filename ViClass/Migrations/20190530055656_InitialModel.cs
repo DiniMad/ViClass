@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ViClass.Data.Migrations
+namespace ViClass.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitialModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,11 +82,31 @@ namespace ViClass.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WeekTimeSchedule",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SaturdayTime = table.Column<int>(nullable: true),
+                    SundayTime = table.Column<int>(nullable: true),
+                    MondayTime = table.Column<int>(nullable: true),
+                    TuesdayTime = table.Column<int>(nullable: true),
+                    WednesdayTime = table.Column<int>(nullable: true),
+                    ThursdayTime = table.Column<int>(nullable: true),
+                    FridayTime = table.Column<int>(nullable: true),
+                    ClassId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeekTimeSchedule", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -106,7 +127,7 @@ namespace ViClass.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -186,6 +207,155 @@ namespace ViClass.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Surveys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    CreatorId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Surveys", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Surveys_AspNetUsers_CreatorId",
+                        column: x => x.CreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Classes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    InstructorId = table.Column<string>(nullable: true),
+                    ShouldPresentVideo = table.Column<bool>(nullable: false),
+                    WeekTimeScheduleId = table.Column<int>(nullable: false),
+                    StartDateFormatted = table.Column<string>(nullable: true),
+                    EndDateFormatted = table.Column<string>(nullable: true),
+                    PeriodInEveryXWeeks = table.Column<byte>(nullable: false),
+                    MinStudentNumber = table.Column<byte>(nullable: false),
+                    MaxStudentNumber = table.Column<byte>(nullable: false),
+                    IsItPrivate = table.Column<bool>(nullable: false),
+                    PriceInToman = table.Column<int>(nullable: false),
+                    LinkToLiveBroadcast = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Classes_AspNetUsers_InstructorId",
+                        column: x => x.InstructorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Classes_WeekTimeSchedule_WeekTimeScheduleId",
+                        column: x => x.WeekTimeScheduleId,
+                        principalTable: "WeekTimeSchedule",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SurveyItem",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Text = table.Column<string>(nullable: true),
+                    VotedForCount = table.Column<long>(nullable: false),
+                    VotedAgainstCount = table.Column<long>(nullable: false),
+                    SurveyId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SurveyItem", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SurveyItem_Surveys_SurveyId",
+                        column: x => x.SurveyId,
+                        principalTable: "Surveys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClassStudent",
+                columns: table => new
+                {
+                    StudentId = table.Column<string>(nullable: false),
+                    ClassId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClassStudent", x => new { x.ClassId, x.StudentId });
+                    table.ForeignKey(
+                        name: "FK_ClassStudent_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClassStudent_AspNetUsers_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SharedFile",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    VolumeInMg = table.Column<int>(nullable: false),
+                    ClassId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SharedFile", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SharedFile_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Video",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    VolumeInMg = table.Column<long>(nullable: false),
+                    LengthFormatted = table.Column<string>(nullable: true),
+                    ClassId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Video", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Video_Classes_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Classes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -195,7 +365,8 @@ namespace ViClass.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -221,7 +392,24 @@ namespace ViClass.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Classes_InstructorId",
+                table: "Classes",
+                column: "InstructorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Classes_WeekTimeScheduleId",
+                table: "Classes",
+                column: "WeekTimeScheduleId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClassStudent_StudentId",
+                table: "ClassStudent",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
@@ -233,6 +421,26 @@ namespace ViClass.Data.Migrations
                 name: "IX_PersistedGrants_SubjectId_ClientId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "ClientId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SharedFile_ClassId",
+                table: "SharedFile",
+                column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SurveyItem_SurveyId",
+                table: "SurveyItem",
+                column: "SurveyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Surveys_CreatorId",
+                table: "Surveys",
+                column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Video_ClassId",
+                table: "Video",
+                column: "ClassId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -253,16 +461,37 @@ namespace ViClass.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ClassStudent");
+
+            migrationBuilder.DropTable(
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "SharedFile");
+
+            migrationBuilder.DropTable(
+                name: "SurveyItem");
+
+            migrationBuilder.DropTable(
+                name: "Video");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Surveys");
+
+            migrationBuilder.DropTable(
+                name: "Classes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "WeekTimeSchedule");
         }
     }
 }
