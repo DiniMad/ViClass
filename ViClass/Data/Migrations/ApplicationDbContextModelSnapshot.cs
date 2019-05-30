@@ -268,14 +268,9 @@ namespace ViClass.Data.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<int>("WeekTimeScheduleId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("InstructorId")
-                        .IsUnique();
-
-                    b.HasIndex("WeekTimeScheduleId")
                         .IsUnique();
 
                     b.ToTable("Class");
@@ -336,30 +331,6 @@ namespace ViClass.Data.Migrations
                     b.ToTable("Video");
                 });
 
-            modelBuilder.Entity("ViClass.Models.WeekTimeSchedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<ushort?>("FridayTime");
-
-                    b.Property<ushort?>("MondayTime");
-
-                    b.Property<ushort?>("SaturdayTime");
-
-                    b.Property<ushort?>("SundayTime");
-
-                    b.Property<ushort?>("ThursdayTime");
-
-                    b.Property<ushort?>("TuesdayTime");
-
-                    b.Property<ushort?>("WednesdayTime");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WeekTimeSchedule");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -416,12 +387,6 @@ namespace ViClass.Data.Migrations
                     b.HasOne("ViClass.Models.ApplicationUser", "Instructor")
                         .WithOne("ClassAsInstructor")
                         .HasForeignKey("ViClass.Models.Class", "InstructorId");
-
-                    b.HasOne("ViClass.Models.WeekTimeSchedule", "WeekTimeSchedule")
-                        .WithOne("Class")
-                        .HasForeignKey("ViClass.Models.Class", "WeekTimeScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ViClass.Models.ClassStudent", b =>
