@@ -51,6 +51,8 @@
     <Compile Remove="Migrations\20190604093151_foo.Designer.cs" />
     <Compile Remove="Migrations\20190604101221_ApplyingIsRequiredAndHasMaxLengthConstraintsToTitleColumnOfSurveyTable.cs" />
     <Compile Remove="Migrations\20190604101221_ApplyingIsRequiredAndHasMaxLengthConstraintsToTitleColumnOfSurveyTable.Designer.cs" />
+    <Compile Remove="Migrations\20190604101859_foo.cs" />
+    <Compile Remove="Migrations\20190604101859_foo.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
