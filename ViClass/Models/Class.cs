@@ -8,8 +8,8 @@ namespace ViClass.Models
     {
         public Class()
         {
-            Students=new Collection<ClassStudent>();
-            SharedFiles=new Collection<SharedFile>();
+            Students = new Collection<ClassStudent>();
+            SharedFiles = new Collection<SharedFile>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -17,11 +17,7 @@ namespace ViClass.Models
         public string InstructorId { get; set; }
         public ApplicationUser Instructor { get; set; }
         public ICollection<ClassStudent> Students { get; set; }
-        public bool ShouldPresentVideo
-        {
-            get => ShouldPresentVideo;
-            set => Videos = value ? new Collection<Video>() : null;
-        }
+        public bool ShouldPresentVideo { get; set; }
         public ICollection<Video> Videos { get; set; }
         public ICollection<SharedFile> SharedFiles { get; set; }
         public int WeekTimeScheduleId { get; set; }
