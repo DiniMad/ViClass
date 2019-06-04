@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ViClass.Data;
 
 namespace ViClass.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190604100135_SevenNewColumnsForLengthTimeOfSevenDaysOfWeekAddedToWeekTimeScheduleTable")]
+    partial class SevenNewColumnsForLengthTimeOfSevenDaysOfWeekAddedToWeekTimeScheduleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -339,12 +341,9 @@ namespace ViClass.Migrations
 
                     b.Property<string>("CreatorId");
 
-                    b.Property<string>("Text")
-                        .IsRequired();
+                    b.Property<string>("Text");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -361,9 +360,7 @@ namespace ViClass.Migrations
 
                     b.Property<int>("SurveyId");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Text");
 
                     b.Property<long>("VotedAgainstCount");
 
@@ -411,47 +408,33 @@ namespace ViClass.Migrations
 
                     b.Property<int>("ClassId");
 
-                    b.Property<string>("FridayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<string>("FridayLengthTime");
 
-                    b.Property<string>("FridayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<string>("FridayStartTimeFormatted");
 
-                    b.Property<string>("MondayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<string>("MondayLengthTime");
 
-                    b.Property<string>("MondayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<string>("MondayStartTimeFormatted");
 
-                    b.Property<string>("SaturdayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<string>("SaturdayLengthTime");
 
-                    b.Property<string>("SaturdayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<string>("SaturdayStartTimeFormatted");
 
-                    b.Property<string>("SundayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<string>("SundayLengthTime");
 
-                    b.Property<string>("SundayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<string>("SundayStartTimeFormatted");
 
-                    b.Property<string>("ThursdayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<string>("ThursdayLengthTime");
 
-                    b.Property<string>("ThursdayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<string>("ThursdayStartTimeFormatted");
 
-                    b.Property<string>("TuesdayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<string>("TuesdayLengthTime");
 
-                    b.Property<string>("TuesdayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<string>("TuesdayStartTimeFormatted");
 
-                    b.Property<string>("WednesdayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<string>("WednesdayLengthTime");
 
-                    b.Property<string>("WednesdayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<string>("WednesdayStartTimeFormatted");
 
                     b.HasKey("Id");
 

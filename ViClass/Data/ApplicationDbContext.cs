@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using ViClass.ModelConfigurations;
 
 namespace ViClass.Data
 {
@@ -23,12 +24,14 @@ namespace ViClass.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<ClassStudent>()
-                   .HasKey(cs => new { cs.ClassId, cs.StudentId });
-            builder.Entity<Class>()
-                   .HasOne(c => c.WeekTimeSchedule)
-                   .WithOne(w => w.Class)
-                   .HasForeignKey<Class>();
+            builder.ApplyConfiguration(new ClassConfiguration());
+            builder.ApplyConfiguration(new VideoConfiguration());
+            builder.ApplyConfiguration(new SharedFileConfiguration());
+            builder.ApplyConfiguration(new WeekTimeScheduleConfiguration());
+            builder.ApplyConfiguration(new SurveyConfiguration());
+            builder.Entity<ClassStudent>().HasKey(cs => new { cs.ClassId, cs.StudentId });
+            builder.Entity<SurveyItem>().Property(si => si.Text).IsRequired().HasMaxLength(255);
+
             base.OnModelCreating(builder);
         }
     }

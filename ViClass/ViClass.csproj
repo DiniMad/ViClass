@@ -43,6 +43,14 @@
     <Compile Remove="Migrations\20190530054915_InitialModel.Designer.cs" />
     <Compile Remove="Migrations\20190530055528_foo.cs" />
     <Compile Remove="Migrations\20190530055528_foo.Designer.cs" />
+    <Compile Remove="Migrations\20190604091229_ApplyingIsRequiredConstraintsToStartDateFormattedColumnOfClassTable.cs" />
+    <Compile Remove="Migrations\20190604091229_ApplyingIsRequiredConstraintsToStartDateFormattedColumnOfClassTable.Designer.cs" />
+    <Compile Remove="Migrations\20190604091309_ApplyingIsRequiredConstraintsToEndDateFormattedColumnOfClassTable.cs" />
+    <Compile Remove="Migrations\20190604091309_ApplyingIsRequiredConstraintsToEndDateFormattedColumnOfClassTable.Designer.cs" />
+    <Compile Remove="Migrations\20190604093151_foo.cs" />
+    <Compile Remove="Migrations\20190604093151_foo.Designer.cs" />
+    <Compile Remove="Migrations\20190604101221_ApplyingIsRequiredAndHasMaxLengthConstraintsToTitleColumnOfSurveyTable.cs" />
+    <Compile Remove="Migrations\20190604101221_ApplyingIsRequiredAndHasMaxLengthConstraintsToTitleColumnOfSurveyTable.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />

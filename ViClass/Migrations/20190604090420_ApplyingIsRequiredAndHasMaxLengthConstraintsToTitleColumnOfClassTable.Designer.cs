@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ViClass.Data;
 
 namespace ViClass.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190604090420_ApplyingIsRequiredAndHasMaxLengthConstraintsToTitleColumnOfClassTable")]
+    partial class ApplyingIsRequiredAndHasMaxLengthConstraintsToTitleColumnOfClassTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -252,12 +254,9 @@ namespace ViClass.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .IsRequired();
+                    b.Property<string>("Description");
 
-                    b.Property<string>("EndDateFormatted")
-                        .IsRequired()
-                        .HasMaxLength(10);
+                    b.Property<string>("EndDateFormatted");
 
                     b.Property<string>("InstructorId");
 
@@ -265,7 +264,7 @@ namespace ViClass.Migrations
 
                     b.Property<string>("LinkToLiveBroadcast");
 
-                    b.Property<byte?>("MaxStudentNumber");
+                    b.Property<byte>("MaxStudentNumber");
 
                     b.Property<byte>("MinStudentNumber");
 
@@ -275,9 +274,7 @@ namespace ViClass.Migrations
 
                     b.Property<bool>("ShouldPresentVideo");
 
-                    b.Property<string>("StartDateFormatted")
-                        .IsRequired()
-                        .HasMaxLength(10);
+                    b.Property<string>("StartDateFormatted");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -316,11 +313,9 @@ namespace ViClass.Migrations
 
                     b.Property<int>("ClassId");
 
-                    b.Property<string>("Description")
-                        .IsRequired();
+                    b.Property<string>("Description");
 
-                    b.Property<string>("Path")
-                        .IsRequired();
+                    b.Property<string>("Path");
 
                     b.Property<int>("VolumeInMg");
 
@@ -339,12 +334,9 @@ namespace ViClass.Migrations
 
                     b.Property<string>("CreatorId");
 
-                    b.Property<string>("Text")
-                        .IsRequired();
+                    b.Property<string>("Text");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -361,9 +353,7 @@ namespace ViClass.Migrations
 
                     b.Property<int>("SurveyId");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Text");
 
                     b.Property<long>("VotedAgainstCount");
 
@@ -384,15 +374,11 @@ namespace ViClass.Migrations
 
                     b.Property<int>("ClassId");
 
-                    b.Property<string>("Description")
-                        .IsRequired();
+                    b.Property<string>("Description");
 
-                    b.Property<string>("LengthFormatted")
-                        .IsRequired()
-                        .HasMaxLength(6);
+                    b.Property<string>("LengthFormatted");
 
-                    b.Property<string>("Path")
-                        .IsRequired();
+                    b.Property<string>("Path");
 
                     b.Property<long>("VolumeInMg");
 
@@ -411,47 +397,19 @@ namespace ViClass.Migrations
 
                     b.Property<int>("ClassId");
 
-                    b.Property<string>("FridayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<int?>("FridayTime");
 
-                    b.Property<string>("FridayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<int?>("MondayTime");
 
-                    b.Property<string>("MondayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<int?>("SaturdayTime");
 
-                    b.Property<string>("MondayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<int?>("SundayTime");
 
-                    b.Property<string>("SaturdayLengthTime")
-                        .HasMaxLength(5);
+                    b.Property<int?>("ThursdayTime");
 
-                    b.Property<string>("SaturdayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<int?>("TuesdayTime");
 
-                    b.Property<string>("SundayLengthTime")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("SundayStartTimeFormatted")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("ThursdayLengthTime")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("ThursdayStartTimeFormatted")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("TuesdayLengthTime")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("TuesdayStartTimeFormatted")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("WednesdayLengthTime")
-                        .HasMaxLength(5);
-
-                    b.Property<string>("WednesdayStartTimeFormatted")
-                        .HasMaxLength(5);
+                    b.Property<int?>("WednesdayTime");
 
                     b.HasKey("Id");
 

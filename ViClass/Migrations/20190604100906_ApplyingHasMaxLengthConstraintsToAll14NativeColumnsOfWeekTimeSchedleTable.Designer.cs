@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ViClass.Data;
 
 namespace ViClass.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190604100906_ApplyingHasMaxLengthConstraintsToAll14NativeColumnsOfWeekTimeSchedleTable")]
+    partial class ApplyingHasMaxLengthConstraintsToAll14NativeColumnsOfWeekTimeSchedleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -339,12 +341,9 @@ namespace ViClass.Migrations
 
                     b.Property<string>("CreatorId");
 
-                    b.Property<string>("Text")
-                        .IsRequired();
+                    b.Property<string>("Text");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -361,9 +360,7 @@ namespace ViClass.Migrations
 
                     b.Property<int>("SurveyId");
 
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Text");
 
                     b.Property<long>("VotedAgainstCount");
 

@@ -30,7 +30,7 @@ namespace ViClass.Models
         public string EndDateFormatted { get; set; }
         public byte PeriodInEveryXWeeks { get; set; }
         public byte MinStudentNumber { get; set; }
-        public byte MaxStudentNumber { get; set; }
+        public byte? MaxStudentNumber { get; set; }
         public bool IsItPrivate { get; set; }
         public ushort PriceInToman { get; set; }
         public string LinkToLiveBroadcast { get; set; }
