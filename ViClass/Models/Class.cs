@@ -8,8 +8,10 @@ namespace ViClass.Models
     {
         public Class()
         {
+            Videos = new Collection<Video>();
             Students = new Collection<ClassStudent>();
             SharedFiles = new Collection<SharedFile>();
+            DayOfWeekSchedules = new Collection<DayOfWeekSchedule>();
         }
         public int Id { get; set; }
         public string Title { get; set; }
@@ -20,8 +22,7 @@ namespace ViClass.Models
         public bool ShouldPresentVideo { get; set; }
         public ICollection<Video> Videos { get; set; }
         public ICollection<SharedFile> SharedFiles { get; set; }
-        public int WeekTimeScheduleId { get; set; }
-        public WeekTimeSchedule WeekTimeSchedule { get; set; }
+        public ICollection<DayOfWeekSchedule> DayOfWeekSchedules { get; set; }
         public string StartDateFormatted { get; set; }
         public string EndDateFormatted { get; set; }
         public byte PeriodInEveryXWeeks { get; set; }

@@ -55,6 +55,12 @@
     <Compile Remove="Migrations\20190604101221_ApplyingIsRequiredAndHasMaxLengthConstraintsToTitleColumnOfSurveyTable.Designer.cs" />
     <Compile Remove="Migrations\20190604101859_foo.cs" />
     <Compile Remove="Migrations\20190604101859_foo.Designer.cs" />
+    <Compile Remove="Migrations\20190605121559_WeekTimeScheduleTableAndItsForeignKeyFromClassTableRemoved.cs" />
+    <Compile Remove="Migrations\20190605121559_WeekTimeScheduleTableAndItsForeignKeyFromClassTableRemoved.Designer.cs" />
+    <Compile Remove="Migrations\20190605121807_WeekTimeScheduleTableAndItsForeignKeyFromClassTableRemoved.cs" />
+    <Compile Remove="Migrations\20190605121807_WeekTimeScheduleTableAndItsForeignKeyFromClassTableRemoved.Designer.cs" />
+    <Compile Remove="Migrations\20190605122047_DayOfWeekSchedulesTableCreatedWithAForeignKeyToClassTable.cs" />
+    <Compile Remove="Migrations\20190605122047_DayOfWeekSchedulesTableCreatedWithAForeignKeyToClassTable.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />

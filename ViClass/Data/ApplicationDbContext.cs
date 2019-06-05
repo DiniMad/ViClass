@@ -27,7 +27,6 @@ namespace ViClass.Data
             builder.ApplyConfiguration(new ClassConfiguration());
             builder.ApplyConfiguration(new VideoConfiguration());
             builder.ApplyConfiguration(new SharedFileConfiguration());
-            builder.ApplyConfiguration(new WeekTimeScheduleConfiguration());
             builder.ApplyConfiguration(new SurveyConfiguration());
             builder.Entity<ClassStudent>().HasKey(cs => new { cs.ClassId, cs.StudentId });
             builder.Entity<SurveyItem>().Property(si => si.Text).IsRequired().HasMaxLength(255);

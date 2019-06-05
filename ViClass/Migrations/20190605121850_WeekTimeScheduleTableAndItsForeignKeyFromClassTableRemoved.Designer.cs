@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ViClass.Data;
 
 namespace ViClass.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190605121850_WeekTimeScheduleTableAndItsForeignKeyFromClassTableRemoved")]
+    partial class WeekTimeScheduleTableAndItsForeignKeyFromClassTableRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,27 +305,6 @@ namespace ViClass.Migrations
                     b.ToTable("ClassStudent");
                 });
 
-            modelBuilder.Entity("ViClass.Models.DayOfWeekSchedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClassId");
-
-                    b.Property<byte>("DayOfWeek");
-
-                    b.Property<string>("LengthTimeFormatted");
-
-                    b.Property<string>("StartTimeFormatted");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("DayOfWeekSchedule");
-                });
-
             modelBuilder.Entity("ViClass.Models.SharedFile", b =>
                 {
                     b.Property<int>("Id")
@@ -488,15 +469,6 @@ namespace ViClass.Migrations
                     b.HasOne("ViClass.Models.ApplicationUser", "Student")
                         .WithMany("ClassesAsStudent")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ViClass.Models.DayOfWeekSchedule", b =>
-                {
-                    b.HasOne("ViClass.Models.Class", "Class")
-                        .WithMany("DayOfWeekSchedules")
-                        .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

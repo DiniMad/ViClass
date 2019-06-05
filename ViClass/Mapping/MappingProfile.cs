@@ -11,8 +11,7 @@ namespace ViClass.Mapping
             CreateMap<Class, ClassResource>();
             CreateMap<Video, VideoResource>();
             CreateMap<SharedFile, SharedFileResource>();
-            CreateMap<WeekTimeSchedule, WeekTimeScheduleResource>();
-            //CreateMap<ClassStudent, ClassStudentResource>();
+            CreateMap<DayOfWeekSchedule, DayOfWeekScheduleResource>();
         }
     }
 }

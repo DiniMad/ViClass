@@ -8,9 +8,6 @@ namespace ViClass.ModelConfigurations
     {
         public void Configure(EntityTypeBuilder<Class> builder)
         {
-            builder.HasOne(c => c.WeekTimeSchedule)
-                   .WithOne(w => w.Class)
-                   .HasForeignKey<Class>();
             builder.Property(c => c.Title)
                    .IsRequired()
                    .HasMaxLength(255);

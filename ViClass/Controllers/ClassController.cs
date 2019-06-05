@@ -26,7 +26,7 @@ namespace ViClass.Controllers
         {
             var classes= _context.Classes
                            .Include(c=>c.Instructor)
-                           .Include(c=>c.WeekTimeSchedule)
+                           .Include(c=>c.DayOfWeekSchedules)
                            .Include(c=>c.Videos)
                            .ToList();
             return _mapper.Map<List<Class>, List<ClassResource>>(classes);

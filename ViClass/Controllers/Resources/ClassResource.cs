@@ -6,11 +6,6 @@ namespace ViClass.Controllers.Resources
 {
     public class ClassResource
     {
-        public ClassResource()
-        {
-            Students = new Collection<ClassStudent>();
-            SharedFiles = new Collection<SharedFileResource>();
-        }
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -20,8 +15,7 @@ namespace ViClass.Controllers.Resources
         public bool ShouldPresentVideo { get; set; }
         public ICollection<VideoResource> Videos { get; set; }
         public ICollection<SharedFileResource> SharedFiles { get; set; }
-        public int WeekTimeScheduleId { get; set; }
-        public WeekTimeScheduleResource WeekTimeSchedule { get; set; }
+        public ICollection<DayOfWeekScheduleResource> DayOfWeekSchedules { get; set; }
         public string StartDateFormatted { get; set; }
         public string EndDateFormatted { get; set; }
         public byte PeriodInEveryXWeeks { get; set; }
