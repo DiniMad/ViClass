@@ -4,10 +4,11 @@ using ViClass.Models;
 
 namespace ViClass.Mapping
 {
-    public class MappingProfile:Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
+            CreateMap<ApplicationUser, ApplicationUserResource>();
             CreateMap<Class, ClassResource>();
             CreateMap<Video, VideoResource>();
             CreateMap<SharedFile, SharedFileResource>();

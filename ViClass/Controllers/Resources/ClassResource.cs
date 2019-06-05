@@ -10,7 +10,7 @@ namespace ViClass.Controllers.Resources
         public string Title { get; set; }
         public string Description { get; set; }
         public string InstructorId { get; set; }
-        public ApplicationUser Instructor { get; set; }
+        public ApplicationUserResource Instructor { get; set; }
         public ICollection<ClassStudent> Students { get; set; }
         public bool ShouldPresentVideo { get; set; }
         public ICollection<VideoResource> Videos { get; set; }
