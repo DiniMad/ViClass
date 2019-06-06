@@ -24,6 +24,7 @@ namespace ViClass.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new ClassConfiguration());
             builder.ApplyConfiguration(new VideoConfiguration());
             builder.ApplyConfiguration(new DayOfWeekScheduleConfiguration());

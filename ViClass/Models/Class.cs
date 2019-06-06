@@ -29,7 +29,7 @@ namespace ViClass.Models
         public byte MinStudentNumber { get; set; }
         public byte? MaxStudentNumber { get; set; }
         public bool IsItPrivate { get; set; }
-        public ushort PriceInToman { get; set; }
+        public ushort PriceInHezarToman { get; set; }
         public string LinkToLiveBroadcast { get; set; }
     }
 }
