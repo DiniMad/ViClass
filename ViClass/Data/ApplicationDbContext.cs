@@ -26,6 +26,7 @@ namespace ViClass.Data
         {
             builder.ApplyConfiguration(new ClassConfiguration());
             builder.ApplyConfiguration(new VideoConfiguration());
+            builder.ApplyConfiguration(new DayOfWeekScheduleConfiguration());
             builder.ApplyConfiguration(new SharedFileConfiguration());
             builder.ApplyConfiguration(new SurveyConfiguration());
             builder.Entity<ClassStudent>().HasKey(cs => new { cs.ClassId, cs.StudentId });
