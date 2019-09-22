@@ -11,7 +11,7 @@ namespace ViClass.ModelConfigurations
 
             builder.Property(au => au.StudentNumber)
                    .HasMaxLength(10);
-            builder.HasIndex(au => au.StudentNumber);
+            builder.HasIndex(au => au.StudentNumber).IsUnique();
         }
     }
 }
