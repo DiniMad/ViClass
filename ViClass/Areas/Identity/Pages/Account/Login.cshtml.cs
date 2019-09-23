@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Globalization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,43 +19,44 @@ namespace ViClass.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser>   _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly ILogger<LoginModel>            _logger;
+        private readonly IEmailSender                   _emailSender;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, 
-            ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager,
-            IEmailSender emailSender)
+        public LoginModel(SignInManager<ApplicationUser> signInManager,
+                          ILogger<LoginModel>            logger,
+                          UserManager<ApplicationUser>   userManager,
+                          IEmailSender                   emailSender)
         {
-            _userManager = userManager;
+            _userManager   = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
-            _logger = logger;
+            _emailSender   = emailSender;
+            _logger        = logger;
         }
 
-        [BindProperty]
-        public InputModel Input { get; set; }
+        [BindProperty] public InputModel Input { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public string ReturnUrl { get; set; }
 
-        [TempData]
-        public string ErrorMessage { get; set; }
+        [TempData] public string ErrorMessage { get; set; }
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Required(ErrorMessage = "شماره دانشجویی را وارد کنید.")]
+            [Display(Name          = "شماره دانشجویی")]
+            [Range(typeof(ulong), "9000000000", "9999999999", ErrorMessage =
+                "شماره دانشجویی یک عدد بدون علامت 10 رقمی است.")]
+            public ulong StudentNumber { get; set; }
 
-            [Required]
+            [Display(Name          = "رمز عبور")]
+            [Required(ErrorMessage = "رمز عبور را وارد کنید.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "مرا به خاطر نگه دار")]
             public bool RememberMe { get; set; }
         }
 
@@ -78,31 +80,12 @@ namespace ViClass.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
+                var user = _userManager.Users.FirstOrDefault(u => u.StudentNumber == Input.StudentNumber.ToString());
+                if (!(user is null) && await _userManager.CheckPasswordAsync(user, Input.Password))
+                    await _signInManager.SignInAsync(user, Input.RememberMe);
+                return Redirect(returnUrl);
             }
 
             // If we got this far, something failed, redisplay form
@@ -116,23 +99,23 @@ namespace ViClass.Areas.Identity.Pages.Account
                 return Page();
             }
 
-            var user = await _userManager.FindByEmailAsync(Input.Email);
+            var user = await _userManager.FindByEmailAsync("");
             if (user == null)
             {
                 ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             }
 
             var userId = await _userManager.GetUserIdAsync(user);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var code   = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { userId = userId, code = code },
-                protocol: Request.Scheme);
+                                       "/Account/ConfirmEmail",
+                                       pageHandler: null,
+                                       values: new {userId = userId, code = code},
+                                       protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
-                Input.Email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                                              "",
+                                              "Confirm your email",
+                                              $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             return Page();
