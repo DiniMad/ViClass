@@ -31,8 +31,9 @@ namespace ViClass.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = ".ایمیل را وارد کنید")]
+            [EmailAddress(ErrorMessage = ".ایمیل وارد شده صحیح نیست")]
+            [Display(Name = "ایمیل")]
             public string Email { get; set; }
         }
 
