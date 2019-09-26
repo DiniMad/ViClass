@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { LoginRegisterOverlay } from "./LoginRegisterOverlay";
 import login, {
-    isUserAuthenticate,
     LoginResult
 } from "./api-authorization/AuthenticationAndApiAuthorization";
 
@@ -13,33 +12,24 @@ export class Home extends Component {
         overlayStyle: "overlay",
         frameStyle: "frame"
     };
-    componentDidMount() {
-        setTimeout(async () => {
-            var isAuthenticate = await isUserAuthenticate();
-            if (isAuthenticate) this.props.history.replace("/dashboard");
-            else {
-                var result = await login();
-                switch (result.status) {
-                    case LoginResult.Success:
-                        this.props.history.replace("/dashboard");
-                        break;
-                    case LoginResult.Redirect:
-                        this.setState({
-                            loginIframeSource: result.redirectUrl,
-                            overlayStyle: "overlay show",
-                            frameStyle: "frame show"
-                        });
-                        break;
-                    default:
-                        console.log(result.message);
-                        break;
-                }
-                if (result.status === "redirect") {
-                    this.setState({ loginIframeSource: result.redirectUrl });
-                }
-            }
-        }, 1000);
-    }
+    componentDidMount = async () => {
+        var result = await login();
+        switch (result.status) {
+            case LoginResult.Success:
+                this.props.history.replace("/dashboard");
+                break;
+            case LoginResult.Redirect:
+                this.setState({
+                    loginIframeSource: result.redirectUrl,
+                    overlayStyle: "overlay show",
+                    frameStyle: "frame show"
+                });
+                break;
+            default:
+                console.log(result.message);
+                break;
+        }
+    };
     handleIframeLoaded = async event => {
         if (event.target.name === "register-page") {
             const url = window.frames["register-page"].location.href;
