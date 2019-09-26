@@ -3,12 +3,14 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using ViClass.Controllers.Resources;
 using ViClass.Data;
 using ViClass.Models;
 
 namespace ViClass.Controllers
 {
+    [Authorize(AuthenticationSchemes = "Identity.Application")]
     [Route("api/[controller]")]
     public class ClassController : Controller
     {
@@ -24,10 +26,10 @@ namespace ViClass.Controllers
         [HttpGet("[action]")]
         public IEnumerable<ClassResource> Classes()
         {
-            var classes= _context.Classes
-                           .Include(c=>c.Instructor)
-                           .Include(c=>c.DayOfWeekSchedules)
-                           .Include(c=>c.Videos)
+            var classes = _context.Classes
+                           .Include(c => c.Instructor)
+                           .Include(c => c.DayOfWeekSchedules)
+                           .Include(c => c.Videos)
                            .ToList();
             return _mapper.Map<List<Class>, List<ClassResource>>(classes);
         }
