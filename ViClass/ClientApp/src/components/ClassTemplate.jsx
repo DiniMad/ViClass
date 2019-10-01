@@ -17,7 +17,9 @@ class ClassTemplate extends Component {
             >
                 <h3>{this.props.title}</h3>
                 <p>{this.props.description}</p>
-                <a href="#">{this.props.instructor.userName}</a>
+                <a href={`/api/user/${this.props.instructor.id}`}>
+                    {this.props.instructor.userName}
+                </a>
                 {this.renderClassDate(
                     this.props.dayOfWeekSchedules,
                     this.props.startDateFormatted
