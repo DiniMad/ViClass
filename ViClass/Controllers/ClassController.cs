@@ -42,7 +42,7 @@ namespace ViClass.Controllers
         [HttpGet("[action]")]
         public async Task<IEnumerable<ClassResource>> StudentClasses()
         {
-            var requestUser = await _userManager.GetUserAsync(HttpContext.User);
+            var userId=HttpContext.User.Claims.First(c=>c.Type=="sub").Value;
 
             var user = await _context.Users
                                      .Include(u => u.ClassesAsStudent)
@@ -54,7 +54,7 @@ namespace ViClass.Controllers
                                      .Include(u => u.ClassesAsStudent)
                                      .ThenInclude(cs => cs.Class)
                                      .ThenInclude(c => c.Videos)
-                                     .SingleAsync(u => u.Id == requestUser.Id);
+                                     .SingleAsync(u => u.Id == userId);
 
             var studentClasses = user.ClassesAsStudent.Select(cs => cs.Class).ToList();
 
