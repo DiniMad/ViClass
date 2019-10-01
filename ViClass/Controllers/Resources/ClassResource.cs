@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using ViClass.Models;
@@ -12,7 +12,7 @@ namespace ViClass.Controllers.Resources
         public string Description { get; set; }
         public string InstructorId { get; set; }
         public ApplicationUserResource Instructor { get; set; }
-        public ICollection<ClassStudent> Students { get; set; }
+        public ICollection<ApplicationUserResource> Students { get; set; }
         public bool ShouldPresentVideo { get; set; }
         public ICollection<VideoResource> Videos { get; set; }
         public ICollection<SharedFileResource> SharedFiles { get; set; }
