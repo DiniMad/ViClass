@@ -1,0 +1,66 @@
+.recycle-slider {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 5rem;
+    height: 35rem;
+    width: 100%;
+
+    >div.slider-item {
+        position: absolute;
+        transition: all 1s;
+    }
+
+    >div.slider-arrow-button {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 5rem;
+        width: 6rem;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+
+        >button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 0;
+            width: 0;
+            opacity: 0;
+            border-radius: 50%;
+            border: none;
+            transition: all .3s;
+
+            img {
+                height: 70%;
+                width: 70%;
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &.show {
+                opacity: 1;
+                height: 5rem;
+                width: 5rem;
+            }
+        }
+
+        &:first-child {
+            left: 35px;
+
+
+        }
+
+        &:last-child {
+            right: 35px;
+
+            img {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
