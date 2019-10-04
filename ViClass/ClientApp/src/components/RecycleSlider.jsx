@@ -19,9 +19,19 @@ class RecycleSlider extends Component {
         this.calculateItemPosition();
     }
     calculateItemPosition = () => {
+        // Unpack some of props variables.
+        let { itemCountToShow, children } = this.props;
+
         // Calculate width available based on browser width minus width needed for the two left and right buttons
         let widthAvailable = window.innerWidth - this.buttonArea * 2;
-        this.countCanShow = this.props.itemCountToShow;
+
+        // Set countCanShow to count of children count of children count if less than number you specified as itemCountToShow
+        console.log(itemCountToShow);
+        console.log(children.length);
+        this.countCanShow =
+            itemCountToShow >= children.length
+                ? children.length
+                : itemCountToShow;
 
         // Calculate the slice of each child
         this.slice = widthAvailable / this.countCanShow;
