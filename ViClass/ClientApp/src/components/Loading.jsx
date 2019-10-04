@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import authService from "./api-authorization/AuthorizeService";
-import "../css/loading.css";
+import "../styles/loading.css";
 
 class Loading extends Component {
     componentDidUpdate = async () => {
