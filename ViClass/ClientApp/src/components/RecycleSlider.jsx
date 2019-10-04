@@ -4,12 +4,10 @@ import "./RecycleSliderStyle.scss";
 
 class RecycleSlider extends Component {
     buttonArea = 100;
-    slice;
-    leftMargin;
     countCanShow;
     indexOfFirstItemToShow = 0;
-    itmes = null;
-    state = {};
+    itmes;
+    state = { slice: null, leftMargin: null };
 
     constructor() {
         super();
@@ -17,7 +15,18 @@ class RecycleSlider extends Component {
     }
     componentWillMount() {
         this.calculateItemPosition();
+        this.browserLastWidth = window.innerWidth;
+        window.addEventListener("resize", this.browserResized);
     }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.browserResized);
+    }
+    browserResized = async () => {
+        if (this.browserLastWidth === window.innerWidth) return;
+        setTimeout(() => {
+            this.recalculateItemPosition();
+        }, 500);
+    };
     calculateItemPosition = () => {
         // Unpack some of props variables.
         let { itemCountToShow, children } = this.props;
@@ -26,18 +35,16 @@ class RecycleSlider extends Component {
         let widthAvailable = window.innerWidth - this.buttonArea * 2;
 
         // Set countCanShow to count of children count of children count if less than number you specified as itemCountToShow
-        console.log(itemCountToShow);
-        console.log(children.length);
         this.countCanShow =
             itemCountToShow >= children.length
                 ? children.length
                 : itemCountToShow;
 
         // Calculate the slice of each child
-        this.slice = widthAvailable / this.countCanShow;
+        let slice = widthAvailable / this.countCanShow;
 
         // Check if slice that calculated on the number of items you want to show is atleast larg as item width or not
-        if (this.slice - this.props.itemWidth < 0) {
+        if (slice - this.props.itemWidth < 0) {
             let minimumItemMargin = 2;
             // If can not show the number of items that you wants, calculate the number of items we can show in the berowser with minimumItemMargin specifyed.
             this.countCanShow = Math.floor(
@@ -45,20 +52,30 @@ class RecycleSlider extends Component {
             );
 
             // Calculate new slice with number of items we can show in the browser.
-            this.slice = widthAvailable / this.countCanShow;
+            slice = widthAvailable / this.countCanShow;
             window.console.warn(
                 `The number of items you wanted to show need more width than it's accessible in the browser.\nSo we decrease it to ${this.countCanShow}.`
             );
         }
-        this.leftMargin = (this.slice - this.props.itemWidth) / 2;
+        let leftMargin = (slice - this.props.itemWidth) / 2;
+        this.setState({ slice, leftMargin });
+    };
+    recalculateItemPosition = () => {
+        this.indexOfFirstItemToShow = 0;
+        this.calculateItemPosition();
+        for (let i = 0; i < this.items.length; i++) {
+            const item = this.items[i];
+            item.style.opacity = i < this.countCanShow ? 1 : 0;
+        }
+        this.updateStateOfArrowButtons();
     };
     handleRightButtonClicked = () => {
         // Move all items one index to right.
         for (let i = 0; i <= this.props.children.length - 1; i++) {
             const item = this.items[i];
             item.style.left =
-                (i - this.indexOfFirstItemToShow + 1) * this.slice +
-                this.leftMargin +
+                (i - this.indexOfFirstItemToShow + 1) * this.state.slice +
+                this.state.leftMargin +
                 this.buttonArea +
                 "px";
 
@@ -72,15 +89,15 @@ class RecycleSlider extends Component {
                 item.style.opacity = 0;
         }
         this.indexOfFirstItemToShow--;
-        this.UpdateStateOfArrowButtons();
+        this.updateStateOfArrowButtons();
     };
     handleLeftButtonClicked = () => {
         // Move all items one index to left.
         for (let i = 0; i <= this.props.children.length - 1; i++) {
             const item = this.items[i];
             item.style.left =
-                (i - this.indexOfFirstItemToShow - 1) * this.slice +
-                this.leftMargin +
+                (i - this.indexOfFirstItemToShow - 1) * this.state.slice +
+                this.state.leftMargin +
                 this.buttonArea +
                 "px";
 
@@ -93,9 +110,9 @@ class RecycleSlider extends Component {
             }
         }
         this.indexOfFirstItemToShow++;
-        this.UpdateStateOfArrowButtons();
+        this.updateStateOfArrowButtons();
     };
-    UpdateStateOfArrowButtons = () => {
+    updateStateOfArrowButtons = () => {
         const hasLeftItemToMove = this.indexOfFirstItemToShow > 0;
         if (hasLeftItemToMove)
             document.getElementById("slider-right-button").className = "show";
@@ -131,8 +148,8 @@ class RecycleSlider extends Component {
                         className="slider-item"
                         style={{
                             left:
-                                index * this.slice +
-                                this.leftMargin +
+                                index * this.state.slice +
+                                this.state.leftMargin +
                                 this.buttonArea,
                             opacity: index < this.countCanShow ? 1 : 0
                         }}
