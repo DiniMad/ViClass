@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import { NavLink } from "reactstrap";
-import { Link } from "react-router-dom";
-import { ApplicationPaths } from "./api-authorization/ApiAuthorizationConstants";
+
 import http from "./Services/HttpService";
 import config from "../config.json";
 import RecycleSlider from "./RecycleSlider";
 import ClassTemplate from "./ClassTemplate";
+import Navbar from "./Navbar";
 
-const logoutPath = {
-    pathname: `${ApplicationPaths.LogOut}`,
-    state: { local: true }
-};
+
 
 const studentClassesApi = config.ApiEndpoints.StudentClass;
 
@@ -31,9 +27,8 @@ class Dashboard extends Component {
     render() {
         return (
             <React.Fragment>
-                <NavLink tag={Link} className="text-dark" to={logoutPath}>
-                    Logout
-                </NavLink>
+                <Navbar/>
+   
                 {this.state.classes && (
                     <RecycleSlider itemCountToShow={5} itemWidth={300}>
                         {this.state.classes.map(c => (
@@ -44,7 +39,7 @@ class Dashboard extends Component {
                                 instructor={c.instructor}
                                 dayOfWeekSchedules={c.dayOfWeekSchedules}
                                 startDateFormatted={c.startDateFormatted}
-                            ></ClassTemplate>
+                            />
                         ))}
                     </RecycleSlider>
                 )}
