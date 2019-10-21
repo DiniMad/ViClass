@@ -17,19 +17,19 @@ class RecycleSlider extends Component {
     componentWillMount() {
         this.calculateItemPosition();
         this.browserLastWidth = window.innerWidth;
-        window.addEventListener("resize", this.browserResized);
+        window.addEventListener("resize", this.debouncedWindowsResized);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.browserResized);
+        window.removeEventListener("resize", this.debouncedWindowsResized);
     }
 
-    browserResized = async () => {
+    onWindowsResized = () => {
         if (this.browserLastWidth === window.innerWidth) return;
-        setTimeout(() => {
-            this.recalculateItemPosition();
-        }, 500);
+        this.recalculateItemPosition();
+        this.browserLastWidth = window.innerWidth;
     };
+    debouncedWindowsResized = debounce(this.onWindowsResized, 500);
     calculateItemPosition = () => {
         // Unpack some of props variables.
         let {itemCountToShow, children} = this.props;
@@ -178,3 +178,25 @@ class RecycleSlider extends Component {
 }
 
 export default RecycleSlider;
+
+// Debounce function will take a function and terminate all calls to the function with interval lower than "wait"
+// seconds and call the function after "wait" seconds after last call to the function. Its also has a boolean called
+// "immediate" to call the function immediately based on this parameters.
+function debounce(func, wait, immediate) {
+    let timeout;
+    return function () {
+        const context = this,
+            args = arguments;
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+            timeout = null;
+            if (!immediate) {
+                func.apply(context, args);
+            }
+        }, wait);
+        if (callNow) func.apply(context, args);
+    }
+}
+
+
