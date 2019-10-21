@@ -21,7 +21,7 @@ a {
     }
 }
 
-$NavHeight:6rem;
+$NavHeight:4rem;
 
 // Utility
 .visible {
@@ -56,10 +56,12 @@ $NavHeight:6rem;
 }
 
 
-header nav {
+nav {
     background-color: rgba($color: #000, $alpha: .7);
     height: $NavHeight;
-}
+    margin-bottom: 1rem;
+    color: #fff;
+    }
 
 // Buttons
 .button {
