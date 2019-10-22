@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {LoginRegisterOverlay} from "./LoginRegisterOverlay";
+import LoginRegisterOverlay from "./LoginRegisterOverlay";
 import login, {
     LoginResult
 } from "./api-authorization/AuthenticationAndApiAuthorization";
