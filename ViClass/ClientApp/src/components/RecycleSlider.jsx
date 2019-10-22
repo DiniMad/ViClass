@@ -1,180 +1,179 @@
-import React, {Component} from "react";
+import React, {useState, useEffect} from "react";
 import LeftArrow from "../image/ArrowIconPointToLeft.svg";
 import "./RecycleSliderStyle.scss";
 
-class RecycleSlider extends Component {
-    buttonArea = 100;
-    countCanShow;
-    indexOfFirstItemToShow = 0;
-    items;
-    state = {slice: null, leftMargin: null};
+const buttonArea = 100;
+let countCanShow = null;
+let indexOfFirstItemToShow = 0;
+let browserLastWidth = null;
+let items = null;
 
-    constructor() {
-        super();
-        this.items = document.getElementsByClassName("slider-item");
-    }
+function RecycleSlider(props) {
+    const [{slice, leftMargin}, setSliceAndLeftMargin] = useState({slice: null, leftMargin: null});
+    items = document.getElementsByClassName("slider-item");
 
-    componentWillMount() {
-        this.calculateItemPosition();
-        this.browserLastWidth = window.innerWidth;
-        window.addEventListener("resize", this.debouncedWindowsResized);
-    }
+    useEffect(() => {
+        calculateItemPosition();
+        browserLastWidth = window.innerWidth;
+        window.addEventListener("resize", debouncedWindowsResized);
+        console.log(props.children);
+        console.log(items);
+        return () => {
+            window.removeEventListener("resize", debouncedWindowsResized);
+        }
+    }, []);
 
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.debouncedWindowsResized);
-    }
-
-    onWindowsResized = () => {
-        if (this.browserLastWidth === window.innerWidth) return;
-        this.recalculateItemPosition();
-        this.browserLastWidth = window.innerWidth;
+    const onWindowsResized = () => {
+        if (browserLastWidth === window.innerWidth) return;
+        recalculateItemPosition();
+        browserLastWidth = window.innerWidth;
     };
-    debouncedWindowsResized = debounce(this.onWindowsResized, 500);
-    calculateItemPosition = () => {
+    const debouncedWindowsResized = debounce(onWindowsResized, 500);
+    const calculateItemPosition = () => {
         // Unpack some of props variables.
-        let {itemCountToShow, children} = this.props;
+        let {itemCountToShow, children, itemWidth} = props;
 
         // Calculate width available based on browser width minus width needed for the two left and right buttons
-        let widthAvailable = window.innerWidth - this.buttonArea * 2;
+        let widthAvailable = window.innerWidth - buttonArea * 2;
 
         // Set countCanShow to count of children count of children count if less than number you specified as
         // itemCountToShow
-        this.countCanShow =
+        countCanShow =
             itemCountToShow >= children.length
             ? children.length
             : itemCountToShow;
 
         // Calculate the slice of each child
-        let slice = widthAvailable / this.countCanShow;
+        let slice = widthAvailable / countCanShow;
 
-        // Check if slice that calculated on the number of items you want to show is atleast larg as item width or not
-        if (slice - this.props.itemWidth < 0) {
+        // Check if slice that calculated on the number of items you want to show is at least  large as item width or
+        // not
+        if (slice < itemWidth) {
             let minimumItemMargin = 2;
             // If can not show the number of items that you wants, calculate the number of items we can show in the
-            // berowser with minimumItemMargin specifyed.
-            this.countCanShow = Math.floor(
-                widthAvailable / (this.props.itemWidth + minimumItemMargin)
+            // browser with minimumItemMargin specified.
+            countCanShow = Math.floor(
+                widthAvailable / (itemWidth + minimumItemMargin)
             );
 
             // Calculate new slice with number of items we can show in the browser.
-            slice = widthAvailable / this.countCanShow;
+            slice = widthAvailable / countCanShow;
             window.console.warn(
-                `The number of items you wanted to show need more width than it's accessible in the browser.\nSo we decrease it to ${this.countCanShow}.`
+                `The number of items you wanted to show need more width than it's accessible in the browser.\nSo we decrease it to ${countCanShow}.`
             );
         }
-        let leftMargin = (slice - this.props.itemWidth) / 2;
-        this.setState({slice, leftMargin});
+        let leftMargin = (slice - itemWidth) / 2;
+        setSliceAndLeftMargin({slice, leftMargin});
     };
-    recalculateItemPosition = () => {
-        this.indexOfFirstItemToShow = 0;
-        this.calculateItemPosition();
-        for (let i = 0; i < this.items.length; i++) {
-            const item = this.items[i];
-            item.style.opacity = i < this.countCanShow
+    const recalculateItemPosition = () => {
+        indexOfFirstItemToShow = 0;
+        calculateItemPosition();
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            item.style.opacity = i < countCanShow
                                  ? 1
                                  : 0;
         }
-        this.updateStateOfArrowButtons();
+        updateStateOfArrowButtons();
     };
-    handleRightButtonClicked = () => {
+    const handleRightButtonClicked = () => {
         // Move all items one index to right.
-        for (let i = 0; i <= this.props.children.length - 1; i++) {
-            const item = this.items[i];
+        for (let i = 0; i <= props.children.length - 1; i++) {
+            const item = items[i];
             item.style.left =
-                (i - this.indexOfFirstItemToShow + 1) * this.state.slice +
-                this.state.leftMargin +
-                this.buttonArea +
+                (i - indexOfFirstItemToShow + 1) * slice +
+                leftMargin +
+                buttonArea +
                 "px";
 
             // If it's the item that should enter the screen make its opacity one.
-            if (i === this.indexOfFirstItemToShow) {
-                this.items[i - 1].style.opacity = 1;
+            if (i === indexOfFirstItemToShow) {
+                items[i - 1].style.opacity = 1;
             }
 
             // If it's the item that should leave the screen make its opacity zero.
-            if (i === this.indexOfFirstItemToShow + this.countCanShow - 1)
+            if (i === indexOfFirstItemToShow + countCanShow - 1)
                 item.style.opacity = 0;
         }
-        this.indexOfFirstItemToShow--;
-        this.updateStateOfArrowButtons();
+        indexOfFirstItemToShow--;
+        updateStateOfArrowButtons();
     };
-    handleLeftButtonClicked = () => {
+    const handleLeftButtonClicked = () => {
         // Move all items one index to left.
-        for (let i = 0; i <= this.props.children.length - 1; i++) {
-            const item = this.items[i];
+        for (let i = 0; i <= props.children.length - 1; i++) {
+            const item = items[i];
             item.style.left =
-                (i - this.indexOfFirstItemToShow - 1) * this.state.slice +
-                this.state.leftMargin +
-                this.buttonArea +
+                (i - indexOfFirstItemToShow - 1) * slice +
+                leftMargin +
+                buttonArea +
                 "px";
 
             // If it's the item that should leave the screen make its opacity zero.
-            if (i === this.indexOfFirstItemToShow) item.style.opacity = 0;
+            if (i === indexOfFirstItemToShow) item.style.opacity = 0;
 
             // If it's the item that should enter the screen make its opacity one.
-            if (i === this.indexOfFirstItemToShow + this.countCanShow) {
-                this.items[i].style.opacity = 1;
+            if (i === indexOfFirstItemToShow + countCanShow) {
+                items[i].style.opacity = 1;
             }
         }
-        this.indexOfFirstItemToShow++;
-        this.updateStateOfArrowButtons();
+        indexOfFirstItemToShow++;
+        updateStateOfArrowButtons();
     };
-    updateStateOfArrowButtons = () => {
-        const hasLeftItemToMove = this.indexOfFirstItemToShow > 0;
+    const updateStateOfArrowButtons = () => {
+        const hasLeftItemToMove = indexOfFirstItemToShow > 0;
         if (hasLeftItemToMove)
             document.getElementById("slider-right-button").className = "show";
         else document.getElementById("slider-right-button").className = "";
 
         const hasRightItemToMove =
-            this.indexOfFirstItemToShow + this.countCanShow <=
-            this.items.length - 1;
+            indexOfFirstItemToShow + countCanShow <=
+            items.length - 1;
         if (!hasRightItemToMove)
             document.getElementById("slider-left-button").className = "";
         else document.getElementById("slider-left-button").className = "show";
     };
 
-    render() {
-        return (
-            <div className="recycle-slider">
-                <div className="slider-arrow-button">
-                    <button
-                        id="slider-left-button"
-                        onClick={this.handleLeftButtonClicked}
-                        className={
-                            this.countCanShow < this.props.children.length
-                            ? "show"
-                            : null
-                        }
-                    >
-                        <img src={LeftArrow} alt="Slider Previous"/>
-                    </button>
-                </div>
-                {// Map every child to a div and set it's margin; And set it's opacity to one if it should be showen in the screen.
-                    this.props.children.map((item, index) => (
-                        <div
-                            key={index}
-                            className="slider-item"
-                            style={{
-                                left: index * this.state.slice + this.state.leftMargin + this.buttonArea,
-                                opacity: index < this.countCanShow
-                                         ? 1
-                                         : 0
-                            }}
-                        >
-                            {item}
-                        </div>
-                    ))}
-                <div className="slider-arrow-button">
-                    <button
-                        id="slider-right-button"
-                        onClick={this.handleRightButtonClicked}
-                    >
-                        <img src={LeftArrow} alt="Slider Next"/>
-                    </button>
-                </div>
+    return (
+        <div className="recycle-slider">
+            <div className="slider-arrow-button">
+                <button
+                    id="slider-left-button"
+                    onClick={handleLeftButtonClicked}
+                    className={
+                        countCanShow < props.children.length
+                        ? "show"
+                        : null
+                    }
+                >
+                    <img src={LeftArrow} alt="Slider Previous"/>
+                </button>
             </div>
-        );
-    }
+            {
+                // Map every child to a div and set it's margin; And set it's opacity to one if it should be showen in the screen.
+                props.children.map((item, index) => (
+                    <div
+                        key={index}
+                        className="slider-item"
+                        style={{
+                            left: index * slice + leftMargin + buttonArea,
+                            opacity: index < countCanShow
+                                     ? 1
+                                     : 0
+                        }}
+                    >
+                        {item}
+                    </div>
+                ))}
+            <div className="slider-arrow-button">
+                <button
+                    id="slider-right-button"
+                    onClick={handleRightButtonClicked}
+                >
+                    <img src={LeftArrow} alt="Slider Next"/>
+                </button>
+            </div>
+        </div>
+    );
 }
 
 export default RecycleSlider;
