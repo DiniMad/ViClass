@@ -1,36 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 
-class ClassTemplate extends Component {
-    state = {};
-    render() {
-        const firstRandomNumber = Math.floor(Math.random() * 358);
-        const secendRandomNumber = Math.floor(Math.random() * 358);
-        const hslColorConf = "30%, 72%";
-        //  const hslColorDark='100%, 15%'
-        return (
-            <div
-                className="class-template"
-                style={{
-                    backgroundColor: `hsl(${firstRandomNumber}, ${hslColorConf})`,
-                    backgroundImage: `linear-gradient(to bottom right,hsl(${firstRandomNumber}, ${hslColorConf}),hsl(${secendRandomNumber}, ${hslColorConf})`
-                }}
-            >
-                <h3>{this.summarizeText(this.props.title, 30)}</h3>
-                <p>{this.summarizeText(this.props.description, 180)}</p>
-                <a href={`/api/user/${this.props.instructor.id}`}>
-                    {this.summarizeText(this.props.instructor.userName, 30)}
-                </a>
-                {this.renderClassDate(
-                    this.props.dayOfWeekSchedules,
-                    this.props.startDateFormatted
-                )}
-            </div>
-        );
-    }
-    summarizeText(text, length) {
-        // Check if every line has atleast one white space (for Description field).
+const hslColorConf = "30%, 72%";
+//  const hslColorDark='100%, 15%'
+
+function ClassTemplate(props) {
+    
+    const firstRandomNumber = Math.floor(Math.random() * 358);
+    const secondRandomNumber = Math.floor(Math.random() * 358);
+
+    const summarizeText = (text, length) => {
+        // Check if every line has at least one white space (for Description field).
         if (text.length < length) {
-            let indexOfWhiteSpaces = this.GetIndexOfAll(text, " ");
+            let indexOfWhiteSpaces = GetAllPositionsOfCharacter(text, " ");
             for (let i = 1; i < indexOfWhiteSpaces.length; i++) {
                 const textBetweenSpaces = text.substring(
                     indexOfWhiteSpaces[i - 1],
@@ -61,10 +42,8 @@ class ClassTemplate extends Component {
             indexOfLastWhiteSpace
         );
         return cutedTextOnWhiteSpace + "...";
-    }
-    renderClassDate(daysOfWeek, classStartDate) {
-        // daysOfWeek[2] = daysOfWeek[0];
-        // daysOfWeek[3] = daysOfWeek[0];
+    };
+    const renderClassDate = (daysOfWeek, classStartDate) => {
         if (daysOfWeek.length !== 0) {
             if (daysOfWeek.length === 7)
                 return (
@@ -72,11 +51,12 @@ class ClassTemplate extends Component {
                         <li>هر روز</li>
                     </ul>
                 );
+            // noinspection JSUnresolvedVariable
             return (
                 <ul className={daysOfWeek.length <= 4 && "low-capacity"}>
                     {daysOfWeek.map(dof => (
                         <li key={dof.id}>
-                            {this.DaysOfWeekConvertor(dof.dayOfWeek)}
+                            {DaysOfWeekConverter(dof.dayOfWeek)}
                         </li>
                     ))}
                 </ul>
@@ -87,8 +67,8 @@ class ClassTemplate extends Component {
                 <li className="green">{classStartDate}</li>
             </ul>
         );
-    }
-    DaysOfWeekConvertor(dayNumber) {
+    };
+    const DaysOfWeekConverter = (dayNumber) => {
         switch (dayNumber) {
             case 1:
                 return "شنبه";
@@ -105,11 +85,11 @@ class ClassTemplate extends Component {
             case 7:
                 return "جمعه";
             default:
-                console.log("Exeption Happened.");
+                console.log("Exception Happened.");
                 break;
         }
-    }
-    GetIndexOfAll(text, character) {
+    };
+    const GetAllPositionsOfCharacter = (text, character) => {
         let indexes = [0];
 
         for (let i = 0; i < text.length; i++) {
@@ -119,7 +99,28 @@ class ClassTemplate extends Component {
 
         indexes[indexes.length] = text.length;
         return indexes;
-    }
+    };
+
+    // noinspection JSUnresolvedVariable
+    return (
+        <div
+            className="class-template"
+            style={{
+                backgroundColor: `hsl(${firstRandomNumber}, ${hslColorConf})`,
+                backgroundImage: `linear-gradient(to bottom right,hsl(${firstRandomNumber}, ${hslColorConf}),hsl(${secondRandomNumber}, ${hslColorConf})`
+            }}
+        >
+            <h3>{summarizeText(props.title, 30)}</h3>
+            <p>{summarizeText(props.description, 180)}</p>
+            <a href={`/api/user/${props.instructor.id}`}>
+                {summarizeText(props.instructor.userName, 30)}
+            </a>
+            {renderClassDate(
+                props.dayOfWeekSchedules,
+                props.startDateFormatted
+            )}
+        </div>
+    );
 }
 
 export default ClassTemplate;
