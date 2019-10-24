@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect} from 'react';
 import authService from "./api-authorization/AuthorizeService";
 import {NavLink} from "reactstrap";
 import {Link} from "react-router-dom";
@@ -9,26 +9,27 @@ const logoutPath = {
     state: {local: true}
 };
 
-class Navbar extends Component {
-    state = {
-        user: null
-    };
+function Navbar(props) {
 
-    componentWillMount = async () => {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        // noinspection JSIgnoredPromiseFromCall
+        getUser();
+    }, []);
+
+    const getUser = async () => {
         const user = await authService.getUser();
-        this.setState({user})
+        setUser(user)
     };
-
-    render() {
-        return (
-            <nav>
-                <p>{this.state.user && this.state.user.name}</p>
-                <NavLink tag={Link} className="text-dark" to={logoutPath}>
-                    Logout
-                </NavLink>
-            </nav>
-        );
-    }
+    return (
+        <nav>
+            <p>{user && user.name}</p>
+            <NavLink tag={Link} className="text-dark" to={logoutPath}>
+                Logout
+            </NavLink>
+        </nav>
+    );
 }
 
 export default Navbar;
