@@ -9,7 +9,7 @@ const logoutPath = {
     state: {local: true}
 };
 
-function Navbar(props) {
+function Navbar() {
 
     const [user, setUser] = useState(null);
 
@@ -24,10 +24,17 @@ function Navbar(props) {
     };
     return (
         <nav>
-            <p>{user && user.name}</p>
-            <NavLink tag={Link} className="text-dark" to={logoutPath}>
-                Logout
-            </NavLink>
+            {user && (
+                <>
+                    {/* TODO: It is better to change the link parameter to username instead of userid*/}
+                    <Link to={`/user/${user.sub}`}>
+                        <p>{user && user.name}</p>
+                    </Link>
+                    <NavLink tag={Link} className="text-dark" to={logoutPath}>
+                        Logout
+                    </NavLink>
+                </>
+            )}
         </nav>
     );
 }
