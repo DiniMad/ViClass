@@ -16,8 +16,6 @@ function RecycleSlider(props) {
         calculateItemPosition();
         browserLastWidth = window.innerWidth;
         window.addEventListener("resize", debouncedWindowsResized);
-        console.log(props.children);
-        console.log(items);
         return () => {
             window.removeEventListener("resize", debouncedWindowsResized);
         }
