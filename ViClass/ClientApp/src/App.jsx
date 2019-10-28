@@ -10,7 +10,7 @@ import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizat
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 import Loading from "./components/Loading";
 import "./styles/style.min.css";
-import CurrentDate from "./components/Context/CurrentDate";
+import CurrentDateContext from "./components/Context/CurrentDateContext";
 import useCurrentDate from "./components/Hooks/useCurrentDate";
 
 export default function App() {
@@ -23,9 +23,9 @@ export default function App() {
             <Route path="/counter" component={Counter} />
             <Route path="/loading" component={Loading} />
             <AuthorizeRoute path="/fetch-data" component={FetchData} />
-            <CurrentDate.Provider value={currentDate}>
+            <CurrentDateContext.Provider value={currentDate}>
                 <AuthorizeRoute path="/dashboard" component={Dashboard} />
-            </CurrentDate.Provider>
+            </CurrentDateContext.Provider>
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             {/* </Layout> */}
         </React.Fragment>
