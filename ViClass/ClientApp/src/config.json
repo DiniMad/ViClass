@@ -1,5 +1,7 @@
 {
     "ApiEndpoints": {
-        "StudentClass": "/api/class/studentclasses"
+        "AllClass": "/api/class/classes",
+        "StudentClass": "/api/class/studentClasses",
+        "CurrentDate": "/api/date/current"
     }
 }
