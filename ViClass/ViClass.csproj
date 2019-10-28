@@ -34,7 +34,10 @@
     <Compile Remove="Data\Migrations\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Include="ClientApp\src\components\Context\CurrentDateContext.jsx" />
+    <Content Include="ClientApp\src\components\Hooks\useCurrentDate.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
+    <Content Include="ClientApp\src\components\Services\StringService.jsx" />
     <EmbeddedResource Remove="Data\Migrations\**" />
     <None Remove="$(SpaRoot)**" />
     <None Remove="Data\Migrations\**" />
