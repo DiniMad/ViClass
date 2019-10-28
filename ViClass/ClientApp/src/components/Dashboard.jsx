@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import http from "./Services/HttpService";
 import config from "../config.json";
 import RecycleSlider from "./RecycleSlider";
@@ -16,27 +16,19 @@ function Dashboard() {
     }, []);
 
     const getData = async () => {
-        const {data: classes} = await http.get(studentClassesApi);
+        const { data: classes } = await http.get(studentClassesApi);
         // TODO: remove the dummy items created below.
-        classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] =
-            classes[0];
+        classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0];
         setClasses(classes);
     };
     // noinspection JSUnresolvedVariable
     return (
         <React.Fragment>
-            <Navbar/>
+            <Navbar />
             {classes && (
                 <RecycleSlider itemCountToShow={5} itemWidth={300}>
                     {classes.map(c => (
-                        <ClassTemplate
-                            key={c.id}
-                            title={c.title}
-                            description={c.description}
-                            instructor={c.instructor}
-                            dayOfWeekSchedules={c.dayOfWeekSchedules}
-                            startDateFormatted={c.startDateFormatted}
-                        />
+                        <ClassTemplate key={c.id} classObject={c} />
                     ))}
                 </RecycleSlider>
             )}
