@@ -259,21 +259,24 @@ section#showcase {
 			flex-basis: 28%;
 			color: #fff;
 			font-size: 1.6rem;
-			background-color: #007bff;
-			border-color: #007bff;
+			background-color: #17a2b8;
+			border-color: #17a2b8;
 			padding: .5rem 1rem;
 			border-radius: 1rem;
 
 			&.green {
 				background-color: #28a745;
 				border-color: #28a745;
-
 			}
 
 			&.red {
 				background-color: #dc3545;
 				border-color: #dc3545;
+			}
 
+			&.blue-primary {
+				background-color: #007bff;
+				border-color: #007bff;
 			}
 		}
 
