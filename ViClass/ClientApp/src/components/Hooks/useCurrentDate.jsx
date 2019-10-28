@@ -1,6 +1,6 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Http from "../Services/HttpService";
-import Config from "../../config.json"
+import Config from "../../config.json";
 
 const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
@@ -12,7 +12,7 @@ function useCurrentDate() {
     }, []);
 
     const getData = async () => {
-        const date = await Http.get(currentDateApi);
+        const date = (await Http.get(currentDateApi)).data;
         setCurrentDate(date);
     };
 
