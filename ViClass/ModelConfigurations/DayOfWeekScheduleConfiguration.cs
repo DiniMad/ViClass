@@ -11,7 +11,7 @@ namespace ViClass.ModelConfigurations
 
             builder.Property(w => w.StartTimeFormatted)
                    .IsRequired();
-            builder.Property(w => w.LengthTimeFormatted)
+            builder.Property(w => w.EndTimeFormatted)
                    .IsRequired();
         }
     }
