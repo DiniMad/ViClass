@@ -11,17 +11,9 @@ const logoutPath = {
 
 function Navbar() {
 
-    const [user, setUser] = useState(null);
 
-    useEffect(() => {
         // noinspection JSIgnoredPromiseFromCall
-        getUser();
-    }, []);
 
-    const getUser = async () => {
-        const user = await authService.getUser();
-        setUser(user)
-    };
     return (
         <nav>
             {user && (
