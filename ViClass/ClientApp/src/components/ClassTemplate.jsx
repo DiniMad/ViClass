@@ -1,13 +1,24 @@
 import React, { useContext } from "react";
-import { summarizeText, isPastAsPersianDate } from "./Services/StringService";
+import { summarizeText } from "./Services/StringService";
 import CurrentDateContext from "./Context/CurrentDateContext";
+import { Link } from "react-router-dom";
+import { daysOfWeekConverter, isPastAsPersianDate } from "./Services/DateService";
 
 const hslColorConf = "30%, 72%";
+
 //  const hslColorDark='100%, 15%'
 
 function ClassTemplate({ classObject }) {
     // Destructuring class properties from classObject
-    const { title, description, instructor, dayOfWeekSchedules, startDateFormatted, endDateFormatted } = classObject;
+    const {
+        id,
+        title,
+        description,
+        instructor,
+        dayOfWeekSchedules,
+        startDateFormatted,
+        endDateFormatted
+    } = classObject;
     // Generate two random number for building random color
     const firstRandomNumber = Math.floor(Math.random() * 358);
     const secondRandomNumber = Math.floor(Math.random() * 358);
@@ -43,7 +54,7 @@ function ClassTemplate({ classObject }) {
             <ul className={dayOfWeekSchedules.length <= 4 ? "low-capacity" : null}>
                 {dayOfWeekSchedules.map(({ id, dayOfWeek }, k) => (
                     <li key={k} className={dayOfWeek === currentDayNumberOfWeek ? "blue-primary" : null}>
-                        {DaysOfWeekConverter(dayOfWeek)}
+                        {daysOfWeekConverter(dayOfWeek)}
                     </li>
                 ))}
             </ul>
@@ -58,9 +69,13 @@ function ClassTemplate({ classObject }) {
                 backgroundImage: `linear-gradient(to bottom right,hsl(${firstRandomNumber}, ${hslColorConf}),hsl(${secondRandomNumber}, ${hslColorConf})`
             }}
         >
-            <h3>{summarizeText(title, 30)}</h3>
-            <p>{summarizeText(description, 180)}</p>
-            <a href={`/api/user/${instructor.id}`}>{summarizeText(instructor.userName, 30)}</a>
+            <Link to={`/class/${id}`} className="class-template-title">
+                <h3>{summarizeText(title, 26)}</h3>
+            </Link>
+            <p className="class-template-description">{summarizeText(description, 180, 35)}</p>
+            <Link to={`/user/${instructor.id}`} className="class-template-instructor">
+                {summarizeText(instructor.userName, 30)}
+            </Link>
             {currentDateFormatted && currentDayNumberOfWeek && renderClassDateBadge()}
         </div>
     );
