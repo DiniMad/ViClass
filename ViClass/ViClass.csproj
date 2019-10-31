@@ -34,9 +34,20 @@
     <Compile Remove="Data\Migrations\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Include="ClientApp\src\components\Class.jsx" />
+    <Content Include="ClientApp\src\components\ClassDate.jsx" />
+    <Content Include="ClientApp\src\components\ClassInstructor.jsx" />
+    <Content Include="ClientApp\src\components\ClassSubscribeButton.jsx" />
+    <Content Include="ClientApp\src\components\ClassSharedFiles.jsx" />
+    <Content Include="ClientApp\src\components\ClassStudents.jsx" />
+    <Content Include="ClientApp\src\components\ClassVideos.jsx" />
     <Content Include="ClientApp\src\components\Context\CurrentDateContext.jsx" />
-    <Content Include="ClientApp\src\components\Hooks\useCurrentDate.jsx" />
+    <Content Include="ClientApp\src\components\Context\UserContext.jsx" />
+    <Content Include="ClientApp\src\components\DayOfWeek.jsx" />
+    <Content Include="ClientApp\src\components\Hooks\useAuthenticateUser.jsx" />
+    <Content Include="ClientApp\src\components\Hooks\useGetData.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
+    <Content Include="ClientApp\src\components\Services\DateService.jsx" />
     <Content Include="ClientApp\src\components\Services\StringService.jsx" />
     <EmbeddedResource Remove="Data\Migrations\**" />
     <None Remove="$(SpaRoot)**" />
@@ -67,6 +78,8 @@
     <Compile Remove="Migrations\20190605121807_WeekTimeScheduleTableAndItsForeignKeyFromClassTableRemoved.Designer.cs" />
     <Compile Remove="Migrations\20190605122047_DayOfWeekSchedulesTableCreatedWithAForeignKeyToClassTable.cs" />
     <Compile Remove="Migrations\20190605122047_DayOfWeekSchedulesTableCreatedWithAForeignKeyToClassTable.Designer.cs" />
+    <Compile Remove="Migrations\20191030054502_LengthTimeFormattedPropertyInDayOfWeekScheduleTableRenamedToEndT.cs" />
+    <Compile Remove="Migrations\20191030054502_LengthTimeFormattedPropertyInDayOfWeekScheduleTableRenamedToEndT.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
