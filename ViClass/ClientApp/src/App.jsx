@@ -30,10 +30,12 @@ export default function App() {
             <Route path="/counter" component={Counter} />
             <Route path="/loading" component={Loading} />
             <AuthorizeRoute path="/fetch-data" component={FetchData} />
-            <CurrentDateContext.Provider value={currentDate}>
-                <AuthorizeRoute path="/dashboard" component={Dashboard} />
+            <UserContext.Provider value={user}>
                 <CurrentDateContext.Provider value={responseStatus === 200 && currentDate}>
-            </CurrentDateContext.Provider>
+                    <AuthorizeRoute path="/dashboard" component={Dashboard} />
+                    <AuthorizeRoute path="/class/:id" component={Class} />
+                </CurrentDateContext.Provider>
+            </UserContext.Provider>
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             {/* </Layout> */}
         </React.Fragment>
