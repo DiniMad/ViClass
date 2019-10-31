@@ -59,7 +59,10 @@ function Class(props) {
             {classObject && (
                 <div className="container-percent">
                     <div className="class">
-                        <ClassSubscribeButton classId={classObject.id} students={classObject.students} />
+                        <ClassSubscribeButton
+                            classId={classObject.id}
+                            relationWithUser={classObject.relationWithUser}
+                        />
                         <ClassInstructor instructor={classObject.instructor} />
                         <div className="class-title">
                             <h1>{summarizeText(classObject.title, 64)}</h1>
