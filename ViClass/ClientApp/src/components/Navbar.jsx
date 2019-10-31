@@ -1,18 +1,16 @@
-import React, {useState, useEffect} from 'react';
-import authService from "./api-authorization/AuthorizeService";
-import {NavLink} from "reactstrap";
-import {Link} from "react-router-dom";
-import {ApplicationPaths} from "./api-authorization/ApiAuthorizationConstants";
+import React, { useContext } from "react";
+import { NavLink } from "reactstrap";
+import { Link } from "react-router-dom";
+import { ApplicationPaths } from "./api-authorization/ApiAuthorizationConstants";
+import UserContext from "./Context/UserContext";
 
 const logoutPath = {
     pathname: `${ApplicationPaths.LogOut}`,
-    state: {local: true}
+    state: { local: true }
 };
 
 function Navbar() {
-
-
-        // noinspection JSIgnoredPromiseFromCall
+    const user = useContext(UserContext);
 
     return (
         <nav>
