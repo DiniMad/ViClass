@@ -296,14 +296,45 @@ section#showcase {
 	position: relative;
 	text-align: center;
 
-	&-option-button {
+	&-subscribe-button {
 		position: absolute;
 		right: 1rem;
 		top: 1rem;
 		border-radius: 50%;
+		border: none;
+		outline: none;
 		height: 5rem;
 		width: 5rem;
-		background:olive;
+
+		&-content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 50%;
+			font-size: 5rem;
+			font-weight: bolder;
+			height: 5rem;
+			width: 5rem;
+			cursor: pointer;
+			transition: background-color .5s;
+		}
+
+		.sub {
+			background-color: green;
+
+			&:hover {
+				background-color: darkgreen;
+			}
+		}
+
+		.unsub {
+			background-color: red;
+			transform: rotate(45deg);
+
+			&:hover {
+				background-color: darkred;
+			}
+		}
 	}
 
 	&-instructor {
