@@ -9,16 +9,19 @@ import AuthorizeRoute from "./components/api-authorization/AuthorizeRoute";
 import ApiAuthorizationRoutes from "./components/api-authorization/ApiAuthorizationRoutes";
 import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizationConstants";
 import Loading from "./components/Loading";
-import "./styles/style.min.css";
 import CurrentDateContext from "./components/Context/CurrentDateContext";
 import Class from "./components/Class";
+import "./styles/style.min.css";
 import useGetData from "./components/Hooks/useGetData";
+import useAuthenticateUser from "./components/Hooks/useAuthenticateUser";
 import Config from "./config";
+import UserContext from "./components/Context/UserContext";
 
 const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
 export default function App() {
     const { data: currentDate, responseStatus } = useGetData(currentDateApi);
+    const user = useAuthenticateUser();
 
     return (
         <React.Fragment>
