@@ -11,10 +11,14 @@ import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizatio
 import Loading from "./components/Loading";
 import "./styles/style.min.css";
 import CurrentDateContext from "./components/Context/CurrentDateContext";
-import useCurrentDate from "./components/Hooks/useCurrentDate";
+import Class from "./components/Class";
+import useGetData from "./components/Hooks/useGetData";
+import Config from "./config";
+
+const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
 export default function App() {
-    const currentDate = useCurrentDate();
+    const { data: currentDate, responseStatus } = useGetData(currentDateApi);
 
     return (
         <React.Fragment>
@@ -25,6 +29,7 @@ export default function App() {
             <AuthorizeRoute path="/fetch-data" component={FetchData} />
             <CurrentDateContext.Provider value={currentDate}>
                 <AuthorizeRoute path="/dashboard" component={Dashboard} />
+                <CurrentDateContext.Provider value={responseStatus === 200 && currentDate}>
             </CurrentDateContext.Provider>
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
             {/* </Layout> */}
