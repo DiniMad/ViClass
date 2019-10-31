@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +61,7 @@ namespace ViClass.Controllers
         }
 
         [HttpGet("{classId}")]
-        public async Task<ActionResult<ClassResource>> GetClass(int classId)
+        public async Task<ActionResult<SingleClassResource>> GetClass(int classId)
         {
             var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
 
@@ -73,12 +74,27 @@ namespace ViClass.Controllers
 
             if (theClass is null) return NotFound("The Class Not Found.");
 
+            RelationWithUser relationWithUser;
+            // If the user requested is the instructor of the class
             if (theClass.InstructorId == userId)
             {
                 _context.Entry(theClass).Collection(s => s.Students).Query().Include(cs => cs.Student).Load();
+                relationWithUser = RelationWithUser.Instructor;
+            }
+            // Otherwise check if the use is student or not
+            else
+            {
+                // Query to check if the class (c => c.Id == theClass.Id)
+                //     contains user requested in its students (c.Students.Any(s => s.StudentId == userId))
+                var isStudent = await _context.Classes.AnyAsync(c => c.Id == theClass.Id &&
+                                                                     c.Students.Any(s => s.StudentId == userId));
+                relationWithUser = isStudent ? RelationWithUser.Student : RelationWithUser.None;
             }
 
-            return _mapper.Map<Class, ClassResource>(theClass);
+            var classResource = _mapper.Map<Class, SingleClassResource>(theClass);
+            classResource.RelationWithUser = relationWithUser;
+
+            return classResource;
         }
     }
 }
