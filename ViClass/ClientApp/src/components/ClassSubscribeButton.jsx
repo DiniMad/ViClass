@@ -1,15 +1,18 @@
 import React from "react";
 
-function ClassSubscribeButton({ classId, students }) {
-    // TODO: Invert the if expresion below
-    const isTeacher = students[0] === null;
-    if (isTeacher) return <></>;
-    
-    
+function ClassSubscribeButton({ classId, relationWithUser }) {
+    const handleSubscribeButton = () => {
+        // TODO: Invert the subscription and send it to API (use a confirmation modal dialog for unsubscribe)
+    };
+
+    // Is he/she the instructor of class
+    if (relationWithUser === 2) return <></>;
     return (
-        <div className="class-option-button">
-            <div>|</div>
-        </div>
+        <button className="class-subscribe-button" onClick={handleSubscribeButton}>
+            <div className={"class-subscribe-button-content " + (relationWithUser === 0 ? "sub" : "unsub")}>
+                <div>+</div>
+            </div>
+        </button>
     );
 }
 
