@@ -25,6 +25,5 @@ namespace ViClass.Controllers.Resources
         public bool                                   IsItPrivate         { get; set; }
         public ushort                                 PriceInHezarToman   { get; set; }
         public string                                 LinkToLiveBroadcast { get; set; }
-        public RelationWithUser RelationWithUser { get; set; }
     }
 }
