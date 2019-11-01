@@ -1,25 +1,27 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from "react";
 import Http from "../Services/HttpService";
 
 function useGetData(url) {
-    const [{data, status}, setDataAndStatus] = useState({data: null, status: null});
+    const [{ data, status }, setDataAndStatus] = useState({ data: null, status: null });
 
     useEffect(() => {
         getData();
     }, []);
 
     const getData = async () => {
+        let responseData, responseStatus;
         try {
-            const {data} = await Http.get(url);
-            setDataAndStatus({data, status: 200});
+            const response = await Http.get(url);
+            responseData = response.data;
+            responseStatus = response.status;
         } catch (e) {
-            if (e.response && e.response.status === 404)
-                setDataAndStatus({data: null, status: 400});
-            else
-                setDataAndStatus({data: null, status: 600});
+            responseData = e.response.data;
+            responseStatus = e.response.status;
         }
+
+        setDataAndStatus({ data: responseData, status: responseStatus });
     };
-    return {data, responseStatus:status};
+    return { data, responseStatus: status };
 }
 
 export default useGetData;
