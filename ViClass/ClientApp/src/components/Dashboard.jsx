@@ -4,32 +4,22 @@ import config from "../config.json";
 import RecycleSlider from "./RecycleSlider";
 import ClassTemplate from "./ClassTemplate";
 import Navbar from "./Navbar";
+import useGetData from "./Hooks/useGetData";
 
 const studentClassesApi = config.ApiEndpoints.StudentClass;
 
 function Dashboard() {
-    const [classes, setClasses] = useState(null);
+    const { data: classes, responseStatus } = useGetData(studentClassesApi);
 
-    useEffect(() => {
-        // noinspection JSIgnoredPromiseFromCall
-        getData();
-    }, []);
+    // TODO: remove the dummy items created below.
+    classes &&
+        classes[0] &&
+        (classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0]);
 
-    const getData = async () => {
-        const { data: classes } = await http.get(studentClassesApi);
-        if (classes && classes.length < 1) {
-            setClasses(null);
-            return;
-        }
-        // TODO: remove the dummy items created below.
-        classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0];
-        setClasses(classes);
-    };
-    // noinspection JSUnresolvedVariable
     return (
         <React.Fragment>
             <Navbar />
-            {classes && (
+            {responseStatus === 200 && classes && (
                 <RecycleSlider itemCountToShow={5} itemWidth={300}>
                     {classes.map(c => c && <ClassTemplate key={c.id} classObject={c} />)}
                 </RecycleSlider>
