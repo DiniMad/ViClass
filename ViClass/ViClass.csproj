@@ -46,6 +46,7 @@
     <Content Include="ClientApp\src\components\DayOfWeek.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useAuthenticateUser.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useGetData.jsx" />
+    <Content Include="ClientApp\src\components\Hooks\usePostData.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
     <Content Include="ClientApp\src\components\Services\DateService.jsx" />
     <Content Include="ClientApp\src\components\Services\StringService.jsx" />
