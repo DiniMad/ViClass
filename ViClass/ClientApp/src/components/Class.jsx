@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import useGetData from "./Hooks/useGetData";
 import Config from "../config";
 import { summarizeText } from "./Services/StringService";
@@ -9,7 +9,6 @@ import ClassSharedFiles from "./ClassSharedFiles";
 import ClassVideos from "./ClassVideos";
 import Navbar from "./Navbar";
 import ClassSubscribeButton from "./ClassSubscribeButton";
-import UserContext from "./Context/UserContext";
 
 const classApi = Config.ApiEndpoints.Class;
 
@@ -17,12 +16,11 @@ function Class(props) {
     const classId = props.match.params.id;
 
     const { data: classObject, responseStatus } = useGetData(classApi + classId);
-    const user = useContext(UserContext);
 
     // TODO: Remove the log below
     classObject && console.log(classObject);
     // TODO: Remove the dummy data below
-    if (classObject) {
+    if (classObject && responseStatus === 200) {
         classObject.title =
             classObject.title + classObject.title + classObject.title + classObject.title + classObject.title;
         classObject.dayOfWeekSchedules[2] = Object.assign({}, classObject.dayOfWeekSchedules[0]);
@@ -56,7 +54,7 @@ function Class(props) {
         <>
             <Navbar />
             {responseStatus === 404 && <p>کلاس وجود ندارد</p>}
-            {classObject && (
+            {responseStatus === 200 && classObject && (
                 <div className="container-percent">
                     <div className="class">
                         <ClassSubscribeButton
