@@ -3,9 +3,8 @@ import Http from "../Services/HttpService";
 
 function usePostData(url) {
     const [{ data, status }, setDataAndStatus] = useState({ data: null, status: null });
-    const [postObject, setPostObject] = useState(null);
 
-    const postData = async () => {
+    const postData = async postObject => {
         if (!postObject) throw 'You should pass a valid object using "setPostObject" function to be post to the API.';
         let responseData, responseStatus;
         try {
@@ -20,7 +19,7 @@ function usePostData(url) {
         setDataAndStatus({ data: responseData, status: responseStatus });
     };
 
-    return { data, responseStatus: status, postData, setPostObject };
+    return { data, responseStatus: status, postData };
 }
 
 export default usePostData;
