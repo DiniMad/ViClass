@@ -11,11 +11,12 @@ import { ApplicationPaths } from "./components/api-authorization/ApiAuthorizatio
 import Loading from "./components/Loading";
 import CurrentDateContext from "./components/Context/CurrentDateContext";
 import Class from "./components/Class";
-import "./styles/style.min.css";
+import User from "./components/User";
 import useGetData from "./components/Hooks/useGetData";
 import useAuthenticateUser from "./components/Hooks/useAuthenticateUser";
-import Config from "./config";
 import UserContext from "./components/Context/UserContext";
+import Config from "./config";
+import "./styles/style.min.css";
 
 const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
@@ -34,6 +35,7 @@ export default function App() {
                 <CurrentDateContext.Provider value={responseStatus === 200 && currentDate}>
                     <AuthorizeRoute path="/dashboard" component={Dashboard} />
                     <AuthorizeRoute path="/class/:id" component={Class} />
+                    <AuthorizeRoute path="/user/:id" component={User} />
                 </CurrentDateContext.Provider>
             </UserContext.Provider>
             <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
