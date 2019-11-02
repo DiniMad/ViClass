@@ -8,7 +8,7 @@ import ClassDate from "./ClassDate";
 import ClassSharedFiles from "./ClassSharedFiles";
 import ClassVideos from "./ClassVideos";
 import Navbar from "./Navbar";
-import ClassSubscribeButton from "./ClassSubscribeButton";
+import ClassOptionButton from "./ClassOptionButton";
 
 const classApi = Config.ApiEndpoints.Class;
 
@@ -57,10 +57,7 @@ function Class(props) {
             {responseStatus === 200 && classObject && (
                 <div className="container-percent">
                     <div className="class">
-                        <ClassSubscribeButton
-                            classId={classObject.id}
-                            relationWithUser={classObject.relationWithUser}
-                        />
+                        <ClassOptionButton classId={classObject.id} relationWithUser={classObject.relationWithUser} />
                         <ClassInstructor instructor={classObject.instructor} />
                         <div className="class-title">
                             <h1>{summarizeText(classObject.title, 64)}</h1>
