@@ -4,14 +4,13 @@ using ViClass.Models;
 
 namespace ViClass.ModelConfigurations
 {
-    public class ApplicationUserConfiguration:IEntityTypeConfiguration<ApplicationUser>
+    public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-
-            builder.Property(au => au.StudentNumber)
-                   .HasMaxLength(10);
+            builder.Property(au => au.StudentNumber).HasMaxLength(10);
             builder.HasIndex(au => au.StudentNumber).IsUnique();
+            builder.Property(au => au.NameAndFamily).HasMaxLength(32);
         }
     }
 }
