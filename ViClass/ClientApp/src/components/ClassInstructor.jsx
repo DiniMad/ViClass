@@ -1,20 +1,32 @@
 import React from "react";
 import UserProfileImage from "../image/UserProfileImage.svg";
-import { Link } from "react-router-dom";
-import { summarizeText } from "./Services/StringService";
+import {Link} from "react-router-dom";
+import {summarizeText} from "./Services/StringService";
+import {nameOrEmail} from "./Services/UserObjcetService";
+import {getImageFromBase64} from "./Services/ImageService";
+import useGetData from "./Hooks/useGetData";
+import Config from "../config";
 
-function ClassInstructor({ instructor }) {
+const imageApi = Config.ApiEndpoints.File;
+
+function ClassInstructor({instructor}) {
     // Destructuring properties from instructor
-    const { id, userName, image } = instructor;
+    const {id, imageId} = instructor;
+
+    const {data: image, responseStatus: imageStatus} = useGetData(imageApi + imageId, !!imageId);
 
     return (
         <div className="class-instructor">
             <img
-                src={image || UserProfileImage}
-                alt={image ? `${userName} image profile.` : "Default user profile image."}
+                src={imageStatus === 200
+                     ? getImageFromBase64(image)
+                     : UserProfileImage}
+                alt={image
+                     ? `${nameOrEmail(instructor)} profile image.`
+                     : "Default profile image."}
             />
             <Link to={`/user/${id}`}>
-                <h3>{summarizeText(userName, 20)}</h3>
+                <h3>{summarizeText(nameOrEmail(instructor), 20)}</h3>
             </Link>
         </div>
     );
