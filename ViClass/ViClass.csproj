@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -38,7 +38,6 @@
     <Content Include="ClientApp\src\components\Class.jsx" />
     <Content Include="ClientApp\src\components\ClassDate.jsx" />
     <Content Include="ClientApp\src\components\ClassInstructor.jsx" />
-    <Content Include="ClientApp\src\components\ClassSubscribeButton.jsx" />
     <Content Include="ClientApp\src\components\ClassSharedFiles.jsx" />
     <Content Include="ClientApp\src\components\ClassStudents.jsx" />
     <Content Include="ClientApp\src\components\ClassVideos.jsx" />
@@ -57,7 +56,6 @@
     <Content Include="ClientApp\src\components\UserDetail.jsx" />
     <Content Include="ClientApp\src\components\UserImage.jsx" />
     <Content Include="ClientApp\src\components\UserTextEditButton.jsx" />
-    <Content Include="ClientApp\src\components\UserValidationBox.jsx" />
     <Content Include="ClientApp\src\image\ArrowIconPointToLeft.svg" />
     <Content Include="ClientApp\src\image\CollegeLogo.png" />
     <Content Include="ClientApp\src\image\EditIcon.svg" />
