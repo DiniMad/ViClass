@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import Http from "../Services/HttpService";
 
-function useGetData(url) {
-    const [{ data, status }, setDataAndStatus] = useState({ data: null, status: null });
+function useGetData(url, shouldExecute = true) {
+    const [{data, status}, setDataAndStatus] = useState({data: null, status: null});
 
     useEffect(() => {
-        getData();
+        if (shouldExecute)
+            getData();
     }, []);
 
     const getData = async () => {
@@ -19,9 +20,9 @@ function useGetData(url) {
             responseStatus = e.response.status;
         }
 
-        setDataAndStatus({ data: responseData, status: responseStatus });
+        setDataAndStatus({data: responseData, status: responseStatus});
     };
-    return { data, responseStatus: status };
+    return {data, responseStatus: status};
 }
 
 export default useGetData;
