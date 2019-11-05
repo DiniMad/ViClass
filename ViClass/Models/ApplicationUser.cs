@@ -15,6 +15,6 @@ namespace ViClass.Models
         public ICollection<Class> ClassesAsInstructor { get; set; }
         public ICollection<ClassStudent> ClassesAsStudent { get; set; }
         public ICollection<Survey> SurveysCreated { get; set; }
-        public string ImagePath { get; set; }
+        public string ImageId { get; set; }
     }
 }
