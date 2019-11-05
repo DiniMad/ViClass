@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using ViClass.Controllers.Resources;
 using ViClass.Data;
 using ViClass.Utility;
 
@@ -28,22 +31,61 @@ namespace ViClass.Controllers
 
         [HttpPost("[action]")]
         public async Task<IActionResult> ProfileImage(IFormFile file)
+            // Every response returns a unique guid so every response is unique
         {
-            if (file is null) return BadRequest("The file is null.");
-            
+            var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
+
+            var newGuid = Guid.NewGuid();
+
+            if (file is null) return BadRequest($"The file is null. {newGuid}");
+
             const long allowedSized  = 1000 * Kb;
             var        fileExtension = Path.GetExtension(file.FileName);
 
-            if (file.Length <= 0) return BadRequest("Size of the file is zero.");
-            if (file.Length > allowedSized) return BadRequest("Size of the file is bigger than allowed size.");
+            // Validate image
+            if (file.Length <= 0) return BadRequest($"Size of the file is zero. {newGuid}");
+            if (file.Length > allowedSized)
+                return BadRequest($"Size of the file is bigger than allowed size. {newGuid}");
             if (!await file.IsImage() || string.IsNullOrWhiteSpace(fileExtension))
-                return StatusCode(415, "File is not a valid image.");
+                return StatusCode(415, $"File is not a valid image. {newGuid}");
 
-            var             filePath = $"{_environment.WebRootPath}\\Profile Images\\{Guid.NewGuid()}{fileExtension}";
-            await using var stream   = System.IO.File.Create(filePath);
+            // Store the image in hard disk
+            var             imageFolderPath = $"{_environment.WebRootPath}\\Profile Images\\";
+            var             filePath        = $"{imageFolderPath}{newGuid}{fileExtension}";
+            await using var stream          = System.IO.File.Create(filePath);
             await file.CopyToAsync(stream);
 
-            return Ok(new {file.Length, filePath});
+            // Assign the new image to the user
+            var user                = await _context.Users.FindAsync(userId);
+            var userPreviousImageId = user.ImageId;
+            user.ImageId = newGuid.ToString();
+            await _context.SaveChangesAsync();
+
+            // Delete the previous image belongs to user from hard disk
+            if (!string.IsNullOrWhiteSpace(userPreviousImageId))
+            {
+                var previousImagePath = Directory.GetFiles(imageFolderPath, $"{userPreviousImageId}.*");
+                if (previousImagePath.Length == 1) System.IO.File.Delete(previousImagePath[0]);
+            }
+
+            return Ok(newGuid);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ImageResource>> ProfileImage(string id)
+        {
+            var imageFolderPath = $"{_environment.WebRootPath}\\Profile Images\\";
+
+            var imagePath = Directory.GetFiles(imageFolderPath, $"{id}.*");
+            if (imagePath.Length != 1) return NotFound("Image not found.");
+
+            var imageFileName = Path.GetFileName(imagePath[0]);
+            var image         = await System.IO.File.ReadAllBytesAsync(imageFolderPath + imageFileName);
+            var imageBase64   = Convert.ToBase64String(image);
+
+            var imageExtensionWithoutPeriod = Path.GetExtension(imageFileName).Remove(0, 1);
+
+            return new ImageResource {Data = imageBase64, Extension = imageExtensionWithoutPeriod};
         }
     }
 }
