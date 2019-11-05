@@ -1,9 +1,10 @@
 {
-    "ApiEndpoints": {
-        "AllClass": "/api/class/classes",
-        "StudentClass": "/api/class/studentClasses",
-        "CurrentDate": "/api/date/current",
-        "Class": "/api/class/",
-        "User": "api/user/"
-    }
+  "ApiEndpoints": {
+    "AllClass": "/api/class/classes",
+    "StudentClass": "/api/class/studentClasses",
+    "CurrentDate": "/api/date/current",
+    "Class": "/api/class/",
+    "User": "api/user/",
+    "File": "api/file/"
+  }
 }
