@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -43,12 +43,15 @@
     <Content Include="ClientApp\src\components\ClassVideos.jsx" />
     <Content Include="ClientApp\src\components\Context\CurrentDateContext.jsx" />
     <Content Include="ClientApp\src\components\Context\UserContext.jsx" />
+    <Content Include="ClientApp\src\components\CropImage.jsx" />
     <Content Include="ClientApp\src\components\DayOfWeek.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useAuthenticateUser.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useGetData.jsx" />
     <Content Include="ClientApp\src\components\Hooks\usePostData.jsx" />
+    <Content Include="ClientApp\src\components\ModalTemplate.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
     <Content Include="ClientApp\src\components\Services\DateService.jsx" />
+    <Content Include="ClientApp\src\components\Services\FileService.jsx" />
     <Content Include="ClientApp\src\components\Services\ImageService.jsx" />
     <Content Include="ClientApp\src\components\Services\StringService.jsx" />
     <Content Include="ClientApp\src\components\Services\UserObjcetService.jsx" />
