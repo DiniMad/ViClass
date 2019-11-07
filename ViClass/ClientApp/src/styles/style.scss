@@ -82,6 +82,89 @@ nav {
 	background: transparent;
 }
 
+// React Crop
+.ReactCrop {
+	display: block !important;
+
+	&__image {
+		max-height: calc(90vh - 4rem);
+	}
+
+	// My elements
+	.selection-item {
+		display: block;
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: auto;
+
+		&.text {
+			direction: ltr;
+			top: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: green;
+			font-size: 1.5rem;
+			padding: .2rem 0;
+			background-image: linear-gradient(to right, transparent, rgba(255, 255, 255, .8), transparent);
+
+			&.red {
+				color: red;
+			}
+		}
+
+		&.button {
+			bottom: .5rem;
+			border-radius: 1rem;
+			padding: .2em 2rem;
+			font-size: 2rem;
+			background: rgba(30, 144, 255, .8);
+			transition: background-color .5s;
+
+			&:hover {
+				background: blue;
+			}
+		}
+	}
+}
+
+// Modal Dialog
+.modal-dialog {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: -1;
+	transition: opacity .5s;
+
+	&.visible {
+		opacity: 1;
+		z-index: 2;
+
+		.modal-dialog-content {
+			margin-top: 0;
+			opacity: 1;
+		}
+	}
+
+	&-content {
+		margin-top: -50rem;
+		opacity: 0;
+		max-height: 90%;
+		background: lightgray;
+		border-radius: 2rem;
+		transition: all .5s;
+	}
+}
+
+
 // Home
 section#showcase {
 	height: 100vh;
@@ -663,6 +746,14 @@ section#showcase {
 					display: none;
 				}
 			}
+		}
+
+		&-crop-title {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2rem;
+			padding: .5rem 0;
 		}
 	}
 
