@@ -7,7 +7,7 @@ namespace ViClass.Utility
 {
     public static class FormFileExtensions
     {
-        public static async Task<bool> IsImage(this IFormFile file)
+        public static async Task<bool> IsSquareImage(this IFormFile file)
         {
             await using var fileMemoryStream = new MemoryStream();
             try
@@ -15,6 +15,7 @@ namespace ViClass.Utility
                 await file.CopyToAsync(fileMemoryStream);
                 using (var possibleImage = Image.FromStream(fileMemoryStream))
                 {
+                    if (possibleImage.Height != possibleImage.Width) return false;
                 }
 
                 // At this point file converted to an Image object so it is an image.
