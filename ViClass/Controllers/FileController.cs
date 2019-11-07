@@ -20,7 +20,8 @@ namespace ViClass.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment  _environment;
-        private const    int                  Kb = 1000;
+        private const    int                  Kb                   = 1000;
+        private const    long                 MaxImageAllowedSized = 300 * Kb;
 
         public FileController(ApplicationDbContext context, IWebHostEnvironment environment)
         {
@@ -39,15 +40,14 @@ namespace ViClass.Controllers
 
             if (file is null) return BadRequest($"The file is null. {newGuid}");
 
-            const long allowedSized  = 1000 * Kb;
-            var        fileExtension = Path.GetExtension(file.FileName);
+            var fileExtension = Path.GetExtension(file.FileName);
 
             // Validate image
             if (file.Length <= 0) return BadRequest($"Size of the file is zero. {newGuid}");
-            if (file.Length > allowedSized)
+            if (file.Length > MaxImageAllowedSized)
                 return BadRequest($"Size of the file is bigger than allowed size. {newGuid}");
-            if (!await file.IsImage() || string.IsNullOrWhiteSpace(fileExtension))
-                return StatusCode(415, $"File is not a valid image. {newGuid}");
+            if (!await file.IsSquareImage() || string.IsNullOrWhiteSpace(fileExtension))
+                return StatusCode(415, $"The file is not either an image or square. {newGuid}");
 
             // Store the image in hard disk
             var             imageFolderPath = $"{_environment.WebRootPath}\\Profile Images\\";
