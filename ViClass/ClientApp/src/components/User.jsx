@@ -1,17 +1,13 @@
 import React, {useContext} from "react";
 import Navbar from "./Navbar";
-import UserDetailBox from "./UserDetailBox";
 import UserImage from "./UserImage";
 import UserTextEditButton from "./UserTextEditButton";
+import UserDetails from "./UserDetails";
 import {nameOrEmail} from "./Services/UserObjcetService";
 import {summarizeText} from "./Services/StringService";
 import useGetData from "./Hooks/useGetData";
 import UserContext from "./Context/UserContext";
-import MobileIcon from "../image/MobileIcon.svg"
-import StudentNumberIcon from "../image/StudentNumberIcon.svg"
-import EmailIcon from "../image/EmailIcon.svg"
 import Config from "../config";
-import UserDetails from "./UserDetails";
 
 const userApi = Config.ApiEndpoints.User;
 
