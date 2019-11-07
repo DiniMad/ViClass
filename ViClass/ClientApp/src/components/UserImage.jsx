@@ -1,12 +1,13 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import ModalDialog from "./ModalDialog";
 import CropImage from "./CropImage";
 import {getImageFromBase64} from "./Services/ImageService";
 import useGetData from "./Hooks/useGetData";
+import usePostData from "./Hooks/usePostData";
+import NotificationContext from "./Context/NotificationContext";
 import UserProfileImage from "../image/UserProfileImage.svg";
 import EditIcon from "../image/EditIcon.svg";
 import Config from "../config"
-import usePostData from "./Hooks/usePostData";
 
 const fileApi = Config.ApiEndpoints.File;
 const imageSizeAllowedInKB = 300;
@@ -18,7 +19,9 @@ function UserImage({imageId, username}) {
     const [displayCropModal, setDisplayCropModal] = useState(false);
     const [newSelectedImage, setNewSelectedImage] = useState(false);
     const [previousImage, setPreviousImage] = useState(null); // In case needed to revert image
-    
+
+    const displayNotification = useContext(NotificationContext);
+
     const {data: postData, responseStatus: postResponseStatus, post} = usePostData(`${fileApi}ProfileImage`);
     // Get user image if imageId is not null
     const {data: fetchedImage, responseStatus: fetchedImageStatus} = useGetData(fileApi + imageId, !!imageId);
@@ -28,10 +31,12 @@ function UserImage({imageId, username}) {
             setImage(getImageFromBase64(fetchedImage))
     }, [fetchedImageStatus]);// Update UI image on user image received from API
     useEffect(() => {
-        // Something went wrong in uploading new image 
-        if (postResponseStatus !== 200 && previousImage) {
+        if (!postResponseStatus) return;
+        if (postResponseStatus === 200)
+            displayNotification("عکس با موفقیت بارگذاری شد.", 5, "success");
+        else if (previousImage) { // Something went wrong in uploading new image 
             setImage(previousImage);
-            // TODO: Display a notification to say something went wrong
+            displayNotification("مشکلی در بارگذاری فایل رخ داده است.", 5, "warning");
         }
     }, [postResponseStatus, postData]); // Revert UI image if upload new image failed
 
