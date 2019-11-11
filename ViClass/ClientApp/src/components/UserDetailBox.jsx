@@ -34,7 +34,7 @@ function UserDetailBox({name, title, text, icon, isValidate, isHimSelf, children
         }
         // It is Validated icon
     };
-
+    
     // If it's not himself just render student number
     if (!isHimSelf && title !== "Student Number") return <></>;
     return (
