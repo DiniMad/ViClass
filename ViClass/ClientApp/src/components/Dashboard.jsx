@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from "react";
-import http from "./Services/HttpService";
+import React from "react";
 import config from "../config.json";
 import RecycleSlider from "./RecycleSlider";
 import ClassTemplate from "./ClassTemplate";
 import Navbar from "./Navbar";
 import useGetData from "./Hooks/useGetData";
 
-const studentClassesApi = config.ApiEndpoints.StudentClass;
+const classesApi = config.ApiEndpoints.Class;
 
 function Dashboard() {
-    const { data: classes, responseStatus } = useGetData(studentClassesApi);
+
+
+    const {data: classes, responseStatus} = useGetData(classesApi);
+    // const {data: studyOrTeachingClasses, responseStatus} = useGetData(classesApi+ "StudyOrTeaching");
 
     // TODO: remove the dummy items created below.
     classes &&
-        classes[0] &&
-        (classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0]);
+    classes[0] &&
+    (classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0]);
 
     return (
         <React.Fragment>
-            <Navbar />
+            <Navbar/>
             {responseStatus === 200 && classes && (
                 <RecycleSlider itemCountToShow={5} itemWidth={300}>
-                    {classes.map(c => c && <ClassTemplate key={c.id} classObject={c} />)}
+                    {classes.map(c => c && <ClassTemplate key={c.id} classObject={c}/>)}
                 </RecycleSlider>
             )}
             {/* TODO: Render classes that user is teaching or study */}
