@@ -63,7 +63,7 @@ function UserImage({imageId, username}) {
         // Post new image to API
         const formData = new FormData();
         formData.append("file", newImage);
-        await post(formData);
+        post(formData);
     };
 
     return (
@@ -73,10 +73,7 @@ function UserImage({imageId, username}) {
                      alt={fetchedImageStatus === 200
                           ? `${username} profile image.`
                           : "Default user profile image."}/>
-                <button
-                    className='user-image-template-edit-button'
-                    onClick={handleEditImageButton}
-                >
+                <button className='user-image-template-edit-button' onClick={handleEditImageButton}>
                     <img src={EditIcon} alt="Edit icon"/>
                     <input ref={imageInput}
                            onChange={handleImageInputChange}
@@ -89,12 +86,10 @@ function UserImage({imageId, username}) {
                 <div className="user-image-crop-title">
                     <p>حداکثر حجم مجاز {imageSizeAllowedInKB} کیلوبایت هست.</p>
                 </div>
-                {displayCropModal && (
-                    <CropImage imageSelectedToCrop={newSelectedImage}
-                               imageSizeAllowedInKB={imageSizeAllowedInKB}
-                               setModalDialogVisibility={setDisplayCropModal}
-                               handleSaveNewImage={handleSaveNewImage}
-                    />
+                {displayCropModal && (<CropImage imageSelectedToCrop={newSelectedImage}
+                                                 imageSizeAllowedInKB={imageSizeAllowedInKB}
+                                                 setModalDialogVisibility={setDisplayCropModal}
+                                                 handleSaveNewImage={handleSaveNewImage}/>
                 )}
             </ModalDialog>}
         </div>
