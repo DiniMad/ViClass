@@ -12,6 +12,7 @@ namespace ViClass.ModelConfigurations
             builder.HasIndex(au => au.StudentNumber).IsUnique();
             builder.Property(au => au.NameAndFamily).HasMaxLength(32);
             builder.HasIndex(au => au.ImageId).IsUnique();
+            builder.HasIndex(au => au.Email).IsUnique();
         }
     }
 }
