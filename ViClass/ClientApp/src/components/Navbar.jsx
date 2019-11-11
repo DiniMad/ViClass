@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink } from "reactstrap";
 import { Link } from "react-router-dom";
 import { ApplicationPaths } from "./api-authorization/ApiAuthorizationConstants";
-import UserContext from "./Context/UserContext";
+import AuthenticatedUserContext from "./Context/AuthenticatedUserContext";
 
 const logoutPath = {
     pathname: `${ApplicationPaths.LogOut}`,
@@ -10,7 +10,7 @@ const logoutPath = {
 };
 
 function Navbar() {
-    const user = useContext(UserContext);
+    const user = useContext(AuthenticatedUserContext);
 
     return (
         <nav>
