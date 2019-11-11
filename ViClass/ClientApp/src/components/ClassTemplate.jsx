@@ -74,7 +74,7 @@ function ClassTemplate({ classObject }) {
             </Link>
             <p className="class-template-description">{summarizeText(description, 180, 35)}</p>
             <Link to={`/user/${instructor.id}`} className="class-template-instructor">
-                {summarizeText(instructor.userName, 30)}
+                {summarizeText(instructor.nameAndFamily, 30)}
             </Link>
             {currentDateFormatted && currentDayNumberOfWeek && renderClassDateBadge()}
         </div>
