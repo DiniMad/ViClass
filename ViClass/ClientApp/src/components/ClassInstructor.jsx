@@ -26,7 +26,7 @@ function ClassInstructor({instructor}) {
                      : "Default profile image."}
             />
             <Link to={`/user/${id}`}>
-                <h3>{summarizeText(nameOrEmail(instructor), 20)}</h3>
+                <h3>{summarizeText(nameOrEmail(instructor), 30)}</h3>
             </Link>
         </div>
     );
