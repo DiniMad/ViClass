@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import authService from "../api-authorization/AuthorizeService";
 
 function useAuthenticateUser() {
@@ -8,8 +8,7 @@ function useAuthenticateUser() {
     }, []);
 
     const getUser = async () => {
-        const user = await authService.getUser();
-        setUser(user);
+        setUser(await authService.getUser());
     };
     return user;
 }
