@@ -7,7 +7,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using ViClass.Controllers.Resources;
 using ViClass.Data;
 using ViClass.Models;
@@ -27,8 +26,8 @@ namespace ViClass.Controllers
             _mapper  = mapper;
         }
 
-        [HttpGet("[action]")]
-        public async Task<IEnumerable<ClassResource>> Classes()
+        [HttpGet]
+        public async Task<IEnumerable<ClassResource>> AllClasses()
         {
             var classes = await _context.Classes
                                         .Include(c => c.Instructor)
@@ -38,11 +37,12 @@ namespace ViClass.Controllers
             return _mapper.Map<List<Class>, List<ClassResource>>(classes);
         }
 
-        [HttpGet("[action]")]
-        public async Task<IEnumerable<ClassResource>> StudentClasses()
+        [HttpGet("StudyOrTeaching")]
+        public async Task<ActionResult<IEnumerable<ClassResource>>> StudyOrTeachingClasses()
         {
             var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
 
+            // TODO: Rewrite the code below to load all classes that user is teaching or studding
             var user = await _context.Users
                                      .Include(u => u.ClassesAsStudent)
                                      .ThenInclude(cs => cs.Class)
