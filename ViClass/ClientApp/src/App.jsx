@@ -15,7 +15,7 @@ import Notification from "./components/Notification";
 import useGetData from "./components/Hooks/useGetData";
 import useAuthenticateUser from "./components/Hooks/useAuthenticateUser";
 import useNotification from "./components/Hooks/useNotification";
-import UserContext from "./components/Context/UserContext";
+import AuthenticatedUserContext from "./components/Context/AuthenticatedUserContext";
 import NotificationContext from "./components/Context/NotificationContext";
 import Config from "./config";
 import "./styles/style.min.css";
@@ -35,13 +35,13 @@ export default function App() {
                 <Route path="/counter" component={Counter}/>
                 <Route path="/loading" component={Loading}/>
                 <AuthorizeRoute path="/fetch-data" component={FetchData}/>
-                <UserContext.Provider value={user}>
+                <AuthenticatedUserContext.Provider value={user}>
                     <CurrentDateContext.Provider value={responseStatus === 200 && currentDate}>
                         <AuthorizeRoute path="/dashboard" component={Dashboard}/>
                         <AuthorizeRoute path="/class/:id" component={Class}/>
                         <AuthorizeRoute path="/user/:id" component={User}/>
                     </CurrentDateContext.Provider>
-                </UserContext.Provider>
+                </AuthenticatedUserContext.Provider>
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
                 <Notification display={display} textTag={textTag} type={notificationType}/>
             </NotificationContext.Provider>
