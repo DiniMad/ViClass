@@ -41,6 +41,7 @@
     <Content Include="ClientApp\src\components\ClassSharedFiles.jsx" />
     <Content Include="ClientApp\src\components\ClassStudents.jsx" />
     <Content Include="ClientApp\src\components\ClassVideos.jsx" />
+    <Content Include="ClientApp\src\components\Context\AuthenticatedUserContext.jsx" />
     <Content Include="ClientApp\src\components\Context\CurrentDateContext.jsx" />
     <Content Include="ClientApp\src\components\Context\NotificationContext.jsx" />
     <Content Include="ClientApp\src\components\Context\UserContext.jsx" />
@@ -48,8 +49,10 @@
     <Content Include="ClientApp\src\components\DayOfWeek.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useAuthenticateUser.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useGetData.jsx" />
+    <Content Include="ClientApp\src\components\Hooks\useInput.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useNotification.jsx" />
     <Content Include="ClientApp\src\components\Hooks\usePostData.jsx" />
+    <Content Include="ClientApp\src\components\Hooks\usePut.jsx" />
     <Content Include="ClientApp\src\components\ModalTemplate.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
     <Content Include="ClientApp\src\components\Notification.jsx" />
@@ -61,6 +64,7 @@
     <Content Include="ClientApp\src\components\User.jsx" />
     <Content Include="ClientApp\src\components\UserDetail.jsx" />
     <Content Include="ClientApp\src\components\UserImage.jsx" />
+    <Content Include="ClientApp\src\components\UserNameAndFamily.jsx" />
     <Content Include="ClientApp\src\components\UserTextEditButton.jsx" />
     <Content Include="ClientApp\src\image\ArrowIconPointToLeft.svg" />
     <Content Include="ClientApp\src\image\CollegeLogo.png" />
