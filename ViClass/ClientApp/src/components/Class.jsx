@@ -1,7 +1,4 @@
 import React from "react";
-import useGetData from "./Hooks/useGetData";
-import Config from "../config";
-import { summarizeText } from "./Services/StringService";
 import ClassInstructor from "./ClassInstructor";
 import ClassStudents from "./ClassStudents";
 import ClassDate from "./ClassDate";
@@ -9,20 +6,21 @@ import ClassSharedFiles from "./ClassSharedFiles";
 import ClassVideos from "./ClassVideos";
 import Navbar from "./Navbar";
 import ClassOptionButton from "./ClassOptionButton";
+import {summarizeText} from "./Services/StringService";
+import useGetData from "./Hooks/useGetData";
+import Config from "../config";
 
 const classApi = Config.ApiEndpoints.Class;
 
 function Class(props) {
     const classId = props.match.params.id;
 
-    const { data: classObject, responseStatus } = useGetData(classApi + classId);
+    const {data: classObject, responseStatus} = useGetData(classApi + classId);
 
     // TODO: Remove the log below
     classObject && console.log(classObject);
     // TODO: Remove the dummy data below
     if (classObject && responseStatus === 200) {
-        classObject.title =
-            classObject.title + classObject.title + classObject.title + classObject.title + classObject.title;
         classObject.dayOfWeekSchedules[2] = Object.assign({}, classObject.dayOfWeekSchedules[0]);
         classObject.dayOfWeekSchedules[2].id = 3;
         classObject.dayOfWeekSchedules[2].dayOfWeek = 2;
@@ -52,27 +50,27 @@ function Class(props) {
 
     return (
         <>
-            <Navbar />
+            <Navbar/>
             {responseStatus === 404 && <p>کلاس وجود ندارد</p>}
             {responseStatus === 200 && classObject && (
                 <div className="container-percent">
                     <div className="class">
-                        <ClassOptionButton classId={classObject.id} relationWithUser={classObject.relationWithUser} />
-                        <ClassInstructor instructor={classObject.instructor} />
+                        <ClassOptionButton classId={classObject.id} relationWithUser={classObject.relationWithUser}/>
+                        <ClassInstructor instructor={classObject.instructor}/>
                         <div className="class-title">
                             <h1>{summarizeText(classObject.title, 64)}</h1>
                         </div>
                         <div className="class-description">
                             <h2>{summarizeText(classObject.description, 512, 85)}</h2>
                         </div>
-                        <ClassStudents students={classObject.students} />
+                        <ClassStudents students={classObject.students}/>
                         <ClassDate
                             startDate={classObject.startDateFormatted}
                             endDate={classObject.endDateFormatted}
                             dayOfWeeks={classObject.dayOfWeekSchedules}
                         />
-                        <ClassSharedFiles sharedFiles={classObject.sharedFiles} />
-                        <ClassVideos shouldPresentVideo={classObject.shouldPresentVideo} videos={classObject.videos} />
+                        <ClassSharedFiles sharedFiles={classObject.sharedFiles}/>
+                        <ClassVideos shouldPresentVideo={classObject.shouldPresentVideo} videos={classObject.videos}/>
                     </div>
                 </div>
             )}
