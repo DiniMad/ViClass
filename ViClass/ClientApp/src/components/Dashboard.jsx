@@ -10,7 +10,7 @@ const classesApi = config.ApiEndpoints.Class;
 function Dashboard() {
 
 
-    const {data: classes, responseStatus} = useGetData(classesApi);
+    const [classes, responseStatus] = useGetData(classesApi + "StudyOrTeaching");
     // const {data: studyOrTeachingClasses, responseStatus} = useGetData(classesApi+ "StudyOrTeaching");
 
     // TODO: remove the dummy items created below.
