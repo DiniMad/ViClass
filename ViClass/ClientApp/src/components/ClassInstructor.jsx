@@ -13,7 +13,7 @@ function ClassInstructor({instructor}) {
     // Destructuring properties from instructor
     const {id, imageId} = instructor;
 
-    const {data: image, responseStatus: imageStatus} = useGetData(imageApi + imageId, !!imageId);
+    const [image, imageStatus] = useGetData(imageApi + imageId, !!imageId);
 
     return (
         <div className="class-instructor">
