@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import { summarizeText } from "./Services/StringService";
-import CurrentDateContext from "./Context/CurrentDateContext";
-import { Link } from "react-router-dom";
-import { daysOfWeekConverter, isPastAsPersianDate } from "./Services/DateService";
+import React from "react";
+import {summarizeText} from "./Services/StringService";
+import {Link} from "react-router-dom";
+import DateService from "./Services/DateService";
 
 const hslColorConf = "30%, 72%";
 
 //  const hslColorDark='100%, 15%'
 
-function ClassTemplate({ classObject }) {
+function ClassTemplate({classObject}) {
+    const {daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek} = DateService();
     // Destructuring class properties from classObject
     const {
         id,
@@ -23,20 +23,17 @@ function ClassTemplate({ classObject }) {
     const firstRandomNumber = Math.floor(Math.random() * 358);
     const secondRandomNumber = Math.floor(Math.random() * 358);
     // Destructuring current date properties using useContext hook
-    const currentDate = useContext(CurrentDateContext);
-    const currentDateFormatted = currentDate ? currentDate.split(",")[0] : null;
-    const currentDayNumberOfWeek = currentDate ? currentDate.split(",")[1] : null;
 
     const renderClassDateBadge = () => {
         // If the class has not started yet
-        if (!isPastAsPersianDate(startDateFormatted, currentDateFormatted))
+        if (!isPastAsPersianDate(startDateFormatted))
             return (
                 <ul>
                     <li className="green">{startDateFormatted}</li>
                 </ul>
             );
         // If the class has been ended
-        if (isPastAsPersianDate(endDateFormatted, currentDateFormatted))
+        if (isPastAsPersianDate(endDateFormatted))
             return (
                 <ul>
                     <li className="red">{endDateFormatted}</li>
@@ -51,9 +48,13 @@ function ClassTemplate({ classObject }) {
                 </ul>
             );
         return (
-            <ul className={dayOfWeekSchedules.length <= 4 ? "low-capacity" : null}>
-                {dayOfWeekSchedules.map(({ id, dayOfWeek }, k) => (
-                    <li key={k} className={dayOfWeek === currentDayNumberOfWeek ? "blue-primary" : null}>
+            <ul className={dayOfWeekSchedules.length <= 4
+                           ? "low-capacity"
+                           : null}>
+                {dayOfWeekSchedules.map(({id, dayOfWeek}, k) => (
+                    <li key={k} className={isCurrentDayOfWeek(dayOfWeek)
+                                           ? "blue-primary"
+                                           : null}>
                         {daysOfWeekConverter(dayOfWeek)}
                     </li>
                 ))}
@@ -76,7 +77,7 @@ function ClassTemplate({ classObject }) {
             <Link to={`/user/${instructor.id}`} className="class-template-instructor">
                 {summarizeText(instructor.nameAndFamily, 30)}
             </Link>
-            {currentDateFormatted && currentDayNumberOfWeek && renderClassDateBadge()}
+            {renderClassDateBadge()}
         </div>
     );
 }
