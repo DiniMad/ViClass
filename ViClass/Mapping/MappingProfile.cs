@@ -15,7 +15,7 @@ namespace ViClass.Mapping
             CreateMap<Video, VideoResource>();
             CreateMap<SharedFile, SharedFileResource>();
             CreateMap<DayOfWeekSchedule, DayOfWeekScheduleResource>();
-            CreateMap<Class, SingleClassResource>()
+            CreateMap<Class, ClassWithRelationResource>()
                 .ForMember(cs => cs.Students, opt => opt.MapFrom(c => c.Students.Select(cs => cs.Student)));
         }
     }
