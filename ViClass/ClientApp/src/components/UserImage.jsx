@@ -24,7 +24,7 @@ function UserImage({imageId, username}) {
 
     const {data: postData, responseStatus: postResponseStatus, post} = usePostData(`${fileApi}ProfileImage`);
     // Get user image if imageId is not null
-    const {data: fetchedImage, responseStatus: fetchedImageStatus} = useGetData(fileApi + imageId, !!imageId);
+    const [fetchedImage, imageStatus] = useGetData(fileApi + imageId, !!imageId, imageId);
 
     useEffect(() => {
         if (fetchedImageStatus === 200)
