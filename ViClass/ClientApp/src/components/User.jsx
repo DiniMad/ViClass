@@ -19,7 +19,7 @@ function User(props) {
     const [user, setUser] = useState(null);
 
     const browserUser = useContext(AuthenticatedUserContext);
-    const {data, responseStatus} = useGetData(userApi + userId);
+    const [userData, userResponseStatus] = useGetData(userApi + userId, undefined, userId);
 
     useEffect(() => {
         if (responseStatus === 200 && data)
