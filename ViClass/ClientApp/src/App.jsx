@@ -24,7 +24,7 @@ const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
 export default function App() {
 
-    const {data: currentDate, responseStatus} = useGetData(currentDateApi);
+    const [ currentDate, responseStatus] = useGetData(currentDateApi);
     const user = useAuthenticateUser();
     const {display, textTag, notificationType, displayNotification} = useNotification();
 
