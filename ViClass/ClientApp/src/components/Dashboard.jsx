@@ -1,11 +1,12 @@
 import React from "react";
-import config from "../config.json";
 import RecycleSlider from "./RecycleSlider";
 import ClassTemplate from "./ClassTemplate";
 import Navbar from "./Navbar";
+import ClassTableView from "./ClassTableView";
 import useGetData from "./Hooks/useGetData";
+import Config from "../config";
 
-const classesApi = config.ApiEndpoints.Class;
+const classesApi = Config.ApiEndpoints.Class;
 
 function Dashboard() {
 
@@ -17,17 +18,19 @@ function Dashboard() {
     classes &&
     classes[0] &&
     (classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0]);
+    classes && console.log(classes);
 
     return (
-        <React.Fragment>
+        <>
             <Navbar/>
-            {responseStatus === 200 && classes && (
-                <RecycleSlider itemCountToShow={5} itemWidth={300}>
-                    {classes.map(c => c && <ClassTemplate key={c.id} classObject={c}/>)}
-                </RecycleSlider>
-            )}
-            {/* TODO: Render classes that user is teaching or study */}
-        </React.Fragment>
+            <div className="dashboard">
+                {responseStatus === 200 && classes && (
+                    <RecycleSlider itemCountToShow={5} itemWidth={300}>
+                        {classes.map(c => c && <ClassTemplate key={c.id} classObject={c}/>)}
+                    </RecycleSlider>)}
+                {responseStatus === 200 && classes && <ClassTableView classes={classes}/>}
+            </div>
+        </>
     );
 }
 
