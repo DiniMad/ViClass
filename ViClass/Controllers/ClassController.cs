@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using ViClass.Controllers.Resources;
 using ViClass.Data;
 using ViClass.Models;
@@ -38,30 +39,31 @@ namespace ViClass.Controllers
         }
 
         [HttpGet("StudyOrTeaching")]
-        public async Task<ActionResult<IEnumerable<ClassResource>>> StudyOrTeachingClasses()
+        public async Task<ActionResult<IEnumerable<ClassWithRelationResource>>> StudyOrTeachingClasses()
         {
             var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
 
-            // TODO: Rewrite the code below to load all classes that user is teaching or studding
-            var user = await _context.Users
-                                     .Include(u => u.ClassesAsStudent)
-                                     .ThenInclude(cs => cs.Class)
-                                     .ThenInclude(c => c.Instructor)
-                                     .Include(u => u.ClassesAsStudent)
-                                     .ThenInclude(cs => cs.Class)
-                                     .ThenInclude(c => c.DayOfWeekSchedules)
-                                     .Include(u => u.ClassesAsStudent)
-                                     .ThenInclude(cs => cs.Class)
-                                     .ThenInclude(c => c.Videos)
-                                     .SingleAsync(u => u.Id == userId);
+            var classes = await _context.Classes
+                                        .Include(c => c.Instructor)
+                                        .Include(c => c.DayOfWeekSchedules)
+                                        .Include(c => c.Students)
+                                        .Where(c => c.InstructorId == userId ||
+                                                    c.Students.Any(s => s.StudentId == userId))
+                                        .ToListAsync();
 
-            var studentClasses = user.ClassesAsStudent.Select(cs => cs.Class).ToList();
+            var classWithRelation = _mapper.Map<List<Class>, List<ClassWithRelationResource>>(classes);
+            classWithRelation.ForEach(c =>
+            {
+                c.RelationWithUser = c.InstructorId == userId
+                                         ? RelationWithUser.Instructor
+                                         : RelationWithUser.Student;
+            });
 
-            return _mapper.Map<List<Class>, List<ClassResource>>(studentClasses);
+            return classWithRelation;
         }
 
         [HttpGet("{classId}")]
-        public async Task<ActionResult<SingleClassResource>> GetClass(int classId)
+        public async Task<ActionResult<ClassWithRelationResource>> GetClass(int classId)
         {
             var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
 
@@ -91,7 +93,7 @@ namespace ViClass.Controllers
                 relationWithUser = isStudent ? RelationWithUser.Student : RelationWithUser.None;
             }
 
-            var classResource = _mapper.Map<Class, SingleClassResource>(theClass);
+            var classResource = _mapper.Map<Class, ClassWithRelationResource>(theClass);
             classResource.RelationWithUser = relationWithUser;
 
             return classResource;
