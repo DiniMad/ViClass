@@ -1,17 +1,18 @@
 import React, {useState, useEffect, useContext} from "react";
 import Navbar from "./Navbar";
 import UserImage from "./UserImage";
-import UserTextEditButton from "./UserTextEditButton";
 import UserDetails from "./UserDetails";
 import {nameOrEmail} from "./Services/UserObjcetService";
-import {summarizeText} from "./Services/StringService";
 import useGetData from "./Hooks/useGetData";
 import AuthenticatedUserContext from "./Context/AuthenticatedUserContext";
 import Config from "../config";
 import UserContext from "./Context/UserContext";
 import UserNameAndFamily from "./UserNameAndFamily";
+import ClassTableViewItem from "./ClassTableViewItem";
+import ClassTableView from "./ClassTableView";
 
 const userApi = Config.ApiEndpoints.User;
+const classesApi = Config.ApiEndpoints.Class;
 
 function User(props) {
     const userId = props.match.params.id;
@@ -20,27 +21,31 @@ function User(props) {
 
     const browserUser = useContext(AuthenticatedUserContext);
     const [userData, userResponseStatus] = useGetData(userApi + userId, undefined, userId);
+    const [classes, classesResponseStatus] = useGetData(classesApi + "StudyOrTeaching");
+
+    // TODO: remove the dummy items created below.
+    classes &&
+    classes[0] &&
+    (classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0]);
 
     useEffect(() => {
-        if (responseStatus === 200 && data)
-            setUser(data);
-    }, [data, responseStatus]);
+        if (userResponseStatus === 200 && userData)
+            setUser(userData);
+    }, [userData, userResponseStatus]);
 
     const isHimSelf = browserUser && browserUser.sub === userId;
 
     return (
         <>
             <Navbar/>
-            {responseStatus === 404 && <p>کاربر وجود ندارد.</p>}
-            {user && (
+            {userResponseStatus === 404 && <p>کاربر وجود ندارد.</p>}
+            {user && userResponseStatus === 200 && (
                 <UserContext.Provider value={{user, setUser}}>
-                    <div className="container-percent">
-                        <div className="user">
-                            <UserImage imageId={user.imageId} username={nameOrEmail(user)}/>
-                            <UserNameAndFamily user={user} isHimSelf={isHimSelf}/>
-                            <UserDetails user={user} isHimSelf={isHimSelf}/>
-                            {isHimSelf && <div className="user-classes">Classes</div>}
-                        </div>
+                    <div className="user">
+                        <UserImage imageId={user.imageId} username={nameOrEmail(user)}/>
+                        <UserNameAndFamily user={user} isHimSelf={isHimSelf}/>
+                        <UserDetails user={user} isHimSelf={isHimSelf}/>
+                        {isHimSelf && classesResponseStatus === 200 && <ClassTableView classes={classes}/>}
                     </div>
                 </UserContext.Provider>
             )}
