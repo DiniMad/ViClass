@@ -27,9 +27,10 @@ function UserImage({imageId, username}) {
     const [fetchedImage, imageStatus] = useGetData(fileApi + imageId, !!imageId, imageId);
 
     useEffect(() => {
-        if (fetchedImageStatus === 200)
+        if (!imageId && image !== UserProfileImage) setImage(UserProfileImage);
+        else if (imageStatus === 200)
             setImage(getImageFromBase64(fetchedImage))
-    }, [fetchedImageStatus]);// Update UI image on user image received from API
+    }, [imageStatus, imageId]);// Update UI image on imageId or API response changed
     useEffect(() => {
         if (!postResponseStatus) return;
         if (postResponseStatus === 200)
@@ -70,7 +71,7 @@ function UserImage({imageId, username}) {
         <div className='user-image'>
             <div className='user-image-template'>
                 <img src={image}
-                     alt={fetchedImageStatus === 200
+                     alt={imageStatus === 200
                           ? `${username} profile image.`
                           : "Default user profile image."}/>
                 <button className='user-image-template-edit-button' onClick={handleEditImageButton}>
