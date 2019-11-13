@@ -15,7 +15,7 @@ const classApi = Config.ApiEndpoints.Class;
 function Class(props) {
     const classId = props.match.params.id;
 
-    const {data: classObject, responseStatus} = useGetData(classApi + classId);
+    const [classObject, responseStatus] = useGetData(classApi + classId);
 
     // TODO: Remove the log below
     classObject && console.log(classObject);
