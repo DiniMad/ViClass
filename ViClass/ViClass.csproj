@@ -40,6 +40,8 @@
     <Content Include="ClientApp\src\components\ClassInstructor.jsx" />
     <Content Include="ClientApp\src\components\ClassSharedFiles.jsx" />
     <Content Include="ClientApp\src\components\ClassStudents.jsx" />
+    <Content Include="ClientApp\src\components\ClassTableView.jsx" />
+    <Content Include="ClientApp\src\components\ClassTableViewItem.jsx" />
     <Content Include="ClientApp\src\components\ClassVideos.jsx" />
     <Content Include="ClientApp\src\components\Context\AuthenticatedUserContext.jsx" />
     <Content Include="ClientApp\src\components\Context\CurrentDateContext.jsx" />
@@ -53,7 +55,6 @@
     <Content Include="ClientApp\src\components\Hooks\useNotification.jsx" />
     <Content Include="ClientApp\src\components\Hooks\usePostData.jsx" />
     <Content Include="ClientApp\src\components\Hooks\usePut.jsx" />
-    <Content Include="ClientApp\src\components\ModalTemplate.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
     <Content Include="ClientApp\src\components\Notification.jsx" />
     <Content Include="ClientApp\src\components\Services\DateService.jsx" />
@@ -62,7 +63,6 @@
     <Content Include="ClientApp\src\components\Services\StringService.jsx" />
     <Content Include="ClientApp\src\components\Services\UserObjcetService.jsx" />
     <Content Include="ClientApp\src\components\User.jsx" />
-    <Content Include="ClientApp\src\components\UserDetail.jsx" />
     <Content Include="ClientApp\src\components\UserImage.jsx" />
     <Content Include="ClientApp\src\components\UserNameAndFamily.jsx" />
     <Content Include="ClientApp\src\components\UserTextEditButton.jsx" />
@@ -75,6 +75,8 @@
     <Content Include="ClientApp\src\image\RemoveIcon.svg" />
     <Content Include="ClientApp\src\image\Showcase.png" />
     <Content Include="ClientApp\src\image\StudentNumberIcon.svg" />
+    <Content Include="ClientApp\src\image\StudentIcon.svg" />
+    <Content Include="ClientApp\src\image\InstructorIcon.svg" />
     <Content Include="ClientApp\src\image\TickIcon.svg" />
     <Content Include="ClientApp\src\image\UserProfileImage.svg" />
     <Content Include="ClientApp\src\image\WarningIcon.svg" />
