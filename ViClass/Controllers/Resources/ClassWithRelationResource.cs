@@ -1,6 +1,6 @@
 namespace ViClass.Controllers.Resources
 {
-    public class SingleClassResource : ClassResource
+    public class ClassWithRelationResource : ClassResource
     {
         public RelationWithUser RelationWithUser { get; set; }
     }
