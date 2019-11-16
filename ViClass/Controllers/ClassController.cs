@@ -35,6 +35,7 @@ namespace ViClass.Controllers
                                         .Include(c => c.DayOfWeekSchedules)
                                         .Include(c => c.Videos)
                                         .ToListAsync();
+
             return _mapper.Map<List<Class>, List<ClassResource>>(classes);
         }
 
@@ -51,15 +52,15 @@ namespace ViClass.Controllers
                                                     c.Students.Any(s => s.StudentId == userId))
                                         .ToListAsync();
 
-            var classWithRelation = _mapper.Map<List<Class>, List<ClassWithRelationResource>>(classes);
-            classWithRelation.ForEach(c =>
+            var classesWithRelation = _mapper.Map<List<Class>, List<ClassWithRelationResource>>(classes);
+            classesWithRelation.ForEach(c =>
             {
                 c.RelationWithUser = c.InstructorId == userId
                                          ? RelationWithUser.Instructor
                                          : RelationWithUser.Student;
             });
 
-            return classWithRelation;
+            return classesWithRelation;
         }
 
         [HttpGet("{classId}")]
