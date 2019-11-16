@@ -193,11 +193,14 @@ nav {
 	z-index: 5;
 	transition-property: right, opacity;
 	transition: 1s ease;
-	background: #17a2b8;
 
 	&.show {
 		right: 5px;
 		opacity: 1;
+	}
+
+	&.info {
+		background: #17a2b8;
 	}
 
 	&.success {
@@ -208,6 +211,7 @@ nav {
 		background: #dc3545;
 	}
 }
+
 
 // Class Table View
 .class-table-view {
