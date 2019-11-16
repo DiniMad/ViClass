@@ -67,6 +67,15 @@ a {
 	background: transparent;
 }
 
+.unselectable {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
 
 // Common
 // Navbar
@@ -285,6 +294,334 @@ nav {
 	}
 }
 
+// Inputs
+.input {
+	// Input Text
+	&-text {
+		overflow: hidden;
+		position: relative;
+		padding: 0 2rem;
+		margin: 0 0 2rem;
+		width: 100%;
+
+		label {
+			position: absolute;
+			top: 1.5rem;
+			left: 0;
+			right: 0;
+			color: rgba(white, .5);
+			font: 400 3rem Roboto;
+			cursor: text;
+			margin: auto;
+			width: fit-content;
+			transition: .25s ease;
+		}
+
+		input, textarea {
+			display: block;
+			text-align: center;
+			color: white;
+			font-size: 2rem;
+			border: none;
+			border-radius: 0; // For iOS
+			padding-top: 3rem;
+			width: 100%;
+			background: inherit;
+			transition: .3s ease;
+
+			&.ltr {
+				direction: ltr;
+			}
+
+			&:valid {
+				~ label {
+					top: 0;
+					font: 700 2.5rem Roboto;
+					color: rgba(white, .5);
+				}
+			}
+
+			&:focus {
+				outline: none;
+
+				~ label {
+					top: 0;
+					font: 700 2.5rem Roboto;
+					color: dodgerblue;
+				}
+
+
+				~ .bar:before {
+					transform: scaleX(1);
+					opacity: 1;
+				}
+			}
+
+			&:-webkit-autofill {
+				-webkit-box-shadow: 0 0 0 1000px #d3d3d3 inset;
+				-webkit-text-fill-color: white !important;
+			}
+		}
+
+		.bar {
+			position: relative;
+			width: 100%;
+			height: .5rem;
+			background: rgba(white, .5);
+
+			&:before {
+				content: '';
+				position: absolute;
+				opacity: 0;
+				width: 100%;
+				height: 150%;
+				background: dodgerblue;
+				transform: scaleX(0);
+				transition: .3s ease;
+			}
+		}
+	}
+
+	&-text-classic {
+		$font-size: 2rem;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: $font-size;
+		height: 5rem;
+
+		label {
+			margin-left: 1rem;
+		}
+
+		input {
+			direction: ltr;
+			border: none;
+			outline: none;
+			font-size: $font-size;
+			background-color: transparent;
+			text-align: center;
+			width: 40%;
+
+			&:focus {
+				~ .bar:before {
+					transform: scaleX(1);
+					opacity: 1;
+				}
+			}
+		}
+
+		.bar {
+			position: absolute;
+			bottom: .1rem;
+			width: 100%;
+			height: .3rem;
+			background: transparent;
+
+			&:before {
+				content: '';
+				position: absolute;
+				opacity: 0;
+				width: 100%;
+				height: 150%;
+				background: dodgerblue;
+				transform: scaleX(0);
+				transition: .3s ease;
+			}
+		}
+	}
+
+	// Input Date
+	&-date {
+		$font-size: 2rem;
+		$big-input-width: 20%;
+		$small-input-width: 10%;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: $font-size;
+		height: 5rem;
+
+		> * {
+			&:nth-child(2) {
+				order: 5;
+				width: $big-input-width;
+			}
+
+			&:nth-child(3) {
+				order: 4;
+			}
+
+			&:nth-child(4) {
+				order: 3;
+				width: $small-input-width;
+			}
+
+			&:nth-child(5) {
+				order: 2;
+			}
+
+			&:nth-child(6) {
+				order: 1;
+				width: $small-input-width;
+			}
+		}
+
+		label {
+			margin-left: 1rem;
+		}
+
+		input {
+			direction: ltr;
+			border: none;
+			outline: none;
+			font-size: $font-size;
+			background-color: transparent;
+			text-align: center;
+
+			&:focus {
+				~ .bar:before {
+					transform: scaleX(1);
+					opacity: 1;
+				}
+			}
+		}
+
+		.bar {
+			position: absolute;
+			bottom: .1rem;
+			width: 100%;
+			height: .3rem;
+			background: transparent;
+
+			&:before {
+				content: '';
+				position: absolute;
+				opacity: 0;
+				width: 100%;
+				height: 150%;
+				background: dodgerblue;
+				transform: scaleX(0);
+				transition: .3s ease;
+			}
+		}
+
+		p {
+			margin: 0 .5rem;
+		}
+	}
+
+	// Input Time
+	&-time {
+		$font-size: 2rem;
+		direction: ltr;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		font-size: $font-size;
+		height: 3.5rem;
+
+		p {
+			margin: 0 .4rem;
+		}
+
+		input {
+			border-radius: .5rem;
+			border: none;
+			outline: none;
+			font-size: $font-size;
+			text-align: center;
+			padding: 0 .2rem;
+			width: 40%;
+
+			&:focus {
+				~ .bar:before {
+					transform: scaleX(1);
+					opacity: 1;
+				}
+			}
+		}
+
+		.bar {
+			position: absolute;
+			bottom: .1rem;
+			width: 100%;
+			height: .3rem;
+			background: transparent;
+
+			&:before {
+				content: '';
+				position: absolute;
+				opacity: 0;
+				width: 100%;
+				height: 150%;
+				background: white;
+				transform: scaleX(0);
+				transition: .3s ease;
+			}
+		}
+	}
+
+	// Input Day Of Week Schedule
+	&-day-of-week-schedule {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		padding: 0 1rem;
+		height: 18rem;
+
+		.item {
+			display: flex;
+			flex-direction: column;
+			justify-items: center;
+			align-items: center;
+			outline: none;
+			border: none;
+			border-radius: 1rem;
+			padding: 1rem .8rem;
+			width: 12rem;
+			max-height: 5rem;
+			background-color: gray;
+			transition-property: background-color, max-height;
+			transition: .3s ease;
+
+			.title {
+				font-size: 3rem;
+				cursor: default;
+				margin-bottom: 1rem;
+			}
+
+			.inputs {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+				max-height: 0;
+				transition: max-height .3s;
+
+				p#to {
+					margin: 1rem;
+					font-size: 2rem;
+				}
+			}
+
+			&.selected {
+				background-color: dodgerblue;
+				max-height: 17rem;
+
+				.inputs {
+					max-height: 100%;
+				}
+			}
+		}
+	}
+}
+
+
 // Web Pages
 // Home
 section#showcase {
@@ -426,6 +763,17 @@ section#showcase {
 	height: 95vh;
 	padding: 1rem 0;
 
+	&-all-class-message {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 50vh;
+
+		h2 {
+			font-size: 3.5rem;
+		}
+	}
+
 	.recycle-slider {
 		height: 50vh;
 	}
@@ -448,13 +796,16 @@ section#showcase {
 		}
 
 		&-title {
-			font-size: 2.5rem;
-			font-weight: bold;
 			text-align: center;
 			margin-bottom: 2rem;
 			margin-top: 1rem;
 			height: 20%;
 			transition: color .5s;
+
+			a {
+				font-weight: bold;
+				font-size: 2.8rem;
+			}
 		}
 
 		&-description,
@@ -514,7 +865,7 @@ section#showcase {
 	}
 }
 
-// Class page
+// Class Page
 .class {
 	display: grid;
 	grid-template-areas: "tit tit tit ins" "des des des ins" "dat dat dat stu" "she she she stu" "vid vid vid stu";
@@ -800,7 +1151,7 @@ section#showcase {
 	}
 }
 
-// User page
+// User Page
 .user {
 	display: flex;
 	flex-direction: column;
@@ -848,84 +1199,11 @@ section#showcase {
 			overflow: hidden;
 			position: relative;
 			padding: 0 2rem;
-			margin: 4rem 0 2rem;
+			margin: 6rem 0 2rem;
 			width: 100%;
 
-			label {
-				position: absolute;
-				top: $width/15;
-				left: 0;
-				right: 0;
-				color: rgba(white, .5);
-				font: 400 $width/15 Roboto;
-				cursor: text;
-				margin: auto;
-				width: fit-content;
-				transition: .25s ease;
-			}
-
-			input {
-				display: block;
-				text-align: center;
-				color: white;
-				font-size: $width/18;
-				border: none;
-				border-radius: 0; // For iOS
-				padding-top: $width/15;
-				width: 100%;
-				background: inherit;
-				transition: .3s ease;
-
-				&.ltr {
-					direction: ltr;
-				}
-
-				&:valid {
-					~ label {
-						top: 0;
-						font: 700 $width/25 Roboto;
-						color: rgba(white, .5);
-					}
-				}
-
-				&:focus {
-					outline: none;
-
-					~ label {
-						top: 0;
-						font: 700 $width/25 Roboto;
-						color: dodgerblue;
-					}
-
-
-					~ .bar:before {
-						transform: scaleX(1);
-						opacity: 1;
-					}
-				}
-
-				&:-webkit-autofill {
-					-webkit-box-shadow: 0 0 0 1000px #d3d3d3 inset;
-					-webkit-text-fill-color: white !important;
-				}
-			}
-
-			.bar {
-				position: relative;
-				width: $width;
-				height: $width/150;
-				background: rgba(white, .5);
-
-				&:before {
-					content: '';
-					position: absolute;
-					opacity: 0;
-					width: 100%;
-					height: 150%;
-					background: dodgerblue;
-					transform: scaleX(0);
-					transition: .3s ease;
-				}
+			input.ltr {
+				direction: ltr;
 			}
 
 			.register {
@@ -934,7 +1212,7 @@ section#showcase {
 				justify-content: center;
 				align-items: center;
 
-				button {
+				input {
 					color: rgba(255, 255, 255, .5);
 					font-size: 3rem;
 					outline: none;
@@ -1088,6 +1366,83 @@ section#showcase {
 	.class-table-view {
 		height: 30vh;
 		background: cadetblue;
+	}
+}
+
+// Create Class Page
+.create-class {
+	padding-top: 2rem;
+	height: 95vh;
+
+	.input-text {
+		margin-bottom: 2rem;
+
+		label {
+			font-size: 3.5rem;
+		}
+	}
+
+	form {
+		.student-number-details {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+
+			.input-text-classic {
+				input {
+					width: 20%;
+				}
+			}
+		}
+
+		.date-details {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+			margin: 1rem 0;
+		}
+
+		.time-input-warning {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2.5rem;
+			opacity: 0;
+			border-radius: .5rem;
+			margin: 1rem 2rem;
+			padding: .2rem 0;
+			background-color: rgba(255, 125, 0, .8);
+			transition: opacity .5s ease;
+
+			&.display {
+				opacity: 1;
+			}
+
+		}
+
+		.register {
+			margin: 4rem 0 1rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			input {
+				color: rgba(255, 255, 255, .5);
+				font-size: 3rem;
+				outline: none;
+				border: .2rem dodgerblue solid;
+				border-radius: 1rem;
+				padding: .5rem 3rem .2rem;
+				background: transparent;
+				transition-property: background-color, color;
+				transition: .3s ease;
+
+				&:hover {
+					color: white;
+					background: dodgerblue;
+				}
+			}
+		}
 	}
 }
 
