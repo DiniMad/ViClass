@@ -7,8 +7,8 @@ const hslColorConf = "30%, 72%";
 
 //  const hslColorDark='100%, 15%'
 
-function ClassTemplate({classObject}) {
-    const {daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek} = DateService();
+function ClassTablet({classObject}) {
+    const {dateServiceInitiated, daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek} = DateService();
     // Destructuring class properties from classObject
     const {
         id,
@@ -26,14 +26,14 @@ function ClassTemplate({classObject}) {
 
     const renderClassDateBadge = () => {
         // If the class has not started yet
-        if (!isPastAsPersianDate(startDateFormatted))
+        if (dateServiceInitiated && !isPastAsPersianDate(startDateFormatted))
             return (
                 <ul>
                     <li className="green">{startDateFormatted}</li>
                 </ul>
             );
         // If the class has been ended
-        if (isPastAsPersianDate(endDateFormatted))
+        if (dateServiceInitiated && isPastAsPersianDate(endDateFormatted))
             return (
                 <ul>
                     <li className="red">{endDateFormatted}</li>
@@ -52,10 +52,10 @@ function ClassTemplate({classObject}) {
                            ? "low-capacity"
                            : null}>
                 {dayOfWeekSchedules.map(({id, dayOfWeek}, k) => (
-                    <li key={k} className={isCurrentDayOfWeek(dayOfWeek)
+                    <li key={k} className={dateServiceInitiated && isCurrentDayOfWeek(dayOfWeek)
                                            ? "blue-primary"
                                            : null}>
-                        {daysOfWeekConverter(dayOfWeek)}
+                        {dateServiceInitiated && daysOfWeekConverter(dayOfWeek)}
                     </li>
                 ))}
             </ul>
@@ -70,9 +70,9 @@ function ClassTemplate({classObject}) {
                 backgroundImage: `linear-gradient(to bottom right,hsl(${firstRandomNumber}, ${hslColorConf}),hsl(${secondRandomNumber}, ${hslColorConf})`
             }}
         >
-            <Link to={`/class/${id}`} className="class-template-title">
-                <h3>{summarizeText(title, 26)}</h3>
-            </Link>
+            <h3 className="class-template-title"><Link to={`/class/${id}`}>
+                {summarizeText(title, 26)}
+            </Link></h3>
             <p className="class-template-description">{summarizeText(description, 180, 35)}</p>
             <Link to={`/user/${instructor.id}`} className="class-template-instructor">
                 {summarizeText(instructor.nameAndFamily, 30)}
@@ -82,4 +82,4 @@ function ClassTemplate({classObject}) {
     );
 }
 
-export default ClassTemplate;
+export default ClassTablet;
