@@ -17,8 +17,9 @@ function Navbar() {
             {user && (
                 <>
                     {/* TODO: It is better to change the link parameter to username instead of userid*/}
-                    <Link to={`/user/${user.sub}`}><p>{user && user.name}</p></Link>
+                    <Link to={`/user/${user.sub}`}><p>پروفایل</p></Link>
                     <Link to="/dashboard">داشبورد</Link>
+                    <Link to="/create">ایجاد کلاس</Link>
                     <NavLink tag={Link} className="text-dark" to={logoutPath}>خروج</NavLink>
                 </>
             )}
