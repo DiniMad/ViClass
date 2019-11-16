@@ -20,10 +20,12 @@ function ClassTableViewItem({classObject}) {
         relationWithUser,
         students
     } = classObject;
-    dayOfWeekSchedules[0].dayOfWeek = 4;
-    dayOfWeekSchedules[1].dayOfWeek = 4;
-    const {whenIsNextClassDate} = DateService();
-    [dateBadgeClasses, dateBadgeText] = whenIsNextClassDate(startDateFormatted, endDateFormatted, dayOfWeekSchedules);
+
+    const {dateServiceInitiated, whenIsNextClassDate} = DateService();
+    
+    [dateBadgeClasses, dateBadgeText] = dateServiceInitiated
+                                        ? whenIsNextClassDate(startDateFormatted, endDateFormatted, dayOfWeekSchedules)
+                                        : [null, null];
 
     return (
         <div className="class-table-view-item">
