@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import ModalDialog from "./ModalDialog";
-import useInput from "./Hooks/useInput";
 import usePutData from "./Hooks/usePutData";
 import AuthenticatedUserContext from "./Context/AuthenticatedUserContext";
 import EditIcon from "../image/EditIcon.svg"
 import Config from "../config"
 import NotificationContext from "./Context/NotificationContext";
 import UserContext from "./Context/UserContext";
+import InputText from "./InputText";
 
 const userApi = Config.ApiEndpoints.User;
 
@@ -25,7 +25,6 @@ function UserTextEditButton({name, value}) {
 
     const inputTag = useRef(null);
 
-    const {text, handleTextChange} = useInput(inputRegex, inputLength, !displayEditModal);
     const {data, responseStatus, put} = usePutData(userApi + authenticatedUser.sub);
 
     useEffect(() => {
@@ -51,13 +50,15 @@ function UserTextEditButton({name, value}) {
     }, [data, responseStatus]); // On put response received
 
     const handleEditButton = () => setDisplayEditModal(true);
-    const handleSaveButton = () => {
+    const handleSubmit = e => {
+        e.preventDefault(); // Prevent default behavior
+
         // If entered value and previous value are same dont do anything
         if (inputTag.current && inputTag.current.value === value) return;
 
         const textEntered = inputTag.current.value;
 
-        if(!validationNewValue(name,textEntered,displayNotification)) return;
+        if (!validationNewValue(name, textEntered, displayNotification)) return;
 
         // Store previous value and its flag
         setPreviousValue(user[modelPropertyName]);
@@ -86,15 +87,19 @@ function UserTextEditButton({name, value}) {
                 <button onClick={handleEditButton}><img src={EditIcon} alt="Edit icon"/></button>
             </div>
             <ModalDialog visible={displayEditModal} setVisibility={setDisplayEditModal}>
-                {displayEditModal && <div className="user-text-edit-form">
-                    <input ref={inputTag} type="text" name={name} id={name} value={text}
-                           onChange={handleTextChange} required/>
-                    <label htmlFor={name} className={inputClasses}>{labelText}</label>
-                    <div className="bar">{}</div>
-                    <div className="register">
-                        <button onClick={handleSaveButton}>ثبت</button>
+                {displayEditModal && <form onSubmit={handleSubmit}>
+                    <div className="user-text-edit-form">
+                        <InputText name={name}
+                                   label={labelText}
+                                   length={inputLength}
+                                   inputRegex={inputRegex}
+                                   inputClass={inputClasses}
+                                   width={550}/>
+                        <div className="register">
+                            <input type="submit" value="ثبت"/>
+                        </div>
                     </div>
-                </div>}
+                </form>}
             </ModalDialog>
         </>
     );
@@ -140,10 +145,10 @@ const parseProperties = name => {
     }
     return {labelText, editButtonClasses, inputRegex, inputLength, modelPropertyName, inputClasses};
 };
-const validationNewValue = (name,textEntered,displayNotification) => {
+const validationNewValue = (name, textEntered, displayNotification) => {
     let emailValidationRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/g;
     let phoneValidationRegex = /^09[0-9]{9}/g;
-    
+
     switch (name) {
         case "name":
             if (textEntered.length === 0) {
@@ -171,6 +176,6 @@ const validationNewValue = (name,textEntered,displayNotification) => {
             }
             break;
     }
-    
+
     return true;
 };
