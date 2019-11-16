@@ -12,19 +12,18 @@ import CurrentDateContext from "./components/Context/CurrentDateContext";
 import Class from "./components/Class";
 import User from "./components/User";
 import Notification from "./components/Notification";
-import useGetData from "./components/Hooks/useGetData";
 import useAuthenticateUser from "./components/Hooks/useAuthenticateUser";
 import useNotification from "./components/Hooks/useNotification";
 import AuthenticatedUserContext from "./components/Context/AuthenticatedUserContext";
 import NotificationContext from "./components/Context/NotificationContext";
-import Config from "./config";
 import "./styles/style.min.css";
+import CreateClass from "./components/CreateClass";
+import useCurrentDate from "./components/Hooks/useCurrentDate";
 
-const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
 export default function App() {
 
-    const [ currentDate, responseStatus] = useGetData(currentDateApi);
+    const [currentDate, setCurrentDate] = useCurrentDate();
     const user = useAuthenticateUser();
     const {display, textTag, notificationType, displayNotification} = useNotification();
 
@@ -36,8 +35,9 @@ export default function App() {
                 <Route path="/loading" component={Loading}/>
                 <AuthorizeRoute path="/fetch-data" component={FetchData}/>
                 <AuthenticatedUserContext.Provider value={user}>
-                    <CurrentDateContext.Provider value={responseStatus === 200 && currentDate}>
+                    <CurrentDateContext.Provider value={currentDate && [currentDate, setCurrentDate]}>
                         <AuthorizeRoute path="/dashboard" component={Dashboard}/>
+                        <AuthorizeRoute path="/create" component={CreateClass}/>
                         <AuthorizeRoute path="/class/:id" component={Class}/>
                         <AuthorizeRoute path="/user/:id" component={User}/>
                     </CurrentDateContext.Provider>
