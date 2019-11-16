@@ -1,16 +1,34 @@
-import {useContext} from "react"
+import React, {useState, useEffect, useContext} from 'react';
+import useGetData from "../Hooks/useGetData";
+import Config from "../../config";
 import CurrentDateContext from "../Context/CurrentDateContext";
-import React from 'react';
+
+const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
 function DateService() {
-    const currentDate = useContext(CurrentDateContext);
+    const [dateServiceInitiated, setDateServiceInitiated] = useState(false);
+
+    const [currentDate, setCurrentData] = useContext(CurrentDateContext); // Stored current date
+
+    const [date, dateResponseStatus] = useGetData(currentDateApi, !currentDate);
+
+    useEffect(() => {
+        if (currentDate)                            // stored date existed
+            setDateServiceInitiated(true);
+        else if (dateResponseStatus === 200) {      // date fetched
+            setDateServiceInitiated(true);
+            setCurrentData(date);
+        }
+        else                                        // date nether existed or has been fetched
+            setDateServiceInitiated(false);
+    }, [date, dateResponseStatus]); // Set dateServiceInitiated
+
     const currentDateFormatted = currentDate
                                  ? currentDate.split(",")[0]
                                  : null;
     const currentDayNumberOfWeek = currentDate
                                    ? currentDate.split(",")[1]
                                    : null;
-
 
     const daysOfWeekConverter = dayNumber => {
         switch (dayNumber) {
@@ -100,7 +118,7 @@ function DateService() {
         return ["future", `${daysIntervalUntilNextClassDate} روز بعد`];
     };
 
-    return {daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek, whenIsNextClassDate}
+    return {dateServiceInitiated, daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek, whenIsNextClassDate}
 }
 
 export default DateService;
