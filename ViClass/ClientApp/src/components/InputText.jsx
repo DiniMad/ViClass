@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import useInput from "./Hooks/useInput";
 
-function InputText({name, label, inputRegex,length, inputClass, lines = 1, width}) {
+function InputText({name, label, inputRegex, length, inputClass, lines = 1, width, setText}) {
     let style = width
                 ? {width: width}
                 : null;
 
     const [text, handleTextChange] = useInput(inputRegex, length, lines);
 
+    useEffect(() => {
+        if (setText)
+            setText(text);
+    }, [text]);
     return (
         <div className="input-text" style={style}>
             {lines === 1
