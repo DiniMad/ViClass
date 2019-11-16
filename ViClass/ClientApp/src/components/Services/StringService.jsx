@@ -31,3 +31,16 @@ export const summarizeText = (text, length, lineWrapLength = 0) => {
     let cutOfTextOnWhiteSpace = cutOfText.substring(0, indexOfLastWhiteSpace);
     return cutOfTextOnWhiteSpace + "...";
 };
+export const normalizeNumberToFixLength = (number: string, length: number) => {
+    if (number.length > length) return number.substring(0, length);
+    if (number.length < length) {
+        const countOfZerosNeeded = length - number.length;
+        let result = "";
+        for (let i = 0; i < countOfZerosNeeded; i++) {
+            result += "0"
+        }
+        result += number;
+        return result;
+    }
+    return number;
+};
