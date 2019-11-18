@@ -328,10 +328,16 @@ nav {
 			font-size: 2rem;
 			border: none;
 			border-radius: 0; // For iOS
-			padding-top: 3rem;
+			margin-top: 3rem;
 			width: 100%;
 			background: inherit;
 			transition: .3s ease;
+			// Remove scrollbar in firefox
+			scrollbar-width: none;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
 
 			&.ltr {
 				direction: ltr;
@@ -362,7 +368,7 @@ nav {
 			}
 
 			&:-webkit-autofill {
-				-webkit-box-shadow: 0 0 0 1000px #d3d3d3 inset;
+				-webkit-box-shadow: 0 0 0 1000px white inset;
 				-webkit-text-fill-color: white !important;
 			}
 		}
@@ -413,6 +419,11 @@ nav {
 					transform: scaleX(1);
 					opacity: 1;
 				}
+			}
+
+			&:-webkit-autofill {
+				-webkit-box-shadow: 0 0 0 1000px white inset;
+				-webkit-text-fill-color: white !important;
 			}
 		}
 
@@ -491,6 +502,11 @@ nav {
 					opacity: 1;
 				}
 			}
+
+			&:-webkit-autofill {
+				-webkit-box-shadow: 0 0 0 1000px white inset;
+				-webkit-text-fill-color: white !important;
+			}
 		}
 
 		.bar {
@@ -546,6 +562,11 @@ nav {
 					transform: scaleX(1);
 					opacity: 1;
 				}
+			}
+
+			&:-webkit-autofill {
+				-webkit-box-shadow: 0 0 0 1000px white inset;
+				-webkit-text-fill-color: white !important;
 			}
 		}
 
