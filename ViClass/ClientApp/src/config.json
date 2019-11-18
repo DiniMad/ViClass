@@ -4,5 +4,9 @@
     "Class": "/api/class/",
     "User": "api/user/",
     "File": "api/file/"
+  },
+  "ModelMaxLengthAllowed": {
+    "ClassTitle": 64,
+    "ClassDescription": 512
   }
 }
