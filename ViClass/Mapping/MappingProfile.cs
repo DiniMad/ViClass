@@ -17,6 +17,9 @@ namespace ViClass.Mapping
             CreateMap<DayOfWeekSchedule, DayOfWeekScheduleResource>();
             CreateMap<Class, ClassWithRelationResource>()
                 .ForMember(cs => cs.Students, opt => opt.MapFrom(c => c.Students.Select(cs => cs.Student)));
+
+            CreateMap<ClassResource, Class>();
+            CreateMap<DayOfWeekScheduleResource, DayOfWeekSchedule>();
         }
     }
 }
