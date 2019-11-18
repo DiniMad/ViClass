@@ -1,35 +1,38 @@
-import React, {useState, useEffect, useContext} from 'react';
-import useGetData from "../Hooks/useGetData";
-import Config from "../../config";
+import React, {useContext} from 'react';
+import Http from "./HttpService";
 import CurrentDateContext from "../Context/CurrentDateContext";
+import Config from "../../config";
 
 const currentDateApi = Config.ApiEndpoints.CurrentDate;
 
 function DateService() {
-    const [dateServiceInitiated, setDateServiceInitiated] = useState(false);
+    const currentDateCallResponse = Http.get(currentDateApi).catch(error => console.log(error));
 
-    const [currentDate, setCurrentData] = useContext(CurrentDateContext); // Stored current date
+    const currentDateObject = useContext(CurrentDateContext); // Stored current date
 
-    const [date, dateResponseStatus] = useGetData(currentDateApi, !currentDate);
+    const [currentDate, setCurrentData] = currentDateObject || [null, null];
 
-    useEffect(() => {
-        if (currentDate)                            // stored date existed
-            setDateServiceInitiated(true);
-        else if (dateResponseStatus === 200) {      // date fetched
-            setDateServiceInitiated(true);
-            setCurrentData(date);
-        }
-        else                                        // date nether existed or has been fetched
-            setDateServiceInitiated(false);
-    }, [date, dateResponseStatus]); // Set dateServiceInitiated
-
-    const currentDateFormatted = currentDate
-                                 ? currentDate.split(",")[0]
-                                 : null;
+    const currentDateFormatted: string = currentDate
+                                         ? currentDate.split(",")[0]
+                                         : null;
     const currentDayNumberOfWeek = currentDate
                                    ? currentDate.split(",")[1]
                                    : null;
 
+    const initiateDateService = async (): boolean => {
+        console.log(currentDate);
+        if (currentDate)
+            return true;
+        currentDateCallResponse.then(response => {
+            setCurrentData(response.data);
+            return true;
+        });
+    };
+    const getTomorrow = () => {
+        const todayArray = currentDateFormatted.split("/");
+        const tomorrowDayOfMonth = parseInt(todayArray[2]) + 1;
+        return `${todayArray[0]}/${todayArray[1]}/${tomorrowDayOfMonth}`;
+    };
     const daysOfWeekConverter = dayNumber => {
         switch (dayNumber) {
             case 1:
@@ -52,27 +55,7 @@ function DateService() {
         }
     };
     const isPastAsPersianDate = (dateToCheck) => {
-        let dateYear, dateMonth, dateDay, nowYear, nowMonth, nowDay;
-        try {
-            // Destructuring properties from dates
-            dateYear = parseInt(dateToCheck.split("/")[0]);
-            dateMonth = parseInt(dateToCheck.split("/")[1]);
-            dateDay = parseInt(dateToCheck.split("/")[2]);
-            nowYear = parseInt(currentDateFormatted.split("/")[0]);
-            nowMonth = parseInt(currentDateFormatted.split("/")[1]);
-            nowDay = parseInt(currentDateFormatted.split("/")[2]);
-        } catch {
-            throw "Parameter is not in a valid persian date format.";
-        }
-
-        // If years not same
-        if (dateYear !== nowYear) return nowYear > dateYear;
-        // If months not same
-        if (dateMonth !== nowMonth) return nowMonth > dateMonth;
-        // If days not same
-        if (dateDay !== nowDay) return nowDay > dateDay;
-        // If it is same year same month and same day(means its today) then its not past
-        return false;
+        return isFirstPersianDateGreaterThanSecond(currentDateFormatted, dateToCheck);
     };
     const isCurrentDayOfWeek = dayNumberOfWeek => dayNumberOfWeek === currentDayNumberOfWeek;
     const isTodayAsPersianDate = (dateToCheck) => {
@@ -117,10 +100,44 @@ function DateService() {
             return ["future", "فردا"];
         return ["future", `${daysIntervalUntilNextClassDate} روز بعد`];
     };
+    const isFirstPersianDateGreaterThanSecond = (firstDate, secondDate): boolean => {
+        let firstYear, firstMonth, firstDay, secondYear, secondMonth, secondDay;
+        try {
+            // Destructuring properties from dates
+            firstYear = parseInt(firstDate.split("/")[0]);
+            firstMonth = parseInt(firstDate.split("/")[1]);
+            firstDay = parseInt(firstDate.split("/")[2]);
+            secondYear = parseInt(secondDate.split("/")[0]);
+            secondMonth = parseInt(secondDate.split("/")[1]);
+            secondDay = parseInt(secondDate.split("/")[2]);
+        } catch {
+            throw "Parameter is not in a valid persian date format.";
+        }
 
-    return {dateServiceInitiated, daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek, whenIsNextClassDate}
+        // If years not same
+        if (firstYear !== secondYear) return firstYear > secondYear;
+        // If months not same
+        if (firstMonth !== secondMonth) return firstMonth > secondMonth;
+        // If days not same
+        if (firstDay !== secondDay) return firstDay > secondDay;
+        // If it is same year same month and same day(means its today) then its not past
+        return false;
+    };
+
+    return {
+        currentDate,
+        initiateDateService,
+        getTomorrow,
+        daysOfWeekConverter,
+        isPastAsPersianDate,
+        isCurrentDayOfWeek,
+        whenIsNextClassDate,
+        isFirstPersianDateGreaterThanSecond
+    }
 }
 
 export default DateService;
+const getDateAndDayNumberOfWeek = date => {
 
+};
 
