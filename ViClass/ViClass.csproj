@@ -66,6 +66,7 @@
     <Content Include="ClientApp\src\components\InputTime.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
     <Content Include="ClientApp\src\components\Notification.jsx" />
+    <Content Include="ClientApp\src\components\Services\ClassService.jsx" />
     <Content Include="ClientApp\src\components\Services\DateService.jsx" />
     <Content Include="ClientApp\src\components\Services\FileService.jsx" />
     <Content Include="ClientApp\src\components\Services\ImageService.jsx" />
