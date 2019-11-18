@@ -22,7 +22,7 @@ function UserImage({imageId, username}) {
 
     const displayNotification = useContext(NotificationContext);
 
-    const {data: postData, responseStatus: postResponseStatus, post} = usePostData(`${fileApi}ProfileImage`);
+    const [postData, postResponseStatus, post] = usePostData(`${fileApi}ProfileImage`);
     // Get user image if imageId is not null
     const [fetchedImage, imageStatus] = useGetData(fileApi + imageId, !!imageId, imageId);
 
