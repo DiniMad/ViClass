@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import {nameOrEmail} from "./Services/UserObjcetService";
 import {summarizeText} from "./Services/StringService";
@@ -20,13 +20,11 @@ function ClassTableViewItem({classObject}) {
         relationWithUser,
         students
     } = classObject;
+    const {currentDate, whenIsNextClassDate} = DateService();
 
-    const {dateServiceInitiated, whenIsNextClassDate} = DateService();
-    
-    [dateBadgeClasses, dateBadgeText] = dateServiceInitiated
+    [dateBadgeClasses, dateBadgeText] = currentDate
                                         ? whenIsNextClassDate(startDateFormatted, endDateFormatted, dayOfWeekSchedules)
                                         : [null, null];
-
     return (
         <div className="class-table-view-item">
             <div className="class-table-view-item-icon">
