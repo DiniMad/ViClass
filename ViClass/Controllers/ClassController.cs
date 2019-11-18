@@ -11,11 +11,13 @@ using Microsoft.AspNetCore.Http.Features;
 using ViClass.Controllers.Resources;
 using ViClass.Data;
 using ViClass.Models;
+using ViClass.Utility;
 
 namespace ViClass.Controllers
 {
     [Authorize(AuthenticationSchemes = "Identity.Application")]
     [Route("api/[controller]")]
+    [ApiController]
     public class ClassController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -98,6 +100,30 @@ namespace ViClass.Controllers
             classResource.RelationWithUser = relationWithUser;
 
             return classResource;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ClassResource>> AddClass(ClassResource classResource)
+        {
+            var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
+
+            // Validation classResource
+            var error = classResource.IsValid();
+            if (!string.IsNullOrWhiteSpace(error)) return BadRequest(error);
+
+            // Convert to model class
+            var classModel = _mapper.Map<ClassResource, Class>(classResource);
+            classModel.InstructorId = userId;
+
+            // Store in database
+            await _context.Classes.AddAsync(classModel);
+            await _context.SaveChangesAsync();
+
+            // Build URL to created class
+            var request = HttpContext.Request;
+            var url     = $"{request.Scheme}://{Request.Host}{Request.Path}{classModel.Id}";
+
+            return Created(url, Guid.NewGuid());
         }
     }
 }
