@@ -44,3 +44,18 @@ export const normalizeNumberToFixLength = (number: string, length: number) => {
     }
     return number;
 };
+export const isFirstTimeGreaterThanSecond = (firstTime: string, secondTime: string): boolean => {
+    let firstHour, firstMinute, secondHour, secondMinute;
+
+    try {
+        firstHour = parseInt(firstTime.split(":")[0]);
+        firstMinute = parseInt(firstTime.split(":")[1]);
+        secondHour = parseInt(secondTime.split(":")[0]);
+        secondMinute = parseInt(secondTime.split(":")[1]);
+    } catch {
+        throw "Time parameter is not in a valid format."
+    }
+    
+    if (firstHour > secondHour) return true;
+    return firstHour === secondHour && firstMinute > secondMinute;
+};
