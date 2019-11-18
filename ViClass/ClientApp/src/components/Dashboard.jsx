@@ -15,10 +15,7 @@ function Dashboard() {
     const [classesRelatedToUser, classesRelatedToUserResponseStatus] = useGetData(classesApi + "StudyOrTeaching");
 
     // TODO: remove the dummy items created below.
-    allClasses &&
-    allClasses[0] &&
-    (allClasses[1] = allClasses[2] = allClasses[3] = allClasses[4] = allClasses[5] = allClasses[6] = allClasses[7] =
-        allClasses[0]);
+    allClasses && console.log(allClasses);
     classesRelatedToUser && console.log(classesRelatedToUser);
 
     return (
