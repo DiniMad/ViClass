@@ -11,6 +11,8 @@ import useGetData from "./Hooks/useGetData";
 import Config from "../config";
 
 const classApi = Config.ApiEndpoints.Class;
+const titleMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassTitle;
+const descriptionMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassDescription;
 
 function Class(props) {
     const classId = props.match.params.id;
@@ -58,10 +60,10 @@ function Class(props) {
                         <ClassOptionButton classId={classObject.id} relationWithUser={classObject.relationWithUser}/>
                         <ClassInstructor instructor={classObject.instructor}/>
                         <div className="class-title">
-                            <h1>{summarizeText(classObject.title, 64)}</h1>
+                            <h1>{summarizeText(classObject.title, titleMaxLengthAllowed)}</h1>
                         </div>
                         <div className="class-description">
-                            <h2>{summarizeText(classObject.description, 512, 85)}</h2>
+                            <h2>{summarizeText(classObject.description, descriptionMaxLengthAllowed, 85)}</h2>
                         </div>
                         <ClassStudents students={classObject.students}/>
                         <ClassDate
