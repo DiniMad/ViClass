@@ -10,9 +10,10 @@ namespace ViClass.ModelConfigurations
         {
             builder.Property(c => c.Title)
                    .IsRequired()
-                   .HasMaxLength(255);
+                   .HasMaxLength(64);
             builder.Property(c => c.Description)
-                   .IsRequired();
+                   .IsRequired()
+                   .HasMaxLength(512);
             builder.Property(c => c.StartDateFormatted)
                    .IsRequired()
                    .HasMaxLength(10);
