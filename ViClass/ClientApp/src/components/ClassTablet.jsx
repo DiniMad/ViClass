@@ -8,7 +8,7 @@ const hslColorConf = "30%, 72%";
 //  const hslColorDark='100%, 15%'
 
 function ClassTablet({classObject}) {
-    const {dateServiceInitiated, daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek} = DateService();
+    const {currentDate, daysOfWeekConverter, isPastAsPersianDate, isCurrentDayOfWeek} = DateService();
     // Destructuring class properties from classObject
     const {
         id,
@@ -26,14 +26,15 @@ function ClassTablet({classObject}) {
 
     const renderClassDateBadge = () => {
         // If the class has not started yet
-        if (dateServiceInitiated && !isPastAsPersianDate(startDateFormatted))
+        if (!currentDate) return null;
+        if (!isPastAsPersianDate(startDateFormatted))
             return (
                 <ul>
                     <li className="green">{startDateFormatted}</li>
                 </ul>
             );
         // If the class has been ended
-        if (dateServiceInitiated && isPastAsPersianDate(endDateFormatted))
+        if (isPastAsPersianDate(endDateFormatted))
             return (
                 <ul>
                     <li className="red">{endDateFormatted}</li>
@@ -52,10 +53,10 @@ function ClassTablet({classObject}) {
                            ? "low-capacity"
                            : null}>
                 {dayOfWeekSchedules.map(({id, dayOfWeek}, k) => (
-                    <li key={k} className={dateServiceInitiated && isCurrentDayOfWeek(dayOfWeek)
+                    <li key={k} className={currentDate && isCurrentDayOfWeek(dayOfWeek)
                                            ? "blue-primary"
                                            : null}>
-                        {dateServiceInitiated && daysOfWeekConverter(dayOfWeek)}
+                        {daysOfWeekConverter(dayOfWeek)}
                     </li>
                 ))}
             </ul>
