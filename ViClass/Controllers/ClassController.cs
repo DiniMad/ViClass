@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Features;
 using ViClass.Controllers.Resources;
 using ViClass.Data;
 using ViClass.Models;
@@ -124,6 +122,44 @@ namespace ViClass.Controllers
             var url     = $"{request.Scheme}://{Request.Host}{Request.Path}{classModel.Id}";
 
             return Created(url, Guid.NewGuid());
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ActionOnClass(int id, ClassActionResource classAction)
+        {
+            var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
+
+            switch (classAction.Action)
+            {
+                case ClassAction.Register:
+                    var requestedClass = await _context.Classes.SingleOrDefaultAsync(c => c.Id == id);
+                    if (requestedClass is null) return BadRequest("The class not found.");
+                    await _context.ClassStudent.AddAsync(new ClassStudent {ClassId = id, StudentId = userId});
+                    break;
+
+                case ClassAction.Unregister:
+                    var entityToRemove =
+                        await _context.ClassStudent
+                                      .SingleOrDefaultAsync(cs => cs.StudentId == userId && cs.ClassId == id);
+                    if (entityToRemove is null) return BadRequest("The requested class with this student not found.");
+                    _context.ClassStudent.Remove(entityToRemove);
+                    break;
+
+                case ClassAction.Remove:
+                    var theClass = await _context.Classes.SingleOrDefaultAsync(c => c.Id == id);
+                    if (theClass is null) return BadRequest("The class not found.");
+                    if (theClass.InstructorId != userId)
+                        return BadRequest("Only instructor of a class can remove the class.");
+                    if (theClass.Students.Count > 0) return BadRequest("Only classes without students can be removed.");
+                    _context.Classes.Remove(theClass);
+                    break;
+                default:
+                    return BadRequest("Unexpected error happened.");
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(Guid.NewGuid());
         }
     }
 }
