@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import LeftArrow from "../image/ArrowIconPointToLeft.svg";
 import "./RecycleSliderStyle.scss";
 
@@ -8,9 +8,13 @@ let indexOfFirstItemToShow = 0;
 let browserLastWidth = null;
 let items = null;
 
-function RecycleSlider(props) {
-    const [{slice, leftMargin}, setSliceAndLeftMargin] = useState({slice: null, leftMargin: null});
+function RecycleSlider({itemCountToShow, children, itemWidth}) {
     items = document.getElementsByClassName("slider-item");
+
+    const [{slice, leftMargin}, setSliceAndLeftMargin] = useState({slice: null, leftMargin: null});
+
+    const leftButton = useRef(null);
+    const rightButton = useRef(null);
 
     useEffect(() => {
         calculateItemPosition();
@@ -28,9 +32,6 @@ function RecycleSlider(props) {
     };
     const debouncedWindowsResized = debounce(onWindowsResized, 500);
     const calculateItemPosition = () => {
-        // Unpack some of props variables.
-        let {itemCountToShow, children, itemWidth} = props;
-
         // Calculate width available based on browser width minus width needed for the two left and right buttons
         let widthAvailable = window.innerWidth - buttonArea * 2;
 
@@ -73,7 +74,7 @@ function RecycleSlider(props) {
     };
     const handleLeftButtonClicked = () => {
         // Move all items one index to right.
-        for (let i = 0; i <= props.children.length - 1; i++) {
+        for (let i = 0; i <= children.length - 1; i++) {
             const item = items[i];
             item.style.left = (i - indexOfFirstItemToShow + 1) * slice + leftMargin + buttonArea + "px";
 
@@ -90,7 +91,7 @@ function RecycleSlider(props) {
     };
     const handleRightButtonClicked = () => {
         // Move all items one index to left.
-        for (let i = 0; i <= props.children.length - 1; i++) {
+        for (let i = 0; i <= children.length - 1; i++) {
             const item = items[i];
             item.style.left = (i - indexOfFirstItemToShow - 1) * slice + leftMargin + buttonArea + "px";
 
@@ -106,28 +107,28 @@ function RecycleSlider(props) {
         updateStateOfArrowButtons();
     };
     const updateStateOfArrowButtons = () => {
-        const hasLeftItemToMove = indexOfFirstItemToShow > 0;
-        if (hasLeftItemToMove) document.getElementById("slider-left-button").className = "show";
-        else document.getElementById("slider-left-button").className = "";
+        const hasLeftItem = indexOfFirstItemToShow > 0;
+        if (hasLeftItem) leftButton.current.classList.add("show");
+        else leftButton.current.classList.remove("show");
 
-        const hasRightItemToMove = indexOfFirstItemToShow + countCanShow <= items.length - 1;
-        if (!hasRightItemToMove) document.getElementById("slider-right-button").className = "";
-        else document.getElementById("slider-right-button").className = "show";
+        const hasRightItem = indexOfFirstItemToShow + countCanShow <= items.length - 1;
+        if (!hasRightItem) rightButton.current.classList.remove("show");
+        else rightButton.current.classList.add("show");
     };
 
     return (
-        props.children &&
-        props.children.length > 0 && (
+        children &&
+        children.length > 0 && (
             <div className="recycle-slider">
                 <div className="slider-arrow-button">
-                    <button
-                        id="slider-left-button"
-                        onClick={handleLeftButtonClicked}>
+                    <button ref={leftButton}
+                            id="slider-left-button"
+                            onClick={handleLeftButtonClicked}>
                         <img src={LeftArrow} alt="Slider Previous"/>
                     </button>
                 </div>
-                {// Map every child to a div and set it's margin; And set it's opacity to one if it should be showen in the screen.
-                    props.children.map((item, index) => (
+                {// Map every child to a div and set it's margin and opacity
+                    children.map((item, index) => (
                         <div
                             key={index}
                             className="slider-item"
@@ -136,17 +137,18 @@ function RecycleSlider(props) {
                                 opacity: index < countCanShow
                                          ? 1
                                          : 0
-                            }}
-                        >
+                            }}>
                             {item}
                         </div>
                     ))}
                 <div className="slider-arrow-button">
-                    <button className={countCanShow < props.children.length
+                    <button ref={rightButton}
+                            id="slider-right-button"
+                            className={countCanShow < children.length
                                        ? "show"
                                        : null}
-                            id="slider-right-button" onClick={handleRightButtonClicked}>
-                        <img src={LeftArrow} alt="Slider Next"/>
+                            onClick={handleRightButtonClicked}>
+                        <img src={LeftArrow} alt="Slider Next"/> {/*The image is transforming to 180deg in style */}
                     </button>
                 </div>
             </div>
