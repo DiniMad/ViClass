@@ -14,11 +14,12 @@ namespace ViClass.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
-        public DbSet<Class> Classes { get; set; }
-        public DbSet<Survey> Surveys { get; set; }
-        public ApplicationDbContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+        public DbSet<Class>        Classes      { get; set; }
+        public DbSet<ClassStudent> ClassStudent { get; set; }
+        public DbSet<Survey>       Surveys      { get; set; }
+
+        public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options, operationalStoreOptions)
         {
         }
 
@@ -30,7 +31,7 @@ namespace ViClass.Data
             builder.ApplyConfiguration(new DayOfWeekScheduleConfiguration());
             builder.ApplyConfiguration(new SharedFileConfiguration());
             builder.ApplyConfiguration(new SurveyConfiguration());
-            builder.Entity<ClassStudent>().HasKey(cs => new { cs.ClassId, cs.StudentId });
+            builder.Entity<ClassStudent>().HasKey(cs => new {cs.ClassId, cs.StudentId});
             builder.Entity<SurveyItem>().Property(si => si.Text).IsRequired().HasMaxLength(255);
 
             base.OnModelCreating(builder);
