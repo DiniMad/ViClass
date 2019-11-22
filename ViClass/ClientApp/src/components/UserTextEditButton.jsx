@@ -25,7 +25,7 @@ function UserTextEditButton({name, value}) {
 
     const inputTag = useRef(null);
 
-    const {data, responseStatus, put} = usePutData(userApi + authenticatedUser.sub);
+    const [data, responseStatus, put] = usePutData(userApi + authenticatedUser.sub);
 
     useEffect(() => {
         if (!responseStatus) return;
@@ -74,7 +74,7 @@ function UserTextEditButton({name, value}) {
 
         // Create model object and sent it to API
         const userToUpdate = {
-            [modelPropertyName]: textEntered,
+            [modelPropertyName]: textEntered
         };
         put(userToUpdate);
 
