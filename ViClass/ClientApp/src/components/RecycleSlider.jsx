@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import LeftArrow from "../image/ArrowIconPointToLeft.svg";
 import "./RecycleSliderStyle.scss";
 
@@ -9,7 +9,7 @@ let browserLastWidth = null;
 let items = null;
 
 function RecycleSlider(props) {
-    const [{ slice, leftMargin }, setSliceAndLeftMargin] = useState({ slice: null, leftMargin: null });
+    const [{slice, leftMargin}, setSliceAndLeftMargin] = useState({slice: null, leftMargin: null});
     items = document.getElementsByClassName("slider-item");
 
     useEffect(() => {
@@ -29,14 +29,16 @@ function RecycleSlider(props) {
     const debouncedWindowsResized = debounce(onWindowsResized, 500);
     const calculateItemPosition = () => {
         // Unpack some of props variables.
-        let { itemCountToShow, children, itemWidth } = props;
+        let {itemCountToShow, children, itemWidth} = props;
 
         // Calculate width available based on browser width minus width needed for the two left and right buttons
         let widthAvailable = window.innerWidth - buttonArea * 2;
 
         // Set countCanShow to count of children count of children count if less than number you specified as
         // itemCountToShow
-        countCanShow = itemCountToShow >= children.length ? children.length : itemCountToShow;
+        countCanShow = itemCountToShow >= children.length
+                       ? children.length
+                       : itemCountToShow;
 
         // Calculate the slice of each child
         let slice = widthAvailable / countCanShow;
@@ -56,18 +58,20 @@ function RecycleSlider(props) {
             );
         }
         let leftMargin = (slice - itemWidth) / 2;
-        setSliceAndLeftMargin({ slice, leftMargin });
+        setSliceAndLeftMargin({slice, leftMargin});
     };
     const recalculateItemPosition = () => {
         indexOfFirstItemToShow = 0;
         calculateItemPosition();
         for (let i = 0; i < items.length; i++) {
             const item = items[i];
-            item.style.opacity = i < countCanShow ? 1 : 0;
+            item.style.opacity = i < countCanShow
+                                 ? 1
+                                 : 0;
         }
         updateStateOfArrowButtons();
     };
-    const handleRightButtonClicked = () => {
+    const handleLeftButtonClicked = () => {
         // Move all items one index to right.
         for (let i = 0; i <= props.children.length - 1; i++) {
             const item = items[i];
@@ -84,7 +88,7 @@ function RecycleSlider(props) {
         indexOfFirstItemToShow--;
         updateStateOfArrowButtons();
     };
-    const handleLeftButtonClicked = () => {
+    const handleRightButtonClicked = () => {
         // Move all items one index to left.
         for (let i = 0; i <= props.children.length - 1; i++) {
             const item = items[i];
@@ -103,12 +107,12 @@ function RecycleSlider(props) {
     };
     const updateStateOfArrowButtons = () => {
         const hasLeftItemToMove = indexOfFirstItemToShow > 0;
-        if (hasLeftItemToMove) document.getElementById("slider-right-button").className = "show";
-        else document.getElementById("slider-right-button").className = "";
+        if (hasLeftItemToMove) document.getElementById("slider-left-button").className = "show";
+        else document.getElementById("slider-left-button").className = "";
 
         const hasRightItemToMove = indexOfFirstItemToShow + countCanShow <= items.length - 1;
-        if (!hasRightItemToMove) document.getElementById("slider-left-button").className = "";
-        else document.getElementById("slider-left-button").className = "show";
+        if (!hasRightItemToMove) document.getElementById("slider-right-button").className = "";
+        else document.getElementById("slider-right-button").className = "show";
     };
 
     return (
@@ -118,28 +122,31 @@ function RecycleSlider(props) {
                 <div className="slider-arrow-button">
                     <button
                         id="slider-left-button"
-                        onClick={handleLeftButtonClicked}
-                        className={countCanShow < props.children.length ? "show" : null}
-                    >
-                        <img src={LeftArrow} alt="Slider Previous" />
+                        onClick={handleLeftButtonClicked}>
+                        <img src={LeftArrow} alt="Slider Previous"/>
                     </button>
                 </div>
                 {// Map every child to a div and set it's margin; And set it's opacity to one if it should be showen in the screen.
-                props.children.map((item, index) => (
-                    <div
-                        key={index}
-                        className="slider-item"
-                        style={{
-                            left: index * slice + leftMargin + buttonArea,
-                            opacity: index < countCanShow ? 1 : 0
-                        }}
-                    >
-                        {item}
-                    </div>
-                ))}
+                    props.children.map((item, index) => (
+                        <div
+                            key={index}
+                            className="slider-item"
+                            style={{
+                                left: index * slice + leftMargin + buttonArea,
+                                opacity: index < countCanShow
+                                         ? 1
+                                         : 0
+                            }}
+                        >
+                            {item}
+                        </div>
+                    ))}
                 <div className="slider-arrow-button">
-                    <button id="slider-right-button" onClick={handleRightButtonClicked}>
-                        <img src={LeftArrow} alt="Slider Next" />
+                    <button className={countCanShow < props.children.length
+                                       ? "show"
+                                       : null}
+                            id="slider-right-button" onClick={handleRightButtonClicked}>
+                        <img src={LeftArrow} alt="Slider Next"/>
                     </button>
                 </div>
             </div>
@@ -154,12 +161,12 @@ export default RecycleSlider;
 // "immediate" to call the function immediately based on this parameters.
 function debounce(func, wait, immediate) {
     let timeout;
-    return function() {
+    return function () {
         const context = this,
             args = arguments;
         const callNow = immediate && !timeout;
         clearTimeout(timeout);
-        timeout = setTimeout(function() {
+        timeout = setTimeout(function () {
             timeout = null;
             if (!immediate) {
                 func.apply(context, args);
