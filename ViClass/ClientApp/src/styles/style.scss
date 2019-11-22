@@ -954,6 +954,53 @@ section#showcase {
 		}
 	}
 
+	&-confirmation-modal {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 15rem;
+		width: 50rem;
+
+		p {
+			font-size: 2.5rem;
+			margin: 2rem;
+		}
+
+		&-buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			input {
+				margin: 0 1rem;
+				color: #fff;
+				font-size: 2rem;
+				outline: none;
+				padding: .5rem 3rem .2rem;
+				border-radius: 1rem;
+				transition-property: background-color, border;
+				transition: .3s ease;
+				border: .2rem #1e90ff solid;
+				background: rgba(30, 144, 255, .6);
+
+				&[type="button"] {
+					border: .2rem transparent solid;
+					background: transparent;
+				}
+
+				&:hover {
+					background-color: dodgerblue;
+
+					&[type="button"] {
+						background: #2b2a2a;
+						border-color: #2b2a2a;
+					}
+				}
+			}
+		}
+	}
+
 	&-instructor {
 		grid-area: ins;
 		display: flex;
