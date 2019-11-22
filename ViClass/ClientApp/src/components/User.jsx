@@ -23,11 +23,6 @@ function User(props) {
     const [userData, userResponseStatus] = useGetData(userApi + userId, undefined, userId);
     const [classes, classesResponseStatus] = useGetData(classesApi + "StudyOrTeaching");
 
-    // TODO: remove the dummy items created below.
-    classes &&
-    classes[0] &&
-    (classes[1] = classes[2] = classes[3] = classes[4] = classes[5] = classes[6] = classes[7] = classes[0]);
-
     useEffect(() => {
         if (userResponseStatus === 200 && userData)
             setUser(userData);
