@@ -35,7 +35,8 @@ function Class(props) {
                                            relationWithUser={classObject.relationWithUser}
                                            studentsNumber={classObject.students.length}
                                            setDataDependency={setGetDataDependency}
-                                           replaceURL={props.history.replace}/>
+                                           replaceURL={props.history.replace}
+                                           maxNumber={classObject.maxStudentNumber}/>
                         <ClassInstructor instructor={classObject.instructor}/>
                         <div className="class-title">
                             <h1>{summarizeText(classObject.title, titleMaxLengthAllowed)}</h1>
