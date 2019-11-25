@@ -1067,6 +1067,7 @@ section#showcase {
 
 	&-students {
 		grid-area: stu;
+		position: relative;
 		padding: 0.5rem;
 		background: salmon;
 
@@ -1074,6 +1075,45 @@ section#showcase {
 			font-size: 2.2rem;
 			font-weight: bold;
 			margin: 1rem;
+		}
+
+		&-number {
+			position: absolute;
+			font-size: 1.5rem;
+			right: .5rem;
+			top: 0;
+			opacity: 0;
+			transition: opacity .5s;
+
+			&.hover {
+				opacity: 1;
+			}
+
+			&-max {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding-top: .6rem;
+				margin-bottom: -1.5rem;
+				width: 5rem;
+				height: 5rem;
+				background: url("../image/TriangleToUp.svg") center center/cover no-repeat;
+			}
+
+			&-min {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding-top: .6rem;
+				width: 5rem;
+				height: 5rem;
+				background: url("../image/TriangleToUp.svg") center center/cover no-repeat;
+				transform: rotate(180deg);
+
+				p {
+					transform: rotate(180deg);
+				}
+			}
 		}
 
 		&-items {
