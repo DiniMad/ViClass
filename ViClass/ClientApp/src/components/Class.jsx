@@ -43,7 +43,9 @@ function Class(props) {
                         <div className="class-description">
                             <h2>{summarizeText(classObject.description, descriptionMaxLengthAllowed, 85)}</h2>
                         </div>
-                        <ClassStudents students={classObject.students}/>
+                        <ClassStudents students={classObject.students}
+                                       minNumber={classObject.minStudentNumber}
+                                       maxNumber={classObject.maxStudentNumber}/>
                         <ClassDate
                             startDate={classObject.startDateFormatted}
                             endDate={classObject.endDateFormatted}
