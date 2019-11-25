@@ -11,7 +11,7 @@ const none = 0,
     instructor = 2;
 const classApi = Config.ApiEndpoints.Class;
 
-function ClassOptionButton({classId, relationWithUser, studentsNumber, setDataDependency, replaceURL}) {
+function ClassOptionButton({classId, relationWithUser, studentsNumber, setDataDependency, replaceURL, maxNumber}) {
 
     const {
         title,
@@ -53,6 +53,10 @@ function ClassOptionButton({classId, relationWithUser, studentsNumber, setDataDe
 
         switch (relationWithUser) {
             case none:
+                if (studentsNumber >= maxNumber) {
+                    displayNotification("ظرفیت کلاس پر شده است.", 5);
+                    return;
+                }
                 put({action: register});
                 break;
 
