@@ -134,6 +134,8 @@ namespace ViClass.Controllers
                 case ClassAction.Register:
                     var requestedClass = await _context.Classes.SingleOrDefaultAsync(c => c.Id == id);
                     if (requestedClass is null) return BadRequest("The class not found.");
+                    if (requestedClass.Students.Count >= requestedClass.MaxStudentNumber)
+                        return BadRequest("The class reaches its maximum capacity.");
                     await _context.ClassStudent.AddAsync(new ClassStudent {ClassId = id, StudentId = userId});
                     break;
 
