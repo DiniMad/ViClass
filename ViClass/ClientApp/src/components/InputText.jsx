@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import useInput from "./Hooks/useInput";
 
-function InputText({name, label, inputRegex, length, inputClass, lines = 1, width, setText}) {
+function InputText({name, label, inputRegex, length, inputClass, lines = 1, width, setText, inputRef}) {
     let style = width
                 ? {width: width}
                 : null;
@@ -15,9 +15,11 @@ function InputText({name, label, inputRegex, length, inputClass, lines = 1, widt
     return (
         <div className="input-text" style={style}>
             {lines === 1
-             ? <input type="text" name={name} id={name} className={inputClass} value={text} onChange={handleTextChange}
+             ? <input ref={inputRef} type="text" name={name} id={name} className={inputClass} value={text}
+                      onChange={handleTextChange}
                       required/>
-             : <textarea name={name} id={name} className={inputClass} value={text} onChange={handleTextChange}
+             : <textarea ref={inputRef} name={name} id={name} className={inputClass} value={text}
+                         onChange={handleTextChange}
                          rows={lines} required/>
             }
             <label htmlFor={name}>{label}</label>

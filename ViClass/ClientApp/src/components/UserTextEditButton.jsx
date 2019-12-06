@@ -89,7 +89,8 @@ function UserTextEditButton({name, value}) {
             <ModalDialog visible={displayEditModal} setVisibility={setDisplayEditModal}>
                 {displayEditModal && <form onSubmit={handleSubmit}>
                     <div className="user-text-edit-form">
-                        <InputText name={name}
+                        <InputText inputRef={inputTag}
+                                   name={name}
                                    label={labelText}
                                    length={inputLength}
                                    inputRegex={inputRegex}
