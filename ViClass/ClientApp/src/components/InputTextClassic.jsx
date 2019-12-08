@@ -14,7 +14,6 @@ function InputTextClassic({title, onTextChange, inputRegex, placeHolder, width, 
 
     return (
         <div className="input-text-classic" style={style}>
-            <label htmlFor={title}>{title}:</label>
             <input id={title}
                    className="year"
                    type="text"
@@ -22,6 +21,7 @@ function InputTextClassic({title, onTextChange, inputRegex, placeHolder, width, 
                    value={text}
                    onChange={handleTextChange}
                    placeholder={placeHolder}/>
+            <label htmlFor={title}>{title}:</label>
             <div className="bar">{}</div>
         </div>
     );

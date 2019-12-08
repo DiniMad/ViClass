@@ -26,7 +26,6 @@ function InputDate({title, setDate,width}) {
 
     return (
         <div className="input-date" style={style}>
-            <label htmlFor={title}>{title}:</label>
             <input id={title}
                    className="year"
                    type="text"
@@ -45,6 +44,7 @@ function InputDate({title, setDate,width}) {
                    value={dayText}
                    onChange={handleDayTextChange}
                    placeholder={dayPlaceHolder}/>
+            <label htmlFor={title}>{title}:</label>
             <div className="bar">{}</div>
         </div>
     );
