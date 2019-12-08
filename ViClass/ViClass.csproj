@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -36,6 +36,11 @@
     <Compile Remove="Data\Migrations\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Include="ClientApp\src\components\ChatDisplayUsersButton.jsx" />
+    <Content Include="ClientApp\src\components\ChatEnterMessage.jsx" />
+    <Content Include="ClientApp\src\components\ChatMessageBox.jsx" />
+    <Content Include="ClientApp\src\components\ChatMessagesWrapper.jsx" />
+    <Content Include="ClientApp\src\components\ChatOnlineUsers.jsx" />
     <Content Include="ClientApp\src\components\Class.jsx" />
     <Content Include="ClientApp\src\components\ClassDate.jsx" />
     <Content Include="ClientApp\src\components\ClassInstructor.jsx" />
@@ -59,12 +64,13 @@
     <Content Include="ClientApp\src\components\Hooks\useInput.jsx" />
     <Content Include="ClientApp\src\components\Hooks\useNotification.jsx" />
     <Content Include="ClientApp\src\components\Hooks\usePostData.jsx" />
-    <Content Include="ClientApp\src\components\Hooks\usePut.jsx" />
     <Content Include="ClientApp\src\components\InputDate.jsx" />
     <Content Include="ClientApp\src\components\InputDayOfWeekScheduleItem.jsx" />
     <Content Include="ClientApp\src\components\InputText.jsx" />
     <Content Include="ClientApp\src\components\InputTextClasic.jsx" />
     <Content Include="ClientApp\src\components\InputTime.jsx" />
+    <Content Include="ClientApp\src\components\LiveChat.jsx" />
+    <Content Include="ClientApp\src\components\LiveClass.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
     <Content Include="ClientApp\src\components\Notification.jsx" />
     <Content Include="ClientApp\src\components\Services\ClassService.jsx" />
