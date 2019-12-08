@@ -1591,6 +1591,20 @@ section#showcase {
 	width: 25%;
 	background: #161616;
 
+	&-message {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 2rem;
+		font-weight: bolder;
+		color: #fff;
+		padding: 0 1rem;
+
+		h2 {
+			text-align: center;
+		}
+	}
+
 	&-header {
 		display: flex;
 		justify-content: center;
