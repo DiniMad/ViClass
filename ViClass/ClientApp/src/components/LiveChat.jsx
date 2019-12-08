@@ -55,7 +55,6 @@ class LiveChat extends Component {
     onMessageReceived = (message) => {
         if (this.state.lastMessageId === message.id) return;
         this.setState({messageList: this.state.messageList.concat(message), lastMessageId: message.id});
-        console.log(this.state);
     }; // On message receive add message to messages list if its a new message
     sendMessage = message => {
         if (!connection) return;
