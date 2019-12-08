@@ -15,20 +15,24 @@ let classId = "1";
 
 class LiveChat extends Component {
     state = {
+        userAlreadyExist: false,
         userId: null,
         lastMessageId: null,
         messageList: [],
         onlineUsers: [],
-        displayChatUsers: false
+        displayChatUsers: false,
+        signalRConnection: null
     };
     componentDidMount = async () => {
         connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
         connection.on("OnReceiveMessage", this.onMessageReceived);
         connection.on("OnSubscribe", this.onSubscribe);
         connection.on("OnUnsubscribe", this.onUnsubscribe);
+        connection.on("UserAlreadyExist", this.UserExist);
         await connection.start().catch(function (err) {
             return console.error(err.toString());
         });
+        this.setState({signalRConnection: connection});
         connection.invoke("Subscribe", classId).catch(function (err) {
             return console.error(err.toString());
         });
@@ -36,12 +40,16 @@ class LiveChat extends Component {
         if (status === 200)
             this.setState({userId: data.id});
     };
-    componentWillUnmount = () => {
+    componentWillUnmount = async () => {
         connection.invoke("Unsubscribe").catch(function (err) {
             return console.error(err.toString());
         });
+        await this.state.signalRConnection.stop();
     };
-
+    UserExist = async () => {
+        this.setState({userAlreadyExist: true});
+        await this.state.signalRConnection.stop();
+    };
     onSubscribe = (client) => {
         if (Array.isArray(client))  // First time receive whole the online users
             this.setState({onlineUsers: client});
@@ -66,25 +74,29 @@ class LiveChat extends Component {
 
     render() {
         const messages = this.state.messageList;
-        const {displayChatUsers, onlineUsers, userId} = this.state;
+        const {displayChatUsers, onlineUsers, userId, userAlreadyExist} = this.state;
         return (
             < div id="chat-box">
-                <ChatDisplayUsersButton
-                    displayState={displayChatUsers}
-                    onDisplayButtonClick={this.displayChatUser}/>
-                <ChatOnlineUsers displayState={displayChatUsers} users={onlineUsers} userId={userId}/>
-                <div id="chat-box-header"><h3>{onlineUsers.length} کاربر آنلاین</h3></div>
-                <ChatMessagesWrapper>
-                    {
-                        messages.map(m => <ChatMessageBox key={m.id}
-                                                          senderUserId={m.userId}
-                                                          text={m.text}
-                                                          byMe={m.userId === this.state.userId}
-                                                          sender={m.user}
-                                                          time={m.time}/>)
-                    }
-                </ChatMessagesWrapper>
-                <ChatEnterMessage sendMessage={this.sendMessage}/>
+                {userAlreadyExist
+                 ? <div id="chat-box-message"><h2>درحال حاضر یک صفحه چت برای شما باز است.</h2></div>
+                 : <>
+                     <ChatDisplayUsersButton
+                         displayState={displayChatUsers}
+                         onDisplayButtonClick={this.displayChatUser}/>
+                     <ChatOnlineUsers displayState={displayChatUsers} users={onlineUsers} userId={userId}/>
+                     <div id="chat-box-header"><h3>{onlineUsers.length} کاربر آنلاین</h3></div>
+                     <ChatMessagesWrapper>
+                         {
+                             messages.map(m => <ChatMessageBox key={m.id}
+                                                               senderUserId={m.userId}
+                                                               text={m.text}
+                                                               byMe={m.userId === this.state.userId}
+                                                               sender={m.user}
+                                                               time={m.time}/>)
+                         }
+                     </ChatMessagesWrapper>
+                     <ChatEnterMessage sendMessage={this.sendMessage}/>
+                 </>}
             </div>
         );
     }
