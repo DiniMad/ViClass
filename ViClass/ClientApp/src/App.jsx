@@ -12,13 +12,14 @@ import CurrentDateContext from "./components/Context/CurrentDateContext";
 import Class from "./components/Class";
 import User from "./components/User";
 import Notification from "./components/Notification";
+import CreateClass from "./components/CreateClass";
+import LiveClass from "./components/LiveClass";
 import useAuthenticateUser from "./components/Hooks/useAuthenticateUser";
 import useNotification from "./components/Hooks/useNotification";
+import useCurrentDate from "./components/Hooks/useCurrentDate";
 import AuthenticatedUserContext from "./components/Context/AuthenticatedUserContext";
 import NotificationContext from "./components/Context/NotificationContext";
 import "./styles/style.min.css";
-import CreateClass from "./components/CreateClass";
-import useCurrentDate from "./components/Hooks/useCurrentDate";
 
 
 export default function App() {
@@ -40,6 +41,7 @@ export default function App() {
                         <AuthorizeRoute path="/create" component={CreateClass}/>
                         <AuthorizeRoute path="/class/:id" component={Class}/>
                         <AuthorizeRoute path="/user/:id" component={User}/>
+                        <AuthorizeRoute path="/live/:id" component={LiveClass}/>
                     </CurrentDateContext.Provider>
                 </AuthenticatedUserContext.Provider>
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
