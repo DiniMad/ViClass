@@ -32,9 +32,11 @@ namespace ViClass.Controllers
         }
 
         // GET: api/User/5
-        [HttpGet("{id}")]
+        [HttpGet("{id?}")]
         public async Task<ActionResult<ApplicationUserResource>> GetUser(string id)
         {
+            if (id is null) id = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
+
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
