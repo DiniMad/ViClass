@@ -1,10 +1,9 @@
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using ViClass.Data;
@@ -12,7 +11,7 @@ using ViClass.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
+using ViClass.Hubs;
 
 namespace ViClass
 {
@@ -31,25 +30,25 @@ namespace ViClass
             services.AddAutoMapper();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                                                            options.UseSqlServer(Configuration
+                                                                                     .GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(option=>option.Password.RequireNonAlphanumeric=false)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>(option =>
+                                                             option.Password.RequireNonAlphanumeric = false)
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddAuthentication()
-                .AddIdentityServerJwt();
-            services.AddMvc(options => options.EnableEndpointRouting = false)
-                .AddNewtonsoftJson();
+                    .AddIdentityServerJwt();
+       
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            services.AddSignalR();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,14 +70,17 @@ namespace ViClass
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
             app.UseIdentityServer();
-
-            app.UseMvc(routes =>
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(name: "default",
+                                             pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
 
             app.UseSpa(spa =>
