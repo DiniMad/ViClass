@@ -23,9 +23,14 @@ namespace ViClass.Hubs
 
         public async Task Subscribe(string classId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, classId);
             var userId = Context.User.Claims.First(c => c.Type == "sub").Value;
-            var user   = _dbContext.Users.SingleOrDefault(u => u.Id == userId);
+            if (ClientsList.Any(cl => cl.UserId == userId))
+            {
+                await Clients.Caller.SendAsync("UserAlreadyExist");
+                return;
+            }
+            await Groups.AddToGroupAsync(Context.ConnectionId, classId);
+            var user = _dbContext.Users.SingleOrDefault(u => u.Id == userId);
             if (user is null) return;
             var userName = user.NameAndFamily ?? user.Email;
             var client = new ClientResourceToStore
@@ -55,9 +60,9 @@ namespace ViClass.Hubs
 
             var chatMessage = new ChatMessageResource
             {
-                UserId  = userId,
-                User    = user.NameAndFamily ?? user.Email,
-                Text    = text
+                UserId = userId,
+                User   = user.NameAndFamily ?? user.Email,
+                Text   = text
             };
             await Clients.Group(classId).SendAsync("OnReceiveMessage", chatMessage);
         }
@@ -75,6 +80,5 @@ namespace ViClass.Hubs
                 await Clients.Group(client.ClassId).SendAsync("OnUnsubscribe", userId);
             }
         }
-        
     }
 }
