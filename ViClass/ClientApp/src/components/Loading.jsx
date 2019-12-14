@@ -1,24 +1,21 @@
-import React, {useEffect} from "react";
-import authService from "./api-authorization/AuthorizeService";
-import "../styles/loading.css";
+import React from "react";
+import ModalDialog from "./ModalDialog";
+import "../styles/loading.scss";
 
-function Loading(props) {
-    useEffect(() => {
-        // noinspection JSIgnoredPromiseFromCall
-        authenticateUser();
-    });
-    const authenticateUser = async () => {
-        const url = window.location.href;
-        const result = await authService.completeSignIn(url);
-        if (result.status !== "success")
-            console.log("Error: " + result.message);
-    };
+function Loading({displayLoading, setDisplayLoading}) {
     return (
-        <div id="loader-wrapper">
-            <div id="loader"/>
-            <div className="loader-section section-left"/>
-            <div className="loader-section section-right"/>
-        </div>
+        <ModalDialog modalId="loading-modal"
+                     visible={displayLoading}
+                     setVisibility={setDisplayLoading}
+                     canCloseModal={false}>
+            <div className="loading">
+                <div className="loading-wrapper">
+                    <div className="loading-spinner">
+                        <div/>
+                    </div>
+                </div>
+            </div>
+        </ModalDialog>
     );
 }
 

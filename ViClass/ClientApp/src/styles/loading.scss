@@ -1,0 +1,56 @@
+#loading-modal {
+	background: rgba(0, 0, 0, .8);
+
+	.modal-dialog-content {
+		background-color: transparent;
+	}
+}
+
+.loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.loading-wrapper {
+		width: 20rem;
+		height: 20rem;
+		display: inline-block;
+		overflow: hidden;
+		background: none;
+
+		.loading-spinner {
+			width: 100%;
+			height: 100%;
+			position: relative;
+			transform: translateZ(0) scale(1);
+			backface-visibility: hidden;
+			transform-origin: 0 0;
+
+			div {
+				position: absolute;
+				animation: loading-spinner 1s linear infinite;
+				width: 160px;
+				height: 160px;
+				top: 20px;
+				left: 20px;
+				border-radius: 50%;
+				box-shadow: 0 4px 0 0 dodgerblue;
+				transform-origin: 80px 82px;
+			}
+		}
+	}
+}
+
+@keyframes loading-spinner {
+	0% {
+		transform: rotate(0deg)
+	}
+
+	50% {
+		transform: rotate(180deg)
+	}
+
+	100% {
+		transform: rotate(360deg)
+	}
+}
