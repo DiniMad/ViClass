@@ -20,6 +20,7 @@ import useCurrentDate from "./components/Hooks/useCurrentDate";
 import AuthenticatedUserContext from "./components/Context/AuthenticatedUserContext";
 import NotificationContext from "./components/Context/NotificationContext";
 import "./styles/style.min.css";
+import Index from "./components/Index";
 
 
 export default function App() {
@@ -31,7 +32,7 @@ export default function App() {
     return (
         <React.Fragment>
             <NotificationContext.Provider value={displayNotification}>
-                <Route exact path="/" component={Home}/>
+                <Route exact path="/" component={Index}/>
                 <Route path="/counter" component={Counter}/>
                 <Route path="/loading" component={Loading}/>
                 <AuthorizeRoute path="/fetch-data" component={FetchData}/>
