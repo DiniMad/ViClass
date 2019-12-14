@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ModalDialog({visible, setVisibility, children}) {
+function ModalDialog({visible, setVisibility, children, canCloseModal = true, modalId}) {
     let mouseDownOnEmptyArea = false;
 
     const modalDialogClasses = visible
@@ -8,14 +8,16 @@ function ModalDialog({visible, setVisibility, children}) {
                                : "modal-dialog";
 
     const onMouseDown = e => {
-        mouseDownOnEmptyArea = e.target.id === "modal-dialog-wrapper";
+        if (canCloseModal)
+            mouseDownOnEmptyArea = e.target.id === "modal-dialog-wrapper";
     };
     const onMouseUp = e => {
-        mouseDownOnEmptyArea && e.target.id === "modal-dialog-wrapper" && setVisibility(false);
+        if (mouseDownOnEmptyArea && e.target.id === "modal-dialog-wrapper")
+            setVisibility(false);
     };
 
     return (
-        <div id="modal-dialog-wrapper"
+        <div id={modalId || null}
              className={modalDialogClasses}
              onMouseDown={onMouseDown}
              onMouseUp={onMouseUp}>
