@@ -13,7 +13,7 @@ function useInput(type, length, lines = 1) {
 
     const handleTextChange = e => {
         const text = e.target.value;
-        if (text.length > length) return;               // If number of characters is more than length
+        if (length && text.length > length) return;     // If number of characters is more than length
 
         const countOfNewLines = getNewLinesCount(text);
         if (countOfNewLines > lines) return;            // if number of new lines is more than lines
