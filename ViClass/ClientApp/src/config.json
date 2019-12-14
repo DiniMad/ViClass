@@ -2,8 +2,9 @@
   "ApiEndpoints": {
     "CurrentDate": "/api/date/current",
     "Class": "/api/class/",
-    "User": "api/user/",
-    "File": "api/file/"
+    "User": "/api/user/",
+    "File": "/api/file/",
+    "Authentication": "/api/authentication/"
   },
   "ModelMaxLengthAllowed": {
     "ClassTitle": 64,
