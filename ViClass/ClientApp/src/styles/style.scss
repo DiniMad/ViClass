@@ -1869,6 +1869,225 @@ section#showcase {
 }
 
 
+#index {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	background: url("../image/Showcase.png") center center/cover no-repeat;
+
+	.modal-dialog-content {
+		background-color: transparent;
+	}
+
+	&-forms {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 90vh;
+		width: 60rem;
+
+		&.turn {
+			#index-forms {
+				&-login {
+					z-index: 0;
+					transform: rotateY(-180deg);
+				}
+
+				&-register {
+					transform: rotateY(0);
+				}
+			}
+
+		}
+
+		.form-container {
+			position: absolute;
+			border-radius: 2rem;
+			height: 100%;
+			width: 100%;
+			background-color: #333;
+			transition: all 1s;
+
+			.form-wrapper {
+				height: 90%;
+
+				#login-popup, #register-popup {
+					height: 100%;
+
+					form {
+						display: flex;
+						flex-direction: column;
+						justify-content: space-around;
+						align-items: center;
+						height: 100%;
+
+						.input-text {
+							margin: 0 0 4rem;
+						}
+
+						.inout-with-error {
+							display: flex;
+							flex-direction: column;
+							justify-content: center;
+							align-items: center;
+							width: 100%;
+
+							.input-text {
+								order: -1;
+								border: 0.2rem transparent solid;
+								border-radius: 1rem;
+								padding: 0 2rem 1rem;
+								margin: 0 0 .5rem;
+								transition: border .5s;
+							}
+
+							.input-error-message {
+								cursor: default;
+								font-size: 2rem;
+								color: red;
+								opacity: 0;
+								transition: opacity .5s;
+
+								&.show {
+									opacity: 1;
+
+									~ .input-text {
+										border-color: red;
+									}
+								}
+							}
+						}
+
+						.input {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							margin-bottom: 10rem;
+							width: 80%;
+
+							.input-check-box {
+								display: flex;
+								justify-content: center;
+								align-items: center;
+								cursor: default;
+								width: fit-content;
+
+								&-label {
+									color: #fff;
+									font-size: 2rem;
+									order: 1;
+									margin: 0 .5rem;
+									-webkit-user-select: none;
+									-moz-user-select: none;
+									-khtml-user-select: none;
+									-ms-user-select: none;
+								}
+
+								&-switch {
+									position: relative;
+									display: flex;
+									justify-content: center;
+									align-items: center;
+									cursor: pointer;
+									border: .2rem black solid;
+									border-radius: .5rem;
+									margin: 0 .5rem;
+									width: 10rem;
+									height: 4rem;
+									background: black;
+
+									&-pointer {
+										position: absolute;
+										right: 0;
+										border-radius: .5rem;
+										height: 100%;
+										width: 50%;
+										background: #333;
+										transition-property: right, background-color;
+										transition: .5s;
+
+
+										&.on {
+											right: 50%;
+											background: dodgerblue;
+										}
+									}
+
+								}
+							}
+						}
+
+						.submit-button {
+							margin: 4rem 0 1rem;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+
+							input {
+								cursor: pointer;
+								color: rgba(255, 255, 255, .5);
+								font-size: 3rem;
+								outline: none;
+								border: .2rem dodgerblue solid;
+								border-radius: 1rem;
+								padding: .5rem 3rem .2rem;
+								background: transparent;
+								transition-property: background-color, color;
+								transition: .3s ease;
+
+								&:hover {
+									color: white;
+									background: dodgerblue;
+								}
+							}
+						}
+					}
+				}
+
+				#login-popup {
+					.input-text {
+						margin: 0 !important;
+					}
+				}
+			}
+
+			.btn-wrapper {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 10%;
+
+				button {
+					cursor: pointer;
+					font-size: 2.5rem;
+					color: dodgerblue;
+					opacity: .6;
+					border: none;
+					outline: none;
+					background-color: transparent;
+					transition: opacity .5s;
+
+					&:hover {
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		&-login {
+			z-index: 1;
+		}
+
+		&-register {
+			transform: rotateY(180deg);
+		}
+	}
+
+}
+
 @keyframes popup {
 	80% {
 		font-size: 5.5rem;
