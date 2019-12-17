@@ -6,8 +6,9 @@ import ClassSharedFiles from "./ClassSharedFiles";
 import ClassVideos from "./ClassVideos";
 import Navbar from "./Navbar";
 import ClassOptionButton from "./ClassOptionButton";
-import {summarizeText} from "./Services/StringService";
+import ClassGoLiveButton from "./ClassGoLiveButton";
 import useGetData from "./Hooks/useGetData";
+import {summarizeText} from "./Services/StringService";
 import Config from "../config";
 
 const classApi = Config.ApiEndpoints.Class;
@@ -20,9 +21,6 @@ function Class(props) {
     // A property to notify "useGetData" to re-fetch data on class information (Option Button) changed.
     const [getDataDependency, setGetDataDependency] = useState(null);
     const [classObject, responseStatus] = useGetData(classApi + classId, undefined, getDataDependency);
-
-    // TODO: Remove the log below
-    classObject && console.log(classObject);
 
     return (
         <>
@@ -37,6 +35,11 @@ function Class(props) {
                                            setDataDependency={setGetDataDependency}
                                            replaceURL={props.history.replace}
                                            maxNumber={classObject.maxStudentNumber}/>
+                        <ClassGoLiveButton classId={classObject.id}
+                                           classTitle={classObject.title}
+                                           instructorId={classObject.instructor.id}
+                                           relationWithUser={classObject.relationWithUser}
+                                           streamKye={classObject.streamKey}/>
                         <ClassInstructor instructor={classObject.instructor}/>
                         <div className="class-title">
                             <h1>{summarizeText(classObject.title, titleMaxLengthAllowed)}</h1>
