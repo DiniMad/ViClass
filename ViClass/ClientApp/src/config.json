@@ -6,6 +6,7 @@
     "File": "/api/file/",
     "Authentication": "/api/authentication/"
   },
+  "NginXStreamEndPoint": "https://project.viclass.stream.dinimad.ir/hls/",
   "ModelMaxLengthAllowed": {
     "ClassTitle": 64,
     "ClassDescription": 512
