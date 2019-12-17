@@ -1064,6 +1064,40 @@ nav {
 		}
 	}
 
+	&-go-live-button {
+		position: absolute;
+		right: 1rem;
+		top: 7rem;
+		border-radius: 50%;
+		border: none;
+		outline: none;
+		height: 5rem;
+		width: 5rem;
+
+		&-content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 50%;
+			font-size: 3rem;
+			font-weight: bolder;
+			opacity: .6;
+			cursor: pointer;
+			height: 5rem;
+			width: 5rem;
+			transition: opacity 0.5s;
+
+			&:hover {
+				opacity: 1;
+			}
+
+			img {
+				height: 60%;
+				width: 60%;
+			}
+		}
+	}
+
 	&-confirmation-modal {
 		display: flex;
 		flex-direction: column;
@@ -1106,6 +1140,23 @@ nav {
 						background: #2b2a2a;
 						border-color: #2b2a2a;
 					}
+				}
+			}
+
+			a {
+				margin: 0 1rem;
+				color: #fff;
+				font-size: 2rem;
+				outline: none;
+				padding: .5rem 3rem .2rem;
+				border-radius: 1rem;
+				transition-property: background-color, border;
+				transition: .3s ease;
+				border: .2rem #1e90ff solid;
+				background: rgba(30, 144, 255, .6);
+
+				&:hover {
+					background-color: dodgerblue;
 				}
 			}
 		}
