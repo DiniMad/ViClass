@@ -1719,6 +1719,110 @@ nav {
 	}
 }
 
+#live {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 95vh;
+
+	&-streaming-video {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 0 5rem 5rem;
+		height: 100%;
+		width: 75%;
+
+		&-header {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			color: #fff;
+			font-size: 2rem;
+			font-weight: bold;
+			height: 12rem;
+		}
+
+		#live-video {
+			width: 100%;
+			height: 100%;
+		}
+
+		&-instructor-guid {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			padding: 1rem;
+			font-size: 1.8rem;
+			line-height: 3rem;
+			width: 100%;
+			height: 100%;
+
+			.setup {
+				display: inherit;
+				flex-direction: inherit;
+				justify-content: space-around;
+				align-items: inherit;
+				height: 50%;
+				margin-bottom: 15rem;
+			}
+
+
+			var {
+				font-weight: lighter;
+				background: #161616;
+				padding: .3rem 1rem;
+				border-radius: .5rem;
+			}
+
+			h3 {
+				text-align: justify;
+
+				&.warning {
+					padding: .5rem 1rem;
+					border: .2rem red solid;
+					border-radius: 1rem;
+					color: red;
+				}
+			}
+
+			#new-stream-key {
+				direction: rtl;
+				cursor: pointer;
+				font-size: 1.8rem;
+				outline: none;
+				border: .15rem dodgerblue solid;
+				border-radius: 1rem;
+				padding: .5rem 1rem;
+				background-color: transparent;
+				transition: background-color .5s;
+
+				&:hover {
+					background-color: dodgerblue;
+				}
+			}
+
+			#stop-streaming {
+				cursor: pointer;
+				font-size: 1.8rem;
+				outline: none;
+				border: .15rem red solid;
+				border-radius: 1rem;
+				margin: 0 .6rem;
+				padding: .5rem 1rem;
+				background-color: transparent;
+				transition: background-color .5s;
+
+				&:hover {
+					background-color: red;
+				}
+			}
+		}
+	}
+}
+
 #chat-box {
 	position: relative;
 	display: flex;
