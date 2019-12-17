@@ -5,8 +5,8 @@ function usePutData(url) {
     const [{data, status}, setDataAndStatus] = useState({data: null, status: null});
 
     const put = async (object) => {
-        if (!object) throw 'You should pass a valid object using "setPostObject" function to be post to the API.';
-        
+        if (object === null || object === undefined) throw 'You should pass a valid object using "setPostObject" function to be post to the API.';
+
         let responseData, responseStatus;
         try {
             const response = await Http.put(url, object);
