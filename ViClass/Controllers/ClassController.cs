@@ -163,5 +163,48 @@ namespace ViClass.Controllers
 
             return Ok(Guid.NewGuid());
         }
+
+        [HttpPut("stream/{id}")]
+        public async Task<IActionResult> ModifySteamState(int id, StreamStateResource streamState)
+        {
+            var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
+            var guid   = Guid.NewGuid().ToString();
+
+            var theClass = await _context.Classes.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (theClass is null) return BadRequest(guid);
+            if (theClass.InstructorId != userId) return BadRequest(guid);
+
+            if (streamState.IsStreamStarted)
+            {
+                // If a steam key already exist return it
+                if (!string.IsNullOrWhiteSpace(theClass.StreamKey))
+                    return Ok(new
+                    {
+                        Started = true, theClass.StreamKey,
+                        Data    = theClass.StreamKey
+                    });
+
+                // Otherwise assign a guid to stream key and return the stream key
+                theClass.StreamKey = guid;
+                await _context.SaveChangesAsync();
+                return Ok(new
+                {
+                    Started = true,
+                    Data    = guid
+                });
+                // Chance of tow Guid with same value is about zero,
+                // so there is no need to check if any other class use this Guid
+            }
+
+            theClass.StreamKey = null;
+            await _context.SaveChangesAsync();
+            // TODO: Notify viewer about stream ending.
+            return Ok(new
+            {
+                Started = false,
+                data    = guid
+            });
+        }
     }
 }
