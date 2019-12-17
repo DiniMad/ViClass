@@ -35,7 +35,7 @@ export default function App() {
                         <AuthorizeRoute path="/create" component={CreateClass}/>
                         <AuthorizeRoute path="/class/:id" component={Class}/>
                         <AuthorizeRoute path="/user/:id" component={User}/>
-                        <AuthorizeRoute path="/live/:id" component={LiveClass}/>
+                        <AuthorizeRoute path="/live/:id/:title/:instructorId" component={LiveClass}/>
                     </CurrentDateContext.Provider>
                 </AuthenticatedUserContext.Provider>
                 <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes}/>
