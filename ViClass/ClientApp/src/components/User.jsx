@@ -8,7 +8,6 @@ import AuthenticatedUserContext from "./Context/AuthenticatedUserContext";
 import Config from "../config";
 import UserContext from "./Context/UserContext";
 import UserNameAndFamily from "./UserNameAndFamily";
-import ClassTableViewItem from "./ClassTableViewItem";
 import ClassTableView from "./ClassTableView";
 
 const userApi = Config.ApiEndpoints.User;
