@@ -53,7 +53,7 @@ function ClassOptionButton({classId, relationWithUser, studentsNumber, setDataDe
 
         switch (relationWithUser) {
             case none:
-                if (studentsNumber >= maxNumber) {
+                if (maxNumber !== null && studentsNumber >= maxNumber) {
                     displayNotification("ظرفیت کلاس پر شده است.", 5);
                     return;
                 }
@@ -110,10 +110,10 @@ const getProperties = relationWithUser => {
                         : PlusIcon;
 
     const imageAltText = relationWithUser === none
-                         ? "Subscribe button"
+                         ? "Subscribe"
                          : relationWithUser === student
-                           ? "Unsubscribe button"
-                           : "Remove icon";
+                           ? "Unsubscribe"
+                           : "Remove";
 
     const title = relationWithUser === none
                   ? "Subscribe"
