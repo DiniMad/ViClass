@@ -17,7 +17,7 @@ function ModalDialog({visible, setVisibility, children, canCloseModal = true, mo
     };
 
     return (
-        <div id={modalId || null}
+        <div id={modalId || "modal-dialog-wrapper"}
              className={modalDialogClasses}
              onMouseDown={onMouseDown}
              onMouseUp={onMouseUp}>
