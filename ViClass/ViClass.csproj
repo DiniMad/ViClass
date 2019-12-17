@@ -43,6 +43,7 @@
     <Content Include="ClientApp\src\components\ChatOnlineUsers.jsx" />
     <Content Include="ClientApp\src\components\Class.jsx" />
     <Content Include="ClientApp\src\components\ClassDate.jsx" />
+    <Content Include="ClientApp\src\components\ClassGoLiveButton.jsx" />
     <Content Include="ClientApp\src\components\ClassInstructor.jsx" />
     <Content Include="ClientApp\src\components\ClassSharedFiles.jsx" />
     <Content Include="ClientApp\src\components\ClassStudents.jsx" />
@@ -73,6 +74,8 @@
     <Content Include="ClientApp\src\components\InputTime.jsx" />
     <Content Include="ClientApp\src\components\LiveChat.jsx" />
     <Content Include="ClientApp\src\components\LiveClass.jsx" />
+    <Content Include="ClientApp\src\components\LiveInstructorGuide.jsx" />
+    <Content Include="ClientApp\src\components\LiveVideoStreaming.jsx" />
     <Content Include="ClientApp\src\components\LoginPopup.jsx" />
     <Content Include="ClientApp\src\components\Navbar.jsx" />
     <Content Include="ClientApp\src\components\Notification.jsx" />
@@ -90,6 +93,7 @@
     <Content Include="ClientApp\src\components\UserNameAndFamily.jsx" />
     <Content Include="ClientApp\src\components\UserTextEditButton.jsx" />
     <Content Include="ClientApp\src\image\ArrowIconPointToLeft.svg" />
+    <Content Include="ClientApp\src\image\LiveIcon.svg" />
     <Content Include="ClientApp\src\image\TriangleToUp.svg" />
     <Content Include="ClientApp\src\image\CollegeLogo.png" />
     <Content Include="ClientApp\src\image\EditIcon.svg" />
@@ -105,6 +109,7 @@
     <Content Include="ClientApp\src\image\UserProfileImage.svg" />
     <Content Include="ClientApp\src\image\WarningIcon.svg" />
     <Content Include="ClientApp\src\styles\loading.scss" />
+    <Content Include="ClientApp\src\styles\videojs.css" />
     <EmbeddedResource Remove="Data\Migrations\**" />
     <None Remove="$(SpaRoot)**" />
     <None Remove="Data\Migrations\**" />
