@@ -4,12 +4,12 @@ import "./RecycleSliderStyle.scss";
 
 const buttonArea = 100;
 let countCanShow = null;
-let indexOfFirstItemToShow = 0;
-let browserLastWidth = null;
-let items = null;
+
 
 function RecycleSlider({itemCountToShow, children, itemWidth}) {
-    items = document.getElementsByClassName("slider-item");
+    let indexOfFirstItemToShow = 0;
+    let browserLastWidth = null;
+    let items = document.getElementsByClassName("slider-item");
 
     const [{slice, leftMargin}, setSliceAndLeftMargin] = useState({slice: null, leftMargin: null});
 
@@ -35,7 +35,7 @@ function RecycleSlider({itemCountToShow, children, itemWidth}) {
         // Calculate width available based on browser width minus width needed for the two left and right buttons
         let widthAvailable = window.innerWidth - buttonArea * 2;
 
-        // Set countCanShow to count of children count of children count if less than number you specified as
+        // Set countCanShow to count of children if count of children is equal or less than number you specified as
         // itemCountToShow
         countCanShow = itemCountToShow >= children.length
                        ? children.length
