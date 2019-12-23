@@ -21,11 +21,11 @@ namespace ViClass.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment  _environment;
-        private const    int                  Kb                         = 1024;
-        private const    int                  Mb                         = 1024 * Kb;
-        private const    long                 MaxImageAllowedSized       = 300  * Kb;
-        private const    long                 MaxClassVideoAllowedSized  = 300  * Mb;
-        private const    long                 MaxSharedFilesAllowedSized = 10   * Mb;
+        private const    double               Kb                         = 1024;
+        private const    double               Mb                         = 1024 * Kb;
+        private const    long                 MaxImageAllowedSized       = (long) (300 * Kb);
+        private const    long                 MaxClassVideoAllowedSized  = (long) (300 * Mb);
+        private const    long                 MaxSharedFilesAllowedSized = (long) (10  * Mb);
 
         public FileController(ApplicationDbContext context, IWebHostEnvironment environment)
         {
@@ -141,8 +141,6 @@ namespace ViClass.Controllers
         {
             var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
 
-            var newGuid = Guid.NewGuid();
-
             if (file is null) return BadRequest(ApiResponseResource.Fail("The file is null."));
 
             var fileExtension = Path.GetExtension(file.FileName);
@@ -161,19 +159,16 @@ namespace ViClass.Controllers
 
             // Store the file on hard disk
             var             sharedFilesFolderPath = $"{_environment.WebRootPath}\\Class Shared Files\\";
-            var             filePath              = $"{sharedFilesFolderPath}{newGuid}{fileExtension}";
+            var             filePath              = $"{sharedFilesFolderPath}{Guid.NewGuid()}{fileExtension}";
             await using var stream                = System.IO.File.Create(filePath);
             await file.CopyToAsync(stream);
 
             // Add new file to the class shared files
-            if (!byte.TryParse((file.Length / Mb).ToString(), out var volume))
-                BadRequest(ApiResponseResource.Fail("An unexpected error occured."));
-
             theClass.SharedFiles.Add(new SharedFile
             {
                 Path        = filePath,
                 Description = Path.GetFileNameWithoutExtension(file.FileName),
-                VolumeInMg  = volume
+                VolumeInMg  = (file.Length / Mb).ToString("F")
             });
             await _context.SaveChangesAsync();
 
