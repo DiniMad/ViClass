@@ -10,5 +10,8 @@
   "ModelMaxLengthAllowed": {
     "ClassTitle": 64,
     "ClassDescription": 512
+  },
+  "Units": {
+    "MB": 1048576
   }
 }
