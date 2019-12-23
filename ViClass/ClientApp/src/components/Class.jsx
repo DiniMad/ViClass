@@ -54,8 +54,14 @@ function Class(props) {
                             startDate={classObject.startDateFormatted}
                             endDate={classObject.endDateFormatted}
                             dayOfWeeks={classObject.dayOfWeekSchedules}/>
-                        <ClassSharedFiles sharedFiles={classObject.sharedFiles}/>
-                        <ClassVideos shouldPresentVideo={classObject.shouldPresentVideo} videos={classObject.videos}/>
+                        <ClassSharedFiles classId={classObject.id}
+                                          sharedFiles={classObject.sharedFiles}
+                                          relationWithUser={classObject.relationWithUser}
+                                          setDataDependency={setGetDataDependency}/>
+                        <ClassVideos shouldPresentVideo={classObject.shouldPresentVideo}
+                                     videos={classObject.videos}
+                                     classId={classObject.id}
+                                     relationWithUser={classObject.relationWithUser}/>
                     </div>
                 </div>
             )}
