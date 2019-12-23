@@ -72,6 +72,7 @@ namespace ViClass.Controllers
                                          .Include(c => c.Instructor)
                                          .Include(c => c.DayOfWeekSchedules)
                                          .Include(c => c.Videos)
+                                         .Include(c => c.SharedFiles)
                                          .Include(c => c.Students)
                                          .SingleOrDefaultAsync(c => c.Id == classId);
 
