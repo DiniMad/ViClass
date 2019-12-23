@@ -1393,6 +1393,7 @@ nav {
 			// Remove scrollbar in firefox
 			scrollbar-width: none;
 			width: 80%;
+			height: 100%;
 
 			&::-webkit-scrollbar {
 				display: none;
