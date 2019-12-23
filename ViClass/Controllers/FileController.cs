@@ -71,7 +71,7 @@ namespace ViClass.Controllers
             return Ok(newGuid);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("[action]/{id}")]
         public async Task<ActionResult<ImageResource>> ProfileImage(string id)
         {
             var imageFolderPath = $"{_environment.WebRootPath}\\Profile Images\\";
