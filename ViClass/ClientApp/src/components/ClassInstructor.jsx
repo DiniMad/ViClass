@@ -7,7 +7,7 @@ import {getImageFromBase64} from "./Services/ImageService";
 import useGetData from "./Hooks/useGetData";
 import Config from "../config";
 
-const imageApi = Config.ApiEndpoints.File;
+const imageApi = Config.ApiEndpoints.File + "ProfileImage/";
 
 function ClassInstructor({instructor}) {
     // Destructuring properties from instructor

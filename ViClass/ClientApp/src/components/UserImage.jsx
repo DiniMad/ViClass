@@ -9,7 +9,7 @@ import UserProfileImage from "../image/UserProfileImage.svg";
 import EditIcon from "../image/EditIcon.svg";
 import Config from "../config"
 
-const fileApi = Config.ApiEndpoints.File;
+const imageApi = Config.ApiEndpoints.File + "ProfileImage/";
 const imageSizeAllowedInKB = 300;
 
 function UserImage({imageId, username}) {
@@ -22,9 +22,9 @@ function UserImage({imageId, username}) {
 
     const displayNotification = useContext(NotificationContext);
 
-    const [postData, postResponseStatus, post] = usePostData(`${fileApi}ProfileImage`);
+    const [postData, postResponseStatus, post] = usePostData(imageApi);
     // Get user image if imageId is not null
-    const [fetchedImage, imageStatus] = useGetData(fileApi + imageId, !!imageId, imageId);
+    const [fetchedImage, imageStatus] = useGetData(imageApi + imageId, !!imageId, imageId);
 
     useEffect(() => {
         if (!imageId && image !== UserProfileImage) setImage(UserProfileImage);
