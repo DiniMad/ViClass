@@ -7,6 +7,7 @@ import PlusIcon from "../image/PlusIcon.svg";
 import Config from "../config";
 
 const sharedFilesApi = Config.ApiEndpoints.File + "SharedFiles/";
+const downloadFileApi = Config.ApiEndpoints.File + "DownloadFile/";
 const mb = Config.Units.MB;
 const sharedFileMaxAllowedSize = 10 * mb;
 
@@ -61,11 +62,10 @@ function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDepend
                          {sharedFiles.map(
                              sf =>
                                  sf && (
-                                     <Link key={sf.id} to={`/files/${sf.id}`}>
+                                     <a key={sf.id} href={`${downloadFileApi}Class Shared Files/${sf.savedName}`}>
                                          <p>{summarizeText(sf.description, 64)}</p>
                                          <p>{sf.volumeInMg} mg</p>
-                                     </Link>
-                                 )
+                                     </a>)
                          )}
                      </div>
                  </>
