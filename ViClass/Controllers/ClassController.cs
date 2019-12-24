@@ -122,7 +122,7 @@ namespace ViClass.Controllers
             var request = HttpContext.Request;
             var url     = $"{request.Scheme}://{Request.Host}{Request.Path}{classModel.Id}";
 
-            return Created(url, Guid.NewGuid());
+            return Created(url, classModel.Id);
         }
 
         [HttpPut("{id}")]
