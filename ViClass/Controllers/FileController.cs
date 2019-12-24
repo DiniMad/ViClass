@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using ViClass.Controllers.Resources;
 using ViClass.Data;
 using ViClass.Models;
@@ -157,22 +155,62 @@ namespace ViClass.Controllers
             if (theClass.InstructorId != userId)
                 return BadRequest(ApiResponseResource.Fail("Only the instructor can upload."));
 
+
             // Store the file on hard disk
             var             sharedFilesFolderPath = $"{_environment.WebRootPath}\\Class Shared Files\\";
-            var             filePath              = $"{sharedFilesFolderPath}{Guid.NewGuid()}{fileExtension}";
+            var             fileName              = $"{Guid.NewGuid()}{fileExtension}";
+            var             filePath              = $"{sharedFilesFolderPath}{fileName}";
             await using var stream                = System.IO.File.Create(filePath);
             await file.CopyToAsync(stream);
 
             // Add new file to the class shared files
             theClass.SharedFiles.Add(new SharedFile
             {
-                Path        = filePath,
+                SavedName   = fileName,
                 Description = Path.GetFileNameWithoutExtension(file.FileName),
                 VolumeInMg  = (file.Length / Mb).ToString("F")
             });
             await _context.SaveChangesAsync();
 
             return Ok(ApiResponseResource.Success("New shared file added."));
+        }
+
+        [HttpGet("[action]/{type}/{name}")]
+        public async Task<IActionResult> DownloadFile(string type, string name)
+        {
+            if (string.IsNullOrEmpty(type) || string.IsNullOrEmpty(name))
+                return BadRequest(ApiResponseResource.Fail("Type or name is invalid."));
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(),
+                                    "wwwroot",
+                                    type,
+                                    name);
+
+            var memory = new MemoryStream();
+            try
+            {
+                await using var stream = new FileStream(path, FileMode.Open);
+                await stream.CopyToAsync(memory);
+            }
+            catch
+            {
+                return BadRequest(ApiResponseResource.Fail("Type or name is invalid."));
+            }
+
+            memory.Position = 0;
+
+            return File(memory, GetContentType(name), name);
+        }
+
+        private static string GetContentType(string fileName)
+        {
+            var ext = Path.GetExtension(fileName);
+            return ext switch
+            {
+                ".rar" => "application/x-rar-compressed",
+                ".zip" => "application/zip",
+                _      => null
+            };
         }
     }
 }
