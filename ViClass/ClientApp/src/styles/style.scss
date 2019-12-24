@@ -102,7 +102,7 @@ textarea {
 	outline: none;
 	height: 5rem;
 	width: 5rem;
-	background-color: aqua;
+	background-color: #777;
 	transition: opacity .5s;
 
 	&:hover {
@@ -1049,29 +1049,11 @@ nav {
 		height: 5rem;
 		width: 5rem;
 
-		&-content {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border-radius: 50%;
-			font-size: 3rem;
-			font-weight: bolder;
-			height: 5rem;
-			width: 5rem;
-			cursor: pointer;
-			transition: background-color 0.5s;
-
-			img {
-				height: 60%;
-				width: 60%;
-			}
-		}
-
 		.sub {
 			background-color: green;
 
 			&:hover {
-				background-color: darkgreen;
+				opacity: 1;
 			}
 		}
 
@@ -1080,17 +1062,34 @@ nav {
 			transform: rotate(45deg);
 
 			&:hover {
-				background-color: darkred;
+				opacity: 1;
 			}
 		}
 
 		.remove {
-			img {
-				background: transparent;
-			}
+			background: #777;
 
 			&:hover {
-				background-color: red;
+				opacity: 1;
+			}
+		}
+
+		&-content {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 50%;
+			font-size: 3rem;
+			font-weight: bolder;
+			opacity: .6;
+			height: 5rem;
+			width: 5rem;
+			cursor: pointer;
+			transition: opacity 0.5s;
+
+			img {
+				height: 60%;
+				width: 60%;
 			}
 		}
 	}
@@ -1202,6 +1201,11 @@ nav {
 		align-items: center;
 		overflow: hidden;
 		height: 35vh;
+		border-top: .2rem #000 solid;
+		border-left: .2rem #000 solid;
+		border-bottom: .2rem #000 solid;
+		border-top-left-radius: 1rem;
+		border-bottom-left-radius: 1rem;
 
 		img {
 			border-radius: 50%;
@@ -1221,8 +1225,6 @@ nav {
 				font-weight: bold;
 			}
 		}
-
-		background: indigo;
 	}
 
 	&-title {
@@ -1233,7 +1235,9 @@ nav {
 		min-width: 0;
 		min-height: 0;
 		height: 10vh;
-		background: tomato;
+		border-top: .2rem #000 solid;
+		border-right: .2rem #000 solid;
+		border-top-right-radius: 1rem;
 
 		h1 {
 			font-size: 3rem;
@@ -1250,7 +1254,9 @@ nav {
 		overflow: hidden;
 		padding: 1rem;
 		height: 25vh;
-		background: darkblue;
+		border-bottom: .2rem #000 solid;
+		border-right: .2rem #000 solid;
+		border-bottom-right-radius: 1rem;
 
 		h2 {
 			font-size: 2.2rem;
@@ -1262,7 +1268,6 @@ nav {
 		grid-area: stu;
 		position: relative;
 		padding: 0.5rem;
-		background: salmon;
 
 		&-title {
 			font-size: 2.2rem;
@@ -1275,11 +1280,11 @@ nav {
 			font-size: 1.5rem;
 			right: .5rem;
 			top: 0;
-			opacity: 0;
+			opacity: 1;
 			transition: opacity .5s;
 
-			&.hover {
-				opacity: 1;
+			p {
+				color: #fff;
 			}
 
 			&-max {
@@ -1335,7 +1340,6 @@ nav {
 	&-date {
 		grid-area: dat;
 		height: 15vh;
-		background: darkcyan;
 
 		&-start-end {
 			display: flex;
@@ -1344,6 +1348,10 @@ nav {
 			font-size: 2rem;
 			height: 30%;
 			width: 100%;
+
+			mark {
+				background-color: transparent;
+			}
 		}
 
 		&-days {
@@ -1363,6 +1371,10 @@ nav {
 				border-radius: 1rem;
 				width: 12%;
 				height: 100%;
+
+				p {
+					color: #fff;
+				}
 			}
 		}
 	}
@@ -1375,7 +1387,6 @@ nav {
 		align-items: center;
 		padding: 1rem;
 		height: 20vh;
-		background: saddlebrown;
 
 		&-message {
 			font-size: 2.2rem;
@@ -1421,7 +1432,6 @@ nav {
 		align-items: center;
 		padding: 1rem;
 		height: 25vh;
-		background: violet;
 
 		&-message {
 			font-size: 2.2rem;
@@ -1545,7 +1555,6 @@ nav {
 		justify-content: center;
 		align-items: center;
 		height: 40vh;
-		background: indigo;
 
 		&-template {
 			position: relative;
@@ -1604,7 +1613,6 @@ nav {
 		position: relative;
 		cursor: default;
 		height: 18vh;
-		background: navajowhite;
 
 		h1 {
 			font-size: 5rem;
@@ -1617,7 +1625,6 @@ nav {
 		align-items: center;
 		font-size: 2.5rem;
 		height: 7vh;
-		background: saddlebrown;
 
 		&-box {
 			display: flex;
@@ -1674,7 +1681,6 @@ nav {
 
 	.class-table-view {
 		height: 30vh;
-		background: cadetblue;
 	}
 }
 
@@ -1758,6 +1764,293 @@ nav {
 	justify-content: space-between;
 	align-items: center;
 	height: 95vh;
+
+	#chat-box {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-self: center;
+		border: .1rem #777 solid;
+		height: 95vh;
+		width: 25%;
+		background: #161616;
+
+		&-message {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 2rem;
+			font-weight: bolder;
+			color: #fff;
+			padding: 0 1rem;
+
+			h2 {
+				text-align: center;
+			}
+		}
+
+		&-header {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding-top: .5rem;
+			height: 6rem;
+			background: #333;
+
+			h3 {
+				color: #fff;
+				font-size: 2rem;
+				font-weight: bolder;
+			}
+		}
+
+		#chat-users-button {
+
+			position: absolute;
+			top: .5rem;
+			right: 1rem;
+			height: 4rem;
+			width: 4rem;
+			z-index: 2;
+
+			button {
+				position: relative;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+				outline: none;
+				border: none;
+				border-radius: 50%;
+				height: 100%;
+				width: 100%;
+				background: #777;
+
+				// When button has "display" class show close icon and on hover set the opacity of close icon to 1
+				&.display {
+					img {
+						opacity: 0;
+
+						&.rotate {
+							opacity: .6;
+						}
+					}
+
+					&:hover {
+						img {
+							opacity: 0;
+
+							&.rotate {
+								opacity: 1;
+							}
+						}
+					}
+				}
+
+				// When button has no classes (normal situation) show contacts icon and on hover set the opacity of the contacts icon to 1
+				img {
+					position: absolute;
+					opacity: .6;
+					height: 60%;
+					width: 60%;
+					transition: opacity .5s;
+
+					&.rotate {
+						transform: rotate(45deg);
+						opacity: 0;
+					}
+				}
+
+				&:hover {
+					img {
+						opacity: 1;
+
+						&.rotate {
+							opacity: 0;
+						}
+					}
+
+				}
+			}
+		}
+
+		#chat-online-users {
+			position: absolute;
+			top: 5rem;
+			right: -100%;
+			opacity: 0;
+			height: calc(100% - 11rem);
+			width: 100%;
+			padding: 1rem;
+			transition-property: opacity, right;
+			transition: .5s;
+			background: #333;
+			z-index: 1;
+
+			&.display {
+				right: 0;
+				opacity: 1;
+			}
+
+			.list {
+				overflow-y: scroll;
+				overflow-x: hidden;
+				// Remove scrollbar in firefox
+				scrollbar-width: none;
+				width: 100%;
+				height: calc(100% - 5rem);
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
+
+				.online-user {
+					font-size: 1.8rem;
+					color: #fff;
+					margin-bottom: 1.5rem;
+					transition: color .3s;
+					display: block;
+
+					&:hover {
+						color: dodgerblue;
+					}
+				}
+			}
+
+		}
+
+		#chat-message-list {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			// Remove scrollbar in firefox
+			scrollbar-width: none;
+			padding-top: 1rem;
+			width: 100%;
+			height: 100%;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+
+			.chat-message-box {
+				align-self: flex-end;
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				cursor: default;
+				align-items: center;
+				border-radius: 1rem;
+				padding: 1rem;
+				max-width: 25rem;
+				min-width: 15rem;
+				background: #333;
+				margin: 0 1rem 2rem 1rem;
+
+				&.sender {
+					align-self: flex-start;
+					background: #4d4d4d;
+				}
+
+				h6 {
+					font-size: 2rem;
+					font-weight: bold;
+					text-align: left;
+					width: 100%;
+					margin-bottom: 1rem;
+
+					a {
+						color: #6bb6ff;
+						transition: color .5s;
+
+						&:hover {
+							color: dodgerblue;
+						}
+					}
+				}
+
+				p {
+					color: #fff;
+					font-size: 1.5rem;
+					text-align: justify;
+					width: 100%;
+				}
+
+				&-time {
+					position: absolute;
+					left: .5rem;
+					bottom: .5rem;
+					opacity: 0;
+					transition: opacity .5s;
+					color: white;
+
+					&.display {
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		#chat-enter-message {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 5rem;
+			margin-bottom: 1rem;
+			background: #333;
+
+			textarea {
+				padding-top: 1.2rem;
+				padding-right: 2rem;
+				border: none;
+				outline: none;
+				height: 100%;
+				width: 100%;
+				font-size: 1.5rem;
+				color: white;
+				// Remove scrollbar in firefox
+				scrollbar-width: none;
+				background: #333;
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
+			}
+
+			button {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				cursor: pointer;
+				border: none;
+				outline: none;
+				background: transparent;
+				width: 3rem;
+				height: 3rem;
+				margin: 1rem;
+
+				img {
+					opacity: .6;
+					height: 100%;
+					width: 100%;
+					transform: rotate(180deg);
+					transition: opacity .5s;
+				}
+
+				&:hover {
+					img {
+						opacity: 1;
+					}
+				}
+			}
+		}
+	}
 
 	&-streaming-video {
 		display: flex;
@@ -1857,292 +2150,6 @@ nav {
 	}
 }
 
-#chat-box {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-self: center;
-	border: .1rem #777 solid;
-	height: 95vh;
-	width: 25%;
-	background: #161616;
-
-	&-message {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 2rem;
-		font-weight: bolder;
-		color: #fff;
-		padding: 0 1rem;
-
-		h2 {
-			text-align: center;
-		}
-	}
-
-	&-header {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding-top: .5rem;
-		height: 6rem;
-		background: #333;
-
-		h3 {
-			color: #fff;
-			font-size: 2rem;
-			font-weight: bolder;
-		}
-	}
-
-	#chat-users-button {
-
-		position: absolute;
-		top: .5rem;
-		right: 1rem;
-		height: 4rem;
-		width: 4rem;
-		z-index: 2;
-
-		button {
-			position: relative;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-			outline: none;
-			border: none;
-			border-radius: 50%;
-			height: 100%;
-			width: 100%;
-			background: #777;
-
-			// When button has "display" class show close icon and on hover set the opacity of close icon to 1
-			&.display {
-				img {
-					opacity: 0;
-
-					&.rotate {
-						opacity: .6;
-					}
-				}
-
-				&:hover {
-					img {
-						opacity: 0;
-
-						&.rotate {
-							opacity: 1;
-						}
-					}
-				}
-			}
-
-			// When button has no classes (normal situation) show contacts icon and on hover set the opacity of the contacts icon to 1
-			img {
-				position: absolute;
-				opacity: .6;
-				height: 60%;
-				width: 60%;
-				transition: opacity .5s;
-
-				&.rotate {
-					transform: rotate(45deg);
-					opacity: 0;
-				}
-			}
-
-			&:hover {
-				img {
-					opacity: 1;
-
-					&.rotate {
-						opacity: 0;
-					}
-				}
-
-			}
-		}
-	}
-
-	#chat-online-users {
-		position: absolute;
-		top: 5rem;
-		right: -100%;
-		opacity: 0;
-		height: calc(100% - 11rem);
-		width: 100%;
-		padding: 1rem;
-		transition-property: opacity, right;
-		transition: .5s;
-		background: #333;
-		z-index: 1;
-
-		&.display {
-			right: 0;
-			opacity: 1;
-		}
-
-		.list {
-			overflow-y: scroll;
-			overflow-x: hidden;
-			// Remove scrollbar in firefox
-			scrollbar-width: none;
-			width: 100%;
-			height: calc(100% - 5rem);
-
-			&::-webkit-scrollbar {
-				display: none;
-			}
-
-			.online-user {
-				font-size: 1.8rem;
-				color: #fff;
-				margin-bottom: 1.5rem;
-				transition: color .3s;
-				display: block;
-
-				&:hover {
-					color: dodgerblue;
-				}
-			}
-		}
-
-	}
-
-	#chat-message-list {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		overflow-y: scroll;
-		overflow-x: hidden;
-		// Remove scrollbar in firefox
-		scrollbar-width: none;
-		padding-top: 1rem;
-		width: 100%;
-		height: 100%;
-
-		&::-webkit-scrollbar {
-			display: none;
-		}
-
-		.chat-message-box {
-			align-self: flex-end;
-			position: relative;
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			cursor: default;
-			align-items: center;
-			border-radius: 1rem;
-			padding: 1rem;
-			max-width: 25rem;
-			min-width: 15rem;
-			background: #333;
-			margin: 0 1rem 2rem 1rem;
-
-			&.sender {
-				align-self: flex-start;
-				background: #4d4d4d;
-			}
-
-			h6 {
-				font-size: 2rem;
-				font-weight: bold;
-				text-align: left;
-				width: 100%;
-				margin-bottom: 1rem;
-
-				a {
-					color: #6bb6ff;
-					transition: color .5s;
-
-					&:hover {
-						color: dodgerblue;
-					}
-				}
-			}
-
-			p {
-				color: #fff;
-				font-size: 1.5rem;
-				text-align: justify;
-				width: 100%;
-			}
-
-			&-time {
-				position: absolute;
-				left: .5rem;
-				bottom: .5rem;
-				opacity: 0;
-				transition: opacity .5s;
-				color: white;
-
-				&.display {
-					opacity: 1;
-				}
-			}
-		}
-	}
-
-	#chat-enter-message {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 5rem;
-		margin-bottom: 1rem;
-		background: #333;
-
-		textarea {
-			padding-top: 1.2rem;
-			padding-right: 2rem;
-			border: none;
-			outline: none;
-			height: 100%;
-			width: 100%;
-			font-size: 1.5rem;
-			color: white;
-			// Remove scrollbar in firefox
-			scrollbar-width: none;
-			background: #333;
-
-			&::-webkit-scrollbar {
-				display: none;
-			}
-		}
-
-		button {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			cursor: pointer;
-			border: none;
-			outline: none;
-			background: transparent;
-			width: 3rem;
-			height: 3rem;
-			margin: 1rem;
-
-			img {
-				opacity: .6;
-				height: 100%;
-				width: 100%;
-				transform: rotate(180deg);
-				transition: opacity .5s;
-			}
-
-			&:hover {
-				img {
-					opacity: 1;
-				}
-			}
-		}
-	}
-}
 
 @keyframes popup {
 	80% {
