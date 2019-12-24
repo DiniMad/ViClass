@@ -13,9 +13,9 @@ const classApi = Config.ApiEndpoints.Class;
 const titleMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassTitle;
 const descriptionMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassDescription;
 
-function CreateClass() {
+function CreateClass({history}) {
     const {validateStudentsNumber, validationDateDetails, validateDayOfWeekSchedule} = ClassService();
-
+    
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dayOfWeekSchedules, setDayOfWeekSchedule] = useState([]);
@@ -38,16 +38,12 @@ function CreateClass() {
     useEffect(() => {
         if (!creatClassResponseData) return;
 
-        if (creatClassResponseStatus === 201) displayNotification("کلاس با موفقیت ایجاد شده.", 5, "success");
+        if (creatClassResponseStatus === 201) {
+            displayNotification("کلاس با موفقیت ایجاد شده.", 5, "success");
+            history.push(`/class/${creatClassResponseData}`);
+        }
         else displayNotification("مشکلی در حین ایجاد کلاس بوجود آمده است.", 5, "warning");
 
-        setTitle("");
-        setDescription("");
-        setDayOfWeekSchedule([]);
-        setStartDateFormatted("");
-        setEndDateFormatted("");
-        setMinStudentsNumber("");
-        setMaxStudentsNumber("");
     }, [creatClassResponseData, creatClassResponseStatus]);
 
 
@@ -80,6 +76,11 @@ function CreateClass() {
             return;
         }
 
+        let minStudent = Number(minStudentNumber);
+        let maxStudent = !maxStudentNumber
+                         ? null
+                         : Number(maxStudentNumber);
+
         // Post object
         const newClass = {
             title,
@@ -87,8 +88,8 @@ function CreateClass() {
             dayOfWeekSchedules,
             startDateFormatted,
             endDateFormatted,
-            minStudentNumber,
-            maxStudentNumber
+            minStudentNumber: minStudent,
+            maxStudentNumber: maxStudent
         };
         postNewClass(newClass);
     };
