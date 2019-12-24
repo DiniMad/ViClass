@@ -21,7 +21,7 @@ function ClassService() {
     };
     const validateDayOfWeekSchedule = Schedule => {
         if (Schedule.length === 0) return "باید حداقل یک روز انتخاب شده باشد.";
-        
+
         for (let i = 0; i < Schedule.length; i++) {
             const day = Schedule[i];
             if (!isFirstTimeGreaterThanSecond(day.endTimeFormatted, day.startTimeFormatted)) {
@@ -32,8 +32,7 @@ function ClassService() {
     };
     const validateStudentsNumber = (min, max) => {
         if (min <= 0) return "حداقل تعداد دانشجو باید از صفر بیشتر باشد.";
-        
-        if (min > max) return "تعداد حداکثر دانشجویان نمیتواند از تعداد حداقل کمتر باشد.";
+        if (min > max && !!max) return "تعداد حداکثر دانشجویان نمیتواند از تعداد حداقل کمتر باشد.";
     };
 
     return {validateStudentsNumber, validationDateDetails, validateDayOfWeekSchedule};
