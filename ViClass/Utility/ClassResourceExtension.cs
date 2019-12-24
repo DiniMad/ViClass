@@ -23,7 +23,7 @@ namespace ViClass.Utility
             var min = classResource.MinStudentNumber;
             var max = classResource.MaxStudentNumber;
             if (min <= 0) return "تعداد حداقل دانشجویان باید از صفر بیشتر باشد.";
-            if (max < min) return "تعداد حداکثر دانشجویان نمیتواند از تعداد حداقل کمتر باشد.";
+            if (max != null && max < min) return "تعداد حداکثر دانشجویان نمیتواند از تعداد حداقل کمتر باشد.";
 
             // Date Details
             var today     = PersianDate.GetPersianDateFormatted();
