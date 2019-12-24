@@ -93,14 +93,14 @@
     <Content Include="ClientApp\src\components\UserNameAndFamily.jsx" />
     <Content Include="ClientApp\src\components\UserTextEditButton.jsx" />
     <Content Include="ClientApp\src\image\ArrowIconPointToLeft.svg" />
-    <Content Include="ClientApp\src\image\LiveIcon.svg" />
     <Content Include="ClientApp\src\image\TriangleToUp.svg" />
+    <Content Include="ClientApp\src\image\RemoveIcon.svg" />
+    <Content Include="ClientApp\src\image\LiveIcon.svg" />
     <Content Include="ClientApp\src\image\CollegeLogo.png" />
     <Content Include="ClientApp\src\image\EditIcon.svg" />
     <Content Include="ClientApp\src\image\EmailIcon.svg" />
     <Content Include="ClientApp\src\image\MobileIcon.svg" />
     <Content Include="ClientApp\src\image\PlusIcon.svg" />
-    <Content Include="ClientApp\src\image\RemoveIcon.svg" />
     <Content Include="ClientApp\src\image\Showcase.png" />
     <Content Include="ClientApp\src\image\StudentNumberIcon.svg" />
     <Content Include="ClientApp\src\image\StudentIcon.svg" />
