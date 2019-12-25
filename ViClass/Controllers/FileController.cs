@@ -114,7 +114,8 @@ namespace ViClass.Controllers
 
             // Store the image in hard disk
             var             videoFolderPath = $"{_environment.WebRootPath}\\Class Videos\\";
-            var             filePath        = $"{videoFolderPath}{newGuid}{fileExtension}";
+            var             fileName        = $"{newGuid}{fileExtension}";
+            var             filePath        = $"{videoFolderPath}{fileName}";
             await using var stream          = System.IO.File.Create(filePath);
             await file.CopyToAsync(stream);
 
@@ -124,12 +125,11 @@ namespace ViClass.Controllers
 
             theClass.Videos.Add(new Video()
             {
-                Path        = filePath,
+                SavedName   = fileName,
                 Description = Path.GetFileNameWithoutExtension(file.FileName),
                 VolumeInMg  = volume
             });
-            // await _context.SaveChangesAsync();
-
+            await _context.SaveChangesAsync();
 
             return Ok(newGuid);
         }
