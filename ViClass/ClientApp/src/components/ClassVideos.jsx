@@ -7,6 +7,9 @@ import Config from "../config";
 import NotificationContext from "./Context/NotificationContext";
 
 const videoApi = Config.ApiEndpoints.File + "ClassVideo/";
+const downloadFileApi = Config.ApiEndpoints.File + "DownloadFile/";
+const mb = Config.Units.MB;
+const videoMaxAllowedSize = 300 * mb;
 
 function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser}) {
     const inputFile = useRef(null);
@@ -17,6 +20,7 @@ function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser}) {
     useEffect(() => {
         if (!postData) return;
         if (postResponseStatus === 200) {
+            displayNotification("ویدیو با موفقیت آپلود شد.", 5, "success");
             console.log(postData);
             console.log(postResponseStatus);
         }
@@ -30,6 +34,11 @@ function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser}) {
         const input = inputFile.current;
         if (!input || input.files.length === 0) return;
 
+        if (input.files[0].size > videoMaxAllowedSize) {
+            displayNotification(`حداکثر حجم ویدیو ${videoMaxAllowedSize / mb} مِگ است.`, 5, "warning");
+            return;
+        }
+
         const formData = new FormData();
         formData.append("classId", classId);
         formData.append("file", input.files[0]);
@@ -42,9 +51,7 @@ function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser}) {
         <div className="class-videos">
             {// If should not present the videos
                 !shouldPresentVideo
-                ? (
-                    <p className="class-videos-message">ویدئوهای این درس ارائه نمیشوند</p>
-                )
+                ? (<p className="class-videos-message">ویدئوهای این درس ارائه نمیشوند</p>)
                 : // Otherwise check to make sure it is not Null
                 videos &&
                 // If there is video but it's empty.
@@ -59,15 +66,14 @@ function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser}) {
                         <div className="class-videos-items">
                             {videos.map(
                                 v =>
-                                    v && (
-                                        <Link key={v.id} to={`/video/${v.id}`}>
-                                            <p>
-                                                [{v.lengthFormatted}]&#8195;
-                                                {summarizeText(v.description, 64)}
-                                            </p>
-                                            <p>{v.volumeInMg}mg</p>
-                                        </Link>
-                                    )
+                                    v &&
+                                    (<a key={v.id} href={`${downloadFileApi}Class Videos/${v.savedName}`}>
+                                        <p>
+                                            [{v.lengthFormatted}]&#8195;
+                                            {summarizeText(v.description, 64)}
+                                        </p>
+                                        <p>{v.volumeInMg}mg</p>
+                                    </a>)
                             )}
                         </div>
                     </>
