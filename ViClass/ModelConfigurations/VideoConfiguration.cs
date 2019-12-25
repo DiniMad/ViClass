@@ -10,7 +10,7 @@ namespace ViClass.ModelConfigurations
         {
             builder.Property(v => v.Description)
                    .IsRequired();
-            builder.Property(v => v.Path)
+            builder.Property(v => v.SavedName)
                    .IsRequired();
             builder.Property(v => v.LengthFormatted)
                    .IsRequired()
