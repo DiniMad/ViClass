@@ -1,9 +1,10 @@
-import React, {useEffect, useRef, useContext} from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import usePostData from "./Hooks/usePostData";
 import {summarizeText} from "./Services/StringService";
 import NotificationContext from "./Context/NotificationContext";
 import PlusIcon from "../image/PlusIcon.svg";
 import Config from "../config";
+import Loading from "./Loading";
 
 const sharedFilesApi = Config.ApiEndpoints.File + "SharedFiles/";
 const downloadFileApi = Config.ApiEndpoints.File + "DownloadFile/";
@@ -11,6 +12,8 @@ const mbUnit = Config.Units.MB;
 const sharedFileMaxSize = Config.FileMaxSizeInMg.SharedFile;
 
 function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDependency}) {
+    const [displayUploadLoading, setDisplayUploadLoading] = useState(false);
+
     const inputFile = useRef(null);
     const filesWrapper = useRef(null);
 
@@ -20,6 +23,9 @@ function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDepend
 
     useEffect(() => {
         if (!postData) return;
+
+        setDisplayUploadLoading(false);
+
         if (postResponseStatus === 200) {
             displayNotification("با موفقیت آپلود شد.", 5, "success");
             setDataDependency(postData);
@@ -36,10 +42,12 @@ function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDepend
     const handleFileInputChange = () => {
         const input = inputFile.current;
         if (!input || input.files.length === 0) return;
-        if (input.files[0].size > sharedFileMaxSize*mbUnit) {
+        if (input.files[0].size > sharedFileMaxSize * mbUnit) {
             displayNotification(`حداکثر حجم فایل ${sharedFileMaxSize} مِگ است.`, 5);
             return;
         }
+
+        setDisplayUploadLoading(true);
 
         const formData = new FormData();
         formData.append("classId", classId);
@@ -83,6 +91,7 @@ function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDepend
                        className="display-none"
                        onChange={handleFileInputChange}
                        accept=".rar,.zip"/>
+                <Loading displayLoading={displayUploadLoading} setDisplayLoading={setDisplayUploadLoading}/>
             </>)}
         </div>
     );
