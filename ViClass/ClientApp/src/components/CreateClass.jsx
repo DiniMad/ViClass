@@ -10,8 +10,8 @@ import usePostData from "./Hooks/usePostData";
 import Config from "../config";
 
 const classApi = Config.ApiEndpoints.Class;
-const titleMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassTitle;
-const descriptionMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassDescription;
+const titleMaxLengthAllowed = Config.TextsMaxLength.ClassTitle;
+const descriptionMaxLengthAllowed = Config.TextsMaxLength.ClassDescription;
 
 function CreateClass({history}) {
     const {validateStudentsNumber, validationDateDetails, validateDayOfWeekSchedule} = ClassService();
