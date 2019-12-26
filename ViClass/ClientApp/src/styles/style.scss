@@ -1440,15 +1440,20 @@ nav {
 		&-title {
 			font-size: 2.2rem;
 			font-weight: bold;
-			width: 15%;
+			width: 19%;
 		}
 
 		&-items {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			overflow-y: scroll;
 			overflow-x: hidden;
 			// Remove scrollbar in firefox
 			scrollbar-width: none;
 			width: 80%;
+			height: 85%;
 
 			&::-webkit-scrollbar {
 				display: none;
@@ -1460,6 +1465,7 @@ nav {
 				font-size: 1.7rem;
 				margin: 0.5rem 0;
 				transition: color 0.5s;
+				width: 100%;
 
 				&:hover {
 					color: dodgerblue;
