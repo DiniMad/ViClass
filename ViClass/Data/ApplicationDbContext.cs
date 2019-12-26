@@ -17,6 +17,7 @@ namespace ViClass.Data
         public DbSet<Class>        Classes      { get; set; }
         public DbSet<ClassStudent> ClassStudent { get; set; }
         public DbSet<Survey>       Surveys      { get; set; }
+        public DbSet<Video>        Video       { get; set; }
 
         public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
             : base(options, operationalStoreOptions)
