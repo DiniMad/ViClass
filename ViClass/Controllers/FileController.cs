@@ -91,50 +91,6 @@ namespace ViClass.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> ClassVideo(int classId, IFormFile file)
-        {
-            var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
-
-            var newGuid = Guid.NewGuid();
-
-            if (file is null) return BadRequest($"The file is null. {newGuid}");
-
-            var fileExtension = Path.GetExtension(file.FileName);
-
-            // Validate video
-            if (file.Length <= 0) return BadRequest($"Size of the file is zero. {newGuid}");
-            if (file.Length > MaxClassVideoAllowedSized)
-                return BadRequest($"Size of the file is bigger than allowed size. {newGuid}");
-            if (string.IsNullOrWhiteSpace(fileExtension) || fileExtension != ".mp4" && fileExtension != ".mkv")
-                return StatusCode(415, $"The file format is not valid. {newGuid}");
-
-            var theClass = await _context.Classes.FindAsync(classId);
-            if (theClass is null) return BadRequest($"The class not found. {newGuid}");
-            if (theClass.InstructorId != userId) return BadRequest($"Only the instructor can upload. {newGuid}");
-
-            // Store the image in hard disk
-            var             videoFolderPath = $"{_environment.WebRootPath}\\Class Videos\\";
-            var             fileName        = $"{newGuid}{fileExtension}";
-            var             filePath        = $"{videoFolderPath}{fileName}";
-            await using var stream          = System.IO.File.Create(filePath);
-            await file.CopyToAsync(stream);
-
-            // Add new video to the class videos
-            if (!byte.TryParse((file.Length / Mb).ToString(), out var volume))
-                BadRequest($"An exception occured. {newGuid}");
-
-            theClass.Videos.Add(new Video()
-            {
-                SavedName   = fileName,
-                Description = Path.GetFileNameWithoutExtension(file.FileName),
-                VolumeInMg  = volume
-            });
-            await _context.SaveChangesAsync();
-
-            return Ok(newGuid);
-        }
-
-        [HttpPost("[action]")]
         public async Task<IActionResult> SharedFiles(int classId, IFormFile file)
         {
             var userId = HttpContext.User.Claims.First(c => c.Type == "sub").Value;
