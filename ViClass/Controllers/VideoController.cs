@@ -72,7 +72,7 @@ namespace ViClass.Controllers
             {
                 SavedName   = completedModel.SessionId,
                 Description = completedModel.FileName,
-                VolumeInMg  = completedModel.TotalSize
+                VolumeInByte = completedModel.TotalSize
             });
             await _context.SaveChangesAsync();
 
@@ -124,7 +124,7 @@ namespace ViClass.Controllers
             var response = _targetResponse ?? Response;
 
             response.ContentType                    = "application/octet-stream";
-            response.ContentLength                  = long.Parse(video.VolumeInMg);
+            response.ContentLength                  = long.Parse(video.VolumeInByte);
             response.Headers["Content-Disposition"] = "attachment; fileName=" + video.Description;
 
             var syncIoFeature = HttpContext.Features.Get<IHttpBodyControlFeature>();
@@ -135,7 +135,7 @@ namespace ViClass.Controllers
 
             UploadService.WriteToStream(_targetOutputStream ?? Response.Body,
                                         video.SavedName,
-                                        long.Parse(video.VolumeInMg));
+                                        long.Parse(video.VolumeInByte));
         }
 
         private static byte[] ToByteArray(Stream stream)

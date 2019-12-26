@@ -36,7 +36,7 @@ function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser, set
                                     v &&
                                     (<a key={v.id} href={downloadVideoApi + v.savedName}>
                                         <p>{summarizeText(v.description.replace(/(.mp4)|(.mkv)$/, ''), 90)}</p>
-                                        <p>{(v.volumeInMg / mbUnit).toFixed(1)} mg</p>
+                                        <p>{(v.volumeInByte / mbUnit).toFixed(1)} mg</p>
                                     </a>)
                             )}
                         </div>
