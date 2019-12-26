@@ -1,8 +1,10 @@
 import React from 'react'
-import { Component } from 'react';
+import {Component} from 'react';
 import authService from './AuthorizeService';
-import { AuthenticationResultStatus } from './AuthorizeService';
-import { QueryParameterNames, LogoutActions, ApplicationPaths } from './ApiAuthorizationConstants';
+import {AuthenticationResultStatus} from './AuthorizeService';
+import {QueryParameterNames, LogoutActions, ApplicationPaths} from './ApiAuthorizationConstants';
+import ModalDialog from "../ModalDialog";
+import Loading from "../Loading";
 
 // The main responsibility of this component is to handle the user's logout process.
 // This is the starting point for the logout process, which is usually initiated when a
@@ -23,17 +25,18 @@ export class Logout extends Component {
         switch (action) {
             case LogoutActions.Logout:
                 if (!!window.history.state.state.local) {
-                    this.logout(this.getReturnUrl());
-                } else {
+                    this.logout("/");
+                }
+                else {
                     // This prevents regular links to <app>/authentication/logout from triggering a logout
-                    this.setState({ isReady: true, message: "The logout was not initiated from within the page." });
+                    this.setState({isReady: true, message: "The logout was not initiated from within the page."});
                 }
                 break;
             case LogoutActions.LogoutCallback:
                 this.processLogoutCallback();
                 break;
             case LogoutActions.LoggedOut:
-                this.setState({ isReady: true, message: "You successfully logged out!" });
+                this.setState({isReady: true, message: "You successfully logged out!"});
                 break;
             default:
                 throw new Error(`Invalid action '${action}'`);
@@ -43,17 +46,18 @@ export class Logout extends Component {
     }
 
     render() {
-        const { isReady, message } = this.state;
+        const {isReady, message} = this.state;
         if (!isReady) {
             return <div></div>
         }
         if (!!message) {
             return (<div>{message}</div>);
-        } else {
+        }
+        else {
             const action = this.props.action;
             switch (action) {
                 case LogoutActions.Logout:
-                    return (<div>Processing logout</div>);
+                    return (<Loading displayLoading={null} setDisplayLoading={null}/>);
                 case LogoutActions.LogoutCallback:
                     return (<div>Processing logout callback</div>);
                 case LogoutActions.LoggedOut:
@@ -65,7 +69,7 @@ export class Logout extends Component {
     }
 
     async logout(returnUrl) {
-        const state = { returnUrl };
+        const state = {returnUrl};
         const isauthenticated = await authService.isAuthenticated();
         if (isauthenticated) {
             const result = await authService.signOut(state);
@@ -79,13 +83,14 @@ export class Logout extends Component {
                     await this.navigateToReturnUrl(returnUrl);
                     break;
                 case AuthenticationResultStatus.Fail:
-                    this.setState({ message: result.message });
+                    this.setState({message: result.message});
                     break;
                 default:
                     throw new Error("Invalid authentication result status.");
             }
-        } else {
-            this.setState({ message: "You successfully logged out!" });
+        }
+        else {
+            this.setState({message: "You successfully logged out!"});
         }
     }
 
@@ -101,7 +106,7 @@ export class Logout extends Component {
                 await this.navigateToReturnUrl(this.getReturnUrl(result.state));
                 break;
             case AuthenticationResultStatus.Fail:
-                this.setState({ message: result.message });
+                this.setState({message: result.message});
                 break;
             default:
                 throw new Error("Invalid authentication result status.");
@@ -110,7 +115,7 @@ export class Logout extends Component {
 
     async populateAuthenticationState() {
         const authenticated = await authService.isAuthenticated();
-        this.setState({ isReady: true, authenticated });
+        this.setState({isReady: true, authenticated});
     }
 
     getReturnUrl(state) {
