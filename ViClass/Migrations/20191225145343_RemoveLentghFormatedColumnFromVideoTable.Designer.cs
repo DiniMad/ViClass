@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ViClass.Data;
 
 namespace ViClass.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191225145343_RemoveLentghFormatedColumnFromVideoTable")]
+    partial class RemoveLentghFormatedColumnFromVideoTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -431,7 +433,7 @@ namespace ViClass.Migrations
                     b.Property<string>("SavedName")
                         .IsRequired();
 
-                    b.Property<string>("VolumeInMg");
+                    b.Property<long>("VolumeInMg");
 
                     b.HasKey("Id");
 
