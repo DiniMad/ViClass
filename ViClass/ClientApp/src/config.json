@@ -7,9 +7,13 @@
     "Authentication": "/api/authentication/"
   },
   "NginXStreamEndPoint": "https://5.56.135.101:9080/hls/",
-  "ModelMaxLengthAllowed": {
+  "TextsMaxLength": {
     "ClassTitle": 64,
     "ClassDescription": 512
+  },
+  "FileMaxSizeInMg": {
+    "ClassVideo": 400,
+    "SharedFile": 10
   },
   "Units": {
     "MB": 1048576
