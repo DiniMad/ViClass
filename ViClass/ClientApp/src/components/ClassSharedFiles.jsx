@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useContext} from "react";
-import {Link} from "react-router-dom";
 import usePostData from "./Hooks/usePostData";
 import {summarizeText} from "./Services/StringService";
 import NotificationContext from "./Context/NotificationContext";
@@ -8,11 +7,12 @@ import Config from "../config";
 
 const sharedFilesApi = Config.ApiEndpoints.File + "SharedFiles/";
 const downloadFileApi = Config.ApiEndpoints.File + "DownloadFile/";
-const mb = Config.Units.MB;
-const sharedFileMaxAllowedSize = 10 * mb;
+const mbUnit = Config.Units.MB;
+const sharedFileMaxSize = Config.FileMaxSizeInMg.SharedFile;
 
 function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDependency}) {
     const inputFile = useRef(null);
+    const filesWrapper = useRef(null);
 
     const displayNotification = useContext(NotificationContext);
 
@@ -26,15 +26,18 @@ function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDepend
         }
         else displayNotification("مشکلی در آپلود فایل رخ داده است.", 5, "warning");
     }, [postData, postResponseStatus]);
-
+    useEffect(() => {
+        const messageBody = filesWrapper.current;
+        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    }, [sharedFiles]);
     const handleAddButtonClick = () => {
         if (inputFile) inputFile.current.click();
     };
     const handleFileInputChange = () => {
         const input = inputFile.current;
         if (!input || input.files.length === 0) return;
-        if (input.files[0].size > sharedFileMaxAllowedSize) {
-            displayNotification(`حداکثر حجم فایل ${sharedFileMaxAllowedSize / mb} مِگ است.`, 5, "warning");
+        if (input.files[0].size > sharedFileMaxSize*mbUnit) {
+            displayNotification(`حداکثر حجم فایل ${sharedFileMaxSize} مِگ است.`, 5);
             return;
         }
 
@@ -58,7 +61,7 @@ function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDepend
                  // Otherwise render files
                  <>
                      <h3 className="class-shared-files-title">منابع</h3>
-                     <div className="class-shared-files-items">
+                     <div ref={filesWrapper} className="class-shared-files-items">
                          {sharedFiles.map(
                              sf =>
                                  sf && (
