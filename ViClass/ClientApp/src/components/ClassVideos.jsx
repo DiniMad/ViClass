@@ -1,51 +1,18 @@
-import React, {useState, useEffect, useRef, useContext} from "react";
-import {Link} from "react-router-dom";
+import React, { useEffect, useRef} from "react";
+import UploadVideo from "./UploadVideo";
 import {summarizeText} from "./Services/StringService";
-import PlusIcon from "../image/PlusIcon.svg"
-import usePostData from "./Hooks/usePostData";
 import Config from "../config";
-import NotificationContext from "./Context/NotificationContext";
 
-const videoApi = Config.ApiEndpoints.File + "ClassVideo/";
-const downloadFileApi = Config.ApiEndpoints.File + "DownloadFile/";
-const mb = Config.Units.MB;
-const videoMaxAllowedSize = 300 * mb;
+const downloadVideoApi = Config.ApiEndpoints.File + "video/download/";
+const mbUnit = Config.Units.MB;
 
-function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser}) {
-    const inputFile = useRef(null);
-    const displayNotification = useContext(NotificationContext);
-
-    const [postData, postResponseStatus, post] = usePostData(videoApi);
+function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser, setDataDependency}) {
+    const videosWrapper = useRef(null);
 
     useEffect(() => {
-        if (!postData) return;
-        if (postResponseStatus === 200) {
-            displayNotification("ویدیو با موفقیت آپلود شد.", 5, "success");
-            console.log(postData);
-            console.log(postResponseStatus);
-        }
-        else displayNotification("مشکلی در آپلود ویدیو رخ داده است.", 5, "warning")
-    }, [postData, postResponseStatus]);
-
-    const handleAddButtonClick = () => {
-        if (inputFile) inputFile.current.click();
-    };
-    const handleFileInputChange = () => {
-        const input = inputFile.current;
-        if (!input || input.files.length === 0) return;
-
-        if (input.files[0].size > videoMaxAllowedSize) {
-            displayNotification(`حداکثر حجم ویدیو ${videoMaxAllowedSize / mb} مِگ است.`, 5, "warning");
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append("classId", classId);
-        formData.append("file", input.files[0]);
-        post(formData);
-
-        input.value = ""; // Clean input file
-    };
+        const messageBody = videosWrapper.current;
+        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+    }, [videos]);
 
     return (
         <div className="class-videos">
@@ -63,32 +30,20 @@ function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser}) {
                     // Otherwise render videos
                     <>
                         <h3 className="class-videos-title">ویدئو جلسات</h3>
-                        <div className="class-videos-items">
+                        <div ref={videosWrapper} className="class-videos-items">
                             {videos.map(
                                 v =>
                                     v &&
-                                    (<a key={v.id} href={`${downloadFileApi}Class Videos/${v.savedName}`}>
-                                        <p>
-                                            [{v.lengthFormatted}]&#8195;
-                                            {summarizeText(v.description, 64)}
-                                        </p>
-                                        <p>{v.volumeInMg}mg</p>
+                                    (<a key={v.id} href={downloadVideoApi + v.savedName}>
+                                        <p>{summarizeText(v.description.replace(/(.mp4)|(.mkv)$/, ''), 90)}</p>
+                                        <p>{(v.volumeInMg / mbUnit).toFixed(1)} mg</p>
                                     </a>)
                             )}
                         </div>
                     </>
                 )}
             {(shouldPresentVideo && relationWithUser === 2) &&
-            (<>
-                <button className="add-button" onClick={handleAddButtonClick}>
-                    <img src={PlusIcon} alt="Add"/>
-                </button>
-                <input ref={inputFile}
-                       type="file"
-                       className="display-none"
-                       onChange={handleFileInputChange}
-                       accept=".mp4,.mkv"/>
-            </>)}
+            (<UploadVideo classId={classId} setDataDependency={setDataDependency}/>)}
         </div>
     );
 }
