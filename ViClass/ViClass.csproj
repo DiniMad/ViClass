@@ -88,6 +88,7 @@
     <Content Include="ClientApp\src\components\Services\StringService.jsx" />
     <Content Include="ClientApp\src\components\Services\UserObjcetService.jsx" />
     <Content Include="ClientApp\src\components\StudentNumberDetails.jsx" />
+    <Content Include="ClientApp\src\components\UploadVideo.jsx" />
     <Content Include="ClientApp\src\components\User.jsx" />
     <Content Include="ClientApp\src\components\UserImage.jsx" />
     <Content Include="ClientApp\src\components\UserNameAndFamily.jsx" />
