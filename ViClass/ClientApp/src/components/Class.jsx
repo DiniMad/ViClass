@@ -12,8 +12,8 @@ import {summarizeText} from "./Services/StringService";
 import Config from "../config";
 
 const classApi = Config.ApiEndpoints.Class;
-const titleMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassTitle;
-const descriptionMaxLengthAllowed = Config.ModelMaxLengthAllowed.ClassDescription;
+const titleMaxLengthAllowed = Config.TextsMaxLength.ClassTitle;
+const descriptionMaxLengthAllowed = Config.TextsMaxLength.ClassDescription;
 
 function Class(props) {
     const classId = props.match.params.id;
@@ -61,7 +61,8 @@ function Class(props) {
                         <ClassVideos shouldPresentVideo={classObject.shouldPresentVideo}
                                      videos={classObject.videos}
                                      classId={classObject.id}
-                                     relationWithUser={classObject.relationWithUser}/>
+                                     relationWithUser={classObject.relationWithUser}
+                                     setDataDependency={setGetDataDependency}/>
                     </div>
                 </div>
             )}
