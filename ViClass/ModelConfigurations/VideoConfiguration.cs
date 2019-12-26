@@ -12,9 +12,6 @@ namespace ViClass.ModelConfigurations
                    .IsRequired();
             builder.Property(v => v.SavedName)
                    .IsRequired();
-            builder.Property(v => v.LengthFormatted)
-                   .IsRequired()
-                   .HasMaxLength(6);
         }
     }
 }
