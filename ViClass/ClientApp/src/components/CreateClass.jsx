@@ -89,7 +89,8 @@ function CreateClass({history}) {
             startDateFormatted,
             endDateFormatted,
             minStudentNumber: minStudent,
-            maxStudentNumber: maxStudent
+            maxStudentNumber: maxStudent,
+            shouldPresentVideo: true
         };
         postNewClass(newClass);
     };
