@@ -1,7 +1,7 @@
 using System;
-using ViClass.Models.UploadVideo.Data;
+using ViClass.Controllers.Resources.UploadVideo.Data;
 
-namespace ViClass.Models.UploadVideo.Models
+namespace ViClass.Controllers.Resources.UploadVideo.Models
 {
     /// <summary>
     /// Status of a session creation

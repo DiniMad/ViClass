@@ -1,5 +1,5 @@
 
-namespace ViClass.Models.UploadVideo.Exception
+namespace ViClass.Controllers.Resources.UploadVideo.Exception
 {
     public class ApiException : System.Exception
     {

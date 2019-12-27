@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace ViClass.Models.UploadVideo.Data
+namespace ViClass.Controllers.Resources.UploadVideo.Data
 {
     public abstract class FileRepository
     {

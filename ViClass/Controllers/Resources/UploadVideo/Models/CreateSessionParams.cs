@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ViClass.Models.UploadVideo.Models
+namespace ViClass.Controllers.Resources.UploadVideo.Models
 {
     /// <summary>
     /// Session creation params

@@ -1,6 +1,6 @@
 using System;
 
-namespace ViClass.Models.UploadVideo.Data
+namespace ViClass.Controllers.Resources.UploadVideo.Data
 {
     public class Session
     {

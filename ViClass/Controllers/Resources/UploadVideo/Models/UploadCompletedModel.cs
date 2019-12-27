@@ -1,4 +1,4 @@
-namespace ViClass.Models.UploadVideo.Models
+namespace ViClass.Controllers.Resources.UploadVideo.Models
 {
     public class UploadCompletedModel
     {

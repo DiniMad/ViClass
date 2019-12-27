@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ViClass.Models.UploadVideo.Data;
+using ViClass.Controllers.Resources.UploadVideo.Data;
 
-namespace ViClass.Models.UploadVideo.Models
+namespace ViClass.Controllers.Resources.UploadVideo.Models
 {
     [Serializable]
     public class UploadStatusResponse
