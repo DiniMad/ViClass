@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ViClass.Models.UploadVideo.Data;
-using ViClass.Models.UploadVideo.Exception;
+using ViClass.Controllers.Resources.UploadVideo.Data;
+using ViClass.Controllers.Resources.UploadVideo.Exception;
 
 namespace ViClass.Service
 {
