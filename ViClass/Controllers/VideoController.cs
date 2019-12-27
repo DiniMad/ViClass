@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,10 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using ViClass.Controllers.Resources.UploadVideo.Data;
+using ViClass.Controllers.Resources.UploadVideo.Models;
 using ViClass.Data;
 using ViClass.Models;
-using ViClass.Models.UploadVideo.Data;
-using ViClass.Models.UploadVideo.Models;
 using ViClass.Service;
 
 namespace ViClass.Controllers
