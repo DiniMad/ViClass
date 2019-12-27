@@ -12,8 +12,10 @@ namespace ViClass.Hubs
     [Authorize(AuthenticationSchemes = "Identity.Application")]
     public class ChatHub : Hub
     {
-        private readonly ApplicationDbContext         _dbContext;
-        private static   IList<ClientResourceToStore> ClientsList { get; } = new List<ClientResourceToStore>();
+        private readonly ApplicationDbContext _dbContext;
+
+        // A property to store the online clients
+        private static IList<ClientResourceToStore> ClientsList { get; } = new List<ClientResourceToStore>();
 
 
         public ChatHub(ApplicationDbContext dbContext)
@@ -21,6 +23,7 @@ namespace ViClass.Hubs
             _dbContext = dbContext;
         }
 
+        // Every client should send his class id to subscribe and get service
         public async Task Subscribe(string classId)
         {
             var userId = Context.User.Claims.First(c => c.Type == "sub").Value;
@@ -29,6 +32,7 @@ namespace ViClass.Hubs
                 await Clients.Caller.SendAsync("UserAlreadyExist");
                 return;
             }
+
             await Groups.AddToGroupAsync(Context.ConnectionId, classId);
             var user = _dbContext.Users.SingleOrDefault(u => u.Id == userId);
             if (user is null) return;
@@ -41,18 +45,20 @@ namespace ViClass.Hubs
             await Clients.Caller.SendAsync("OnSubscribe", ClientsList.Select(c => c as ClientResource));
         }
 
+        // Unsubscribe on user closes the chat page
         public async Task Unsubscribe()
         {
             await RemoveUserOnDisconnect();
         }
 
-
+        // Unsubscribe on user closes the chat page
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             await RemoveUserOnDisconnect();
             await base.OnDisconnectedAsync(exception);
         }
 
+        // Send message to all the client in same class on a message received
         public async Task SendMessage(string classId, string text)
         {
             var userId = Context.User.Claims.First(c => c.Type == "sub").Value;
