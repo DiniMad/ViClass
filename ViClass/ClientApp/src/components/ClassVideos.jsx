@@ -10,6 +10,8 @@ function ClassVideos({shouldPresentVideo, videos, classId, relationWithUser, set
     const videosWrapper = useRef(null);
 
     useEffect(() => {
+        if(!videos||!videos[0]) return;
+
         const messageBody = videosWrapper.current;
         messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
     }, [videos]);

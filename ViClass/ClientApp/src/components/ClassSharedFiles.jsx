@@ -33,6 +33,8 @@ function ClassSharedFiles({sharedFiles, relationWithUser, classId, setDataDepend
         else displayNotification("مشکلی در آپلود فایل رخ داده است.", 5, "warning");
     }, [postData, postResponseStatus]);
     useEffect(() => {
+        if(!sharedFiles||!sharedFiles[0]) return;
+        
         const messageBody = filesWrapper.current;
         messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
     }, [sharedFiles]);
